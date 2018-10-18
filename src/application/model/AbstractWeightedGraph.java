@@ -49,14 +49,7 @@ public abstract class AbstractWeightedGraph<T> {
      * @param v The vertex object. 
      */
 	
-	public abstract void addVertex();
-	
-//	public void addVertex(T v) {
-//        if (containsVertex(v)) {
-//            throw new IllegalArgumentException("Vertex already exists.");
-//        }
-//        this.adjacencyList.put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Integer>>());
-//    }
+	public abstract void addVertex(T v);
 	
 	/**
      * Remove the vertex v from the graph.
@@ -64,19 +57,8 @@ public abstract class AbstractWeightedGraph<T> {
      * @param v The vertex that will be removed.
      */
 	
-	public abstract void removeVertex();
+	public abstract void removeVertex(T v);
 	
-//    public void removeVertex(T v) {
-//        if (!containsVertex(v)) {
-//            throw new IllegalArgumentException("Vertex doesn't exist.");
-//        }
-//        
-//        for (Vertex<T> u: this.getAllVertices()) {
-//            this.adjacencyList.get(u).remove(returnPairInSet(this.adjacencyList.get(u),returnVertex(v)));
-//        }
-// 
-//        this.adjacencyList.remove(returnVertex(v)); 
-//    }
     
     /**
      * Add new edge between vertex. Adding new edge from u to v will
@@ -87,15 +69,7 @@ public abstract class AbstractWeightedGraph<T> {
      * @param w Weight of edge
      */
 	
-	public abstract void addEdge();
-	
-//    public void addEdge(T v, T u, int w) {
-//        if (!containsVertex(v) || !containsVertex(u)) {
-//            throw new IllegalArgumentException();
-//        }
-//        
-//        this.adjacencyList.get(returnVertex(v)).add(new Pair<Vertex<T>,Integer>(returnVertex(u),w));
-//    }
+	public abstract void addEdge(T v, T u, int w);
     
     /**
      * Remove the edge between vertex. Removing the edge from u to v will 
@@ -105,16 +79,7 @@ public abstract class AbstractWeightedGraph<T> {
      * @param u Destination vertex.
      */
 	
-	public abstract void removeEdge();
-	
-//    public void removeEdge(T v, T u) {
-//        if (!containsVertex(v) || !containsVertex(u)) {
-//            throw new IllegalArgumentException();
-//        }
-//        
-//        this.adjacencyList.get(returnVertex(v)).remove(returnPairInSet(this.adjacencyList.get(returnVertex(v)),
-//        													returnVertex(u)));
-//    }
+	public abstract void removeEdge(T v, T u);
     
     /**
      * Check adjacency between 2 vertices in the graph.
