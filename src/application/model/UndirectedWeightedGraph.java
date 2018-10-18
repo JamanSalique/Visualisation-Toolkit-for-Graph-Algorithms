@@ -53,6 +53,7 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
         }
         
         super.getAdjacencyList().get(returnVertex(v)).add(new Pair<Vertex<T>,Integer>(returnVertex(u),w));
+        super.getAdjacencyList().get(returnVertex(u)).add(new Pair<Vertex<T>,Integer>(returnVertex(v),w));
 		
 	}
 
@@ -71,6 +72,9 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
         
         super.getAdjacencyList().get(returnVertex(v)).remove(returnPairInSet(
         										super.getAdjacencyList().get(returnVertex(v)),returnVertex(u)));
+        
+        super.getAdjacencyList().get(returnVertex(u)).remove(returnPairInSet(
+				super.getAdjacencyList().get(returnVertex(u)),returnVertex(v)));
 		
 	}
 
