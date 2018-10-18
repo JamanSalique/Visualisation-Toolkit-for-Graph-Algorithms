@@ -20,5 +20,20 @@ public class Vertex<T> {
 		this.visited = visited;
 	}
 	
+	public void setElement(T elem) {
+		element = elem;
+	}
+	
+	public T getElement() {
+		return element;
+	}
+	
+	public void setVisited(boolean b) {
+		visited = b;
+	}
+	
+	public boolean isVisited() {
+		return visited;
+	}
 	
 }

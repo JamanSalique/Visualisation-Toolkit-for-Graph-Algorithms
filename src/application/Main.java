@@ -1,9 +1,14 @@
 package application;
 	
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+import application.model.Vertex;
 import javafx.application.Application;
-import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
@@ -20,8 +25,21 @@ public class Main extends Application {
 		}
 	}
 	
+	public static boolean containsVertex(Integer element,HashMap<Vertex<Integer>,Integer> adjacencyList) {
+		for (Map.Entry<Vertex<Integer>,Integer> entry : adjacencyList.entrySet()) {
+			if(entry.getKey().getElement() == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		//launch(args);
-		System.out.println("yooo");
+		Vertex v1 = new Vertex(1);
+		HashMap<Vertex<Integer>,Integer> adjacencyList = new HashMap<Vertex<Integer>,Integer>();
+		adjacencyList.put(v1,1);
+		System.out.println(containsVertex(1, adjacencyList));
+		
 	}
 }
