@@ -36,4 +36,24 @@ public class Vertex<T> {
 		return visited;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if(o == this) {
+			return true;
+		}
+		
+		if(!(o instanceof Vertex<?>)) {
+			return false;
+		}
+		
+		Vertex<?> v=  (Vertex<?>) o;
+		
+		return v.getElement() == this.element;
+	}
+	
+	@Override
+	public String toString() {
+		return "Vertex containing element: " + element;
+	}
+	
 }
