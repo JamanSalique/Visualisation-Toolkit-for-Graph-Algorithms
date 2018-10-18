@@ -4,20 +4,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import javafx.util.Pair;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
-public abstract class AbstractNonWeightedGraph<T> {
-	private final HashMap<Vertex<T>,Set<Vertex<T>>> adjacencyList;
-	//private final HashMap<Vertex<T>,Pair<Set<Vertex<T>>,Integer>> weightedGraphAdjacencyList;
+public abstract class AbstractWeightedGraph<T> {
+	private final HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> adjacencyList;
 	
-	public AbstractNonWeightedGraph() {
-        this.adjacencyList = new HashMap<Vertex<T>,Set<Vertex<T>>>();
-    }
+	public AbstractWeightedGraph() {
+		this.adjacencyList = new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>();
+	}
 	
 	private boolean containsVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return true;
 			}
@@ -26,7 +25,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	}
 	
 	private Vertex<T> returnVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return entry.getKey();
 			}
@@ -35,7 +34,16 @@ public abstract class AbstractNonWeightedGraph<T> {
 		return null;
 	}
 	
-	 /**
+	private Pair<Vertex<T>,Integer> returnPairInSet(Set<Pair<Vertex<T>, Integer>> set, Vertex<T> v ){
+		for(Pair<Vertex<T>,Integer> p : set) {
+			if(p.getKey().equals(v)) {
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	/**
      * Add new vertex to the graph.
      * 
      * @param v The vertex object. 
@@ -44,10 +52,10 @@ public abstract class AbstractNonWeightedGraph<T> {
         if (containsVertex(v)) {
             throw new IllegalArgumentException("Vertex already exists.");
         }
-        this.adjacencyList.put(new Vertex<T>(v), new HashSet<Vertex<T>>());
+        this.adjacencyList.put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Integer>>());
     }
-    
-    /**
+	
+	/**
      * Remove the vertex v from the graph.
      * 
      * @param v The vertex that will be removed.
@@ -58,9 +66,9 @@ public abstract class AbstractNonWeightedGraph<T> {
         }
         
         for (Vertex<T> u: this.getAllVertices()) {
-            this.adjacencyList.get(u).remove(returnVertex(v));
+            this.adjacencyList.get(u).remove(returnPairInSet(this.adjacencyList.get(u),returnVertex(v)));
         }
-        
+ 
         this.adjacencyList.remove(returnVertex(v));
         
         
@@ -72,14 +80,14 @@ public abstract class AbstractNonWeightedGraph<T> {
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
+     * @param w Weight of edge
      */
-    public void addEdge(T v, T u) {
+    public void addEdge(T v, T u, int w) {
         if (!containsVertex(v) || !containsVertex(u)) {
             throw new IllegalArgumentException();
         }
         
-        this.adjacencyList.get(returnVertex(v)).add(returnVertex(u));
-        this.adjacencyList.get(returnVertex(u)).add(returnVertex(v));
+        this.adjacencyList.get(returnVertex(v)).add(new Pair<Vertex<T>,Integer>(returnVertex(u),w));
     }
     
     /**
@@ -94,8 +102,8 @@ public abstract class AbstractNonWeightedGraph<T> {
             throw new IllegalArgumentException();
         }
         
-        this.adjacencyList.get(returnVertex(v)).remove(returnVertex(u));
-        this.adjacencyList.get(returnVertex(u)).remove(returnVertex(v));
+        this.adjacencyList.get(returnVertex(v)).remove(returnPairInSet(this.adjacencyList.get(returnVertex(v)),
+        													returnVertex(u)));
     }
     
     /**
@@ -106,7 +114,8 @@ public abstract class AbstractNonWeightedGraph<T> {
      * @return <tt>true</tt> if the vertex v and u are connected.
      */
     public boolean isAdjacent(T v, T u) {
-        return this.adjacencyList.get(returnVertex(v)).contains(returnVertex(u));
+        return this.adjacencyList.get(returnVertex(v)).contains(returnPairInSet(this.adjacencyList.get(
+        															returnVertex(v)),returnVertex(u)));
     }
     
     /**
@@ -115,7 +124,7 @@ public abstract class AbstractNonWeightedGraph<T> {
      * @param v The vertex.
      * @return An iterable for connected vertices.
      */
-    public Iterable<Vertex<T>> getNeighbors(T v) {
+    public Iterable<Pair<Vertex<T>,Integer>> getNeighbors(T v) {
         return this.adjacencyList.get(returnVertex(v));
     }
     
@@ -127,6 +136,4 @@ public abstract class AbstractNonWeightedGraph<T> {
     public Iterable<Vertex<T>> getAllVertices() {
         return this.adjacencyList.keySet();
     }
-	
-
 }
