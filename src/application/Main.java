@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import application.model.UndirectedNonWeightedGraph;
+import application.model.UndirectedWeightedGraph;
 import application.model.Vertex;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -36,10 +38,41 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		//launch(args);
-		Vertex v1 = new Vertex(1);
-		HashMap<Vertex<Integer>,Integer> adjacencyList = new HashMap<Vertex<Integer>,Integer>();
-		adjacencyList.put(v1,1);
-		System.out.println(containsVertex(1, adjacencyList));
+		Vertex<Integer> v1 = new Vertex<Integer>(1);
+		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<Integer> v3 = new Vertex<Integer>(3);
+		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		UndirectedNonWeightedGraph<String> g = new UndirectedNonWeightedGraph<String>();
+		UndirectedWeightedGraph<String> gg = new UndirectedWeightedGraph<String>();
+//		g.addVertex("a");
+//		g.addVertex("b");
+//		g.addVertex("c");
+//		g.addVertex("d");
+//		
+//		g.addEdge("a","b");
+//		
+//		
+//		System.out.println(g);
+		
+		gg.addVertex("a");
+		gg.addVertex("b");
+		gg.addVertex("c");
+		gg.addVertex("d");
+		
+		gg.addEdge("a","b",1);
+		gg.addEdge("b","c",2);
+		gg.addEdge("c","d",3);
+		
+		System.out.println(gg);
+		
+//		HashMap<Vertex<Integer>,Integer> adjacencyList = new HashMap<Vertex<Integer>,Integer>();
+//		adjacencyList.put(v1,1);
+//		adjacencyList.put(v2,1);
+//		adjacencyList.put(v3,1);
+//		adjacencyList.put(v4,1);
+//		
+//		adjacencyList.
+//		System.out.println(containsVertex(1, adjacencyList));
 		
 	}
 }

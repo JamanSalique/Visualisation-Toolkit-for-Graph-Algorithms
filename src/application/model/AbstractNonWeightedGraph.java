@@ -1,11 +1,9 @@
 package application.model;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public abstract class AbstractNonWeightedGraph<T> {
@@ -102,6 +100,21 @@ public abstract class AbstractNonWeightedGraph<T> {
     
     public HashMap<Vertex<T>,Set<Vertex<T>>> getAdjacencyList(){
     		return adjacencyList;
+    }
+    
+    @Override
+    public String toString() {
+    		String toReturn = "";
+    		for(Vertex<T> vertex : adjacencyList.keySet()) {
+    			toReturn = toReturn + vertex.toString() + " -> [" + 
+    					String.join(" ->",adjacencyList.get(returnVertex(vertex.getElement())).stream().
+    							map(o -> o.toString()).collect(Collectors.toList())) + "]";
+    			toReturn = toReturn + "\n";
+    			
+    			
+    		}
+    		
+    		return toReturn;
     }
 	
 

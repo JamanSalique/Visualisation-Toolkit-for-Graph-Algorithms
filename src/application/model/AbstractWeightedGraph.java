@@ -7,6 +7,7 @@ import java.util.Set;
 import javafx.util.Pair;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public abstract class AbstractWeightedGraph<T> {
 	private final HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> adjacencyList;
@@ -114,5 +115,23 @@ public abstract class AbstractWeightedGraph<T> {
     
     public HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> getAdjacencyList(){
 		return adjacencyList;
-}
+    }
+    
+    @Override
+    public String toString() {
+    		String toReturn = "";
+    		for(Vertex<T> vertex : adjacencyList.keySet()) {
+    			toReturn = toReturn + vertex.toString() + " -> [" + 
+    					String.join(" ->",adjacencyList.get(returnVertex(vertex.getElement())).stream().
+    							map(o -> o.toString()).collect(Collectors.toList())) + "]";
+    			
+//    			toReturn = toReturn +
+    			
+    			toReturn = toReturn + "\n";
+    			
+    			
+    		}
+    		
+    		return toReturn;
+    }
 }

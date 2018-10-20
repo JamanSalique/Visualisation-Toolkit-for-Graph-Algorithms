@@ -1,6 +1,6 @@
 package application.model;
 
-public class Vertex<T> {
+public class Vertex<T>{
 	
 	private T element;
 	private boolean visited;
@@ -53,7 +53,7 @@ public class Vertex<T> {
 	
 	@Override
 	public String toString() {
-		return "Vertex containing element: " + element;
+		return "[" + element + "]";
 	}
 	
 }
