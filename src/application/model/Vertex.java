@@ -1,39 +1,52 @@
 package application.model;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 public class Vertex<T>{
 	
-	private T element;
-	private boolean visited;
+	private ObjectProperty<T> element;
+	private BooleanProperty visited;
 	
 	public Vertex() {
 		element = null;
-		visited = false;
+		visited = new SimpleBooleanProperty(false);
 	}
 	
 	public Vertex(T element) {
-		this.element = element;
-		visited = false;
+		this.element = new SimpleObjectProperty<T>(element);
+		this.visited = new SimpleBooleanProperty(false);
 	}
 	
 	public Vertex(T element, boolean visited) {
-		this.element = element;
-		this.visited = visited;
+		this.element = new SimpleObjectProperty<T>(element);
+		this.visited = new SimpleBooleanProperty(visited);
 	}
 	
 	public void setElement(T elem) {
-		element = elem;
+		this.element.set(elem);
 	}
 	
 	public T getElement() {
-		return element;
+		return this.element.get();
+	}
+	
+	public ObjectProperty<T> elementProperty(){
+		return this.element;
 	}
 	
 	public void setVisited(boolean b) {
-		visited = b;
+		this.visited.set(b);
 	}
 	
 	public boolean isVisited() {
-		return visited;
+		return this.visited.get();
+	}
+	
+	public BooleanProperty visitedProperty(){
+		return this.visited;
 	}
 	
 	@Override
@@ -49,9 +62,9 @@ public class Vertex<T>{
 		Vertex<?> v=  (Vertex<?>) o;
 		
 		if(v.getElement() instanceof String) {
-			return v.getElement().equals(this.element);
+			return v.getElement().equals(this.element.get());
 		}else {
-			return v.getElement() == this.element;
+			return v.getElement() == this.element.get();
 		}
 		
 		
@@ -59,7 +72,7 @@ public class Vertex<T>{
 	
 	@Override
 	public String toString() {
-		return "[" + element + "]";
+		return "[" + element.get() + "]";
 	}
 	
 }
