@@ -1,23 +1,24 @@
 package application.model;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import javafx.util.Pair;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.Pair;
+
 public abstract class AbstractWeightedGraph<T> {
-	private final HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> adjacencyList;
+	private final ObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>> adjacencyList;
 	
 	public AbstractWeightedGraph() {
-		this.adjacencyList = new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>();
+		this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>>(
+				new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>());
 	}
 	
 	protected boolean containsVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return true;
 			}
@@ -26,7 +27,7 @@ public abstract class AbstractWeightedGraph<T> {
 	}
 	
 	protected Vertex<T> returnVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return entry.getKey();
 			}
@@ -90,8 +91,8 @@ public abstract class AbstractWeightedGraph<T> {
      * @return <tt>true</tt> if the vertex v and u are connected.
      */
     public boolean isAdjacent(T v, T u) {
-        return this.adjacencyList.get(returnVertex(v)).contains(returnPairInSet(this.adjacencyList.get(
-        															returnVertex(v)),returnVertex(u)));
+        return this.adjacencyList.get().get(returnVertex(v)).contains(returnPairInSet(this.adjacencyList.get().
+        		get(returnVertex(v)),returnVertex(u)));
     }
     
     /**
@@ -100,8 +101,8 @@ public abstract class AbstractWeightedGraph<T> {
      * @param v The vertex.
      * @return An iterable for connected vertices.
      */
-    public Iterable<Pair<Vertex<T>,Integer>> getNeighbors(T v) {
-        return this.adjacencyList.get(returnVertex(v));
+    public Iterable<Pair<Vertex<T>,Integer>> getNeighbours(T v) {
+        return this.adjacencyList.get().get(returnVertex(v));
     }
     
     /**
@@ -110,19 +111,19 @@ public abstract class AbstractWeightedGraph<T> {
      * @return An Iterable for all vertices in the graph.
      */
     public Iterable<Vertex<T>> getAllVertices() {
-        return this.adjacencyList.keySet();
+        return this.adjacencyList.get().keySet();
     }
     
     public HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> getAdjacencyList(){
-		return adjacencyList;
+		return adjacencyList.get();
     }
     
     @Override
     public String toString() {
     		String toReturn = "";
-    		for(Vertex<T> vertex : adjacencyList.keySet()) {
+    		for(Vertex<T> vertex : adjacencyList.get().keySet()) {
     			toReturn = toReturn + vertex.toString() + " -> [" + 
-    					String.join(" ->",adjacencyList.get(returnVertex(vertex.getElement())).stream().
+    					String.join(" ->",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
     			
 //    			toReturn = toReturn +
