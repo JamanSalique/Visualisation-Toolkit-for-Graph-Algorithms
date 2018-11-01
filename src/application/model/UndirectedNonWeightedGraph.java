@@ -53,8 +53,12 @@ public class UndirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
             throw new IllegalArgumentException();
         }
         
-        super.getAdjacencyList().get(returnVertex(v)).add(returnVertex(u));
-        super.getAdjacencyList().get(returnVertex(u)).add(returnVertex(v));
+        if(!isAdjacent(v,u)) {
+        	super.getAdjacencyList().get(returnVertex(v)).add(returnVertex(u));
+        	super.getAdjacencyList().get(returnVertex(u)).add(returnVertex(v));
+        }
+        
+        
     }
     
     /**
