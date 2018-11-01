@@ -38,10 +38,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		//launch(args);
-		Vertex<Integer> v1 = new Vertex<Integer>(1);
-		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<String> v1 = new Vertex<String>("a");
+		Vertex<String> v2 = new Vertex<String>("a");
 		Vertex<Integer> v3 = new Vertex<Integer>(3);
-		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		Vertex<Integer> v4 = new Vertex<Integer>(3);
 		UndirectedNonWeightedGraph<String> g = new UndirectedNonWeightedGraph<String>();
 		UndirectedWeightedGraph<String> gg = new UndirectedWeightedGraph<String>();
 //		g.addVertex("a");
@@ -63,7 +63,9 @@ public class Main extends Application {
 		gg.addEdge("b","c",2);
 		gg.addEdge("c","d",3);
 		
-		System.out.println(gg);
+		//System.out.println(gg);
+		System.out.println(v1.equals(v2));
+		System.out.println(v3.equals(v4));
 		
 //		HashMap<Vertex<Integer>,Integer> adjacencyList = new HashMap<Vertex<Integer>,Integer>();
 //		adjacencyList.put(v1,1);

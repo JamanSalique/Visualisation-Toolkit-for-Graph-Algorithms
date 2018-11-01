@@ -48,7 +48,13 @@ public class Vertex<T>{
 		
 		Vertex<?> v=  (Vertex<?>) o;
 		
-		return v.getElement() == this.element;
+		if(v.getElement() instanceof String) {
+			return v.getElement().equals(this.element);
+		}else {
+			return v.getElement() == this.element;
+		}
+		
+		
 	}
 	
 	@Override
