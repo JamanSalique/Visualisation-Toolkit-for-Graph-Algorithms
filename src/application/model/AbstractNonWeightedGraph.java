@@ -5,17 +5,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 
 public abstract class AbstractNonWeightedGraph<T> {
-	private final HashMap<Vertex<T>,Set<Vertex<T>>> adjacencyList;
-	//private final HashMap<Vertex<T>,Pair<Set<Vertex<T>>,Integer>> weightedGraphAdjacencyList;
+	private final ObjectProperty<HashMap<Vertex<T>,Set<Vertex<T>>>> adjacencyList;
 	
 	public AbstractNonWeightedGraph() {
-        this.adjacencyList = new HashMap<Vertex<T>,Set<Vertex<T>>>();
+        this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Vertex<T>>>>(new HashMap<Vertex<T>,Set<Vertex<T>>>());
     }
 	
 	protected boolean containsVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return true;
 			}
@@ -24,7 +26,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	}
 	
 	protected Vertex<T> returnVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return entry.getKey();
 			}
@@ -76,7 +78,7 @@ public abstract class AbstractNonWeightedGraph<T> {
      * @return <tt>true</tt> if the vertex v and u are connected.
      */
     public boolean isAdjacent(T v, T u) {
-        return this.adjacencyList.get(returnVertex(v)).contains(returnVertex(u));
+        return this.adjacencyList.get().get(returnVertex(v)).contains(returnVertex(u));
     }
     
     /**
@@ -85,8 +87,8 @@ public abstract class AbstractNonWeightedGraph<T> {
      * @param v The vertex.
      * @return An iterable for connected vertices.
      */
-    public Iterable<Vertex<T>> getNeighbors(T v) {
-        return this.adjacencyList.get(returnVertex(v));
+    public Iterable<Vertex<T>> getNeighbours(T v) {
+        return this.adjacencyList.get().get(returnVertex(v));
     }
     
     /**
@@ -95,19 +97,19 @@ public abstract class AbstractNonWeightedGraph<T> {
      * @return An Iterable for all vertices in the graph.
      */
     public Iterable<Vertex<T>> getAllVertices() {
-        return this.adjacencyList.keySet();
+        return this.adjacencyList.get().keySet();
     }
     
     public HashMap<Vertex<T>,Set<Vertex<T>>> getAdjacencyList(){
-    		return adjacencyList;
+    		return adjacencyList.get();
     }
     
     @Override
     public String toString() {
     		String toReturn = "";
-    		for(Vertex<T> vertex : adjacencyList.keySet()) {
+    		for(Vertex<T> vertex : adjacencyList.get().keySet()) {
     			toReturn = toReturn + vertex.toString() + " -> [" + 
-    					String.join(" ->",adjacencyList.get(returnVertex(vertex.getElement())).stream().
+    					String.join(" ->",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
     			toReturn = toReturn + "\n";
     			
