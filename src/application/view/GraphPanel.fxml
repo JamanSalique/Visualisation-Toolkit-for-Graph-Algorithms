@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -44,6 +45,32 @@
                            </padding>
                         </VBox>
                      </left>
+                     <bottom>
+                        <HBox prefHeight="41.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <AnchorPane prefHeight="41.0" prefWidth="48.0">
+                                 <children>
+                                    <Label text="Slow" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <FlowPane prefHeight="60.0" prefWidth="200.0">
+                                 <children>
+                                    <Label text="Animation Speed" />
+                                    <Slider />
+                                 </children>
+                              </FlowPane>
+                              <ToolBar prefHeight="41.0" prefWidth="613.0">
+                                <items>
+                                  <Button mnemonicParsing="false" text="Start Again" />
+                                    <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Rewind" />
+                                    <Button layoutX="101.0" layoutY="11.0" mnemonicParsing="false" text="Stop" />
+                                    <Button layoutX="168.0" layoutY="11.0" mnemonicParsing="false" text="Fast forward" />
+                                    <Button layoutX="219.0" layoutY="11.0" mnemonicParsing="false" text="Skip to end" />
+                                </items>
+                              </ToolBar>
+                           </children>
+                        </HBox>
+                     </bottom>
                   </BorderPane>
                </content>
           </Tab>
