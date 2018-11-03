@@ -46,11 +46,19 @@ public class AddVertexDataController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-           
+           // create new vertex set data of vertex and return it.
 
             okClicked = true;
             dialogStage.close();
         }
+    }
+    
+    /**
+     * Called when the user clicks cancel.
+     */
+    @FXML
+    private void handleCancel() {
+        dialogStage.close();
     }
     
     /**
