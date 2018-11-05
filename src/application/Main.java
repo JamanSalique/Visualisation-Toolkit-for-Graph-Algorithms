@@ -29,26 +29,12 @@ public class Main<T> extends Application {
 	private ObservableList<DirectedWeightedGraph<T>> directedWeightedGraphData = FXCollections.observableArrayList();
 	private ObservableList<Vertex<T>> vertexData = FXCollections.observableArrayList();
 	
-	public ObservableList<UndirectedNonWeightedGraph<T>> getUndirectedNonWeightedGraphData(){
-		return undirectedNonWeightedGraphData;
+	public Main() {
+		undirectedNonWeightedGraphData.add(new UndirectedNonWeightedGraph<T>());
+		undirectedWeightedGraphData.add(new UndirectedWeightedGraph<T>());
+		directedNonWeightedGraphData.add(new DirectedNonWeightedGraph<T>());
+		directedWeightedGraphData.add(new DirectedWeightedGraph<T>());
 	}
-	
-	public ObservableList<UndirectedWeightedGraph<T>> getUndirectedWeightedGraphData(){
-		return undirectedWeightedGraphData;
-	}
-	
-	public ObservableList<DirectedNonWeightedGraph<T>> getDirectedNonWeightedGraphData(){
-		return directedNonWeightedGraphData;
-	}
-	
-	public ObservableList<DirectedWeightedGraph<T>> getDirectedWeightedGraphData(){
-		return directedWeightedGraphData;
-	}
-	
-	public ObservableList<Vertex<T>> getVertexData(){
-		return vertexData;
-	}
-	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -79,7 +65,7 @@ public class Main<T> extends Application {
 	        }
 	}
 	
-	public boolean showAddVertexData() {
+	public boolean showAddVertexDataUndirectedNonWeightedGraph(GraphPanelController gpc) {
 		try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
@@ -97,6 +83,7 @@ public class Main<T> extends Application {
             // Set the person into the controller.
             AddVertexDataController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setGraphPanelController(gpc);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -106,6 +93,26 @@ public class Main<T> extends Application {
             e.printStackTrace();
             return false;
         }
+	}
+	
+	public ObservableList<UndirectedNonWeightedGraph<T>> getUndirectedNonWeightedGraphData(){
+		return undirectedNonWeightedGraphData;
+	}
+	
+	public ObservableList<UndirectedWeightedGraph<T>> getUndirectedWeightedGraphData(){
+		return undirectedWeightedGraphData;
+	}
+	
+	public ObservableList<DirectedNonWeightedGraph<T>> getDirectedNonWeightedGraphData(){
+		return directedNonWeightedGraphData;
+	}
+	
+	public ObservableList<DirectedWeightedGraph<T>> getDirectedWeightedGraphData(){
+		return directedWeightedGraphData;
+	}
+	
+	public ObservableList<Vertex<T>> getVertexData(){
+		return vertexData;
 	}
 	
 	/**
