@@ -1,14 +1,18 @@
 package application.view;
 
 import application.Main;
+import application.model.DirectedNonWeightedGraph;
+import application.model.DirectedWeightedGraph;
 import application.model.UndirectedNonWeightedGraph;
-import javafx.collections.FXCollections;
+import application.model.UndirectedWeightedGraph;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 public class GraphPanelController {
 
@@ -25,6 +29,10 @@ public class GraphPanelController {
 	private void initialize() {
 		choiceBox.getItems().addAll("Integer","Double","String");
 		choiceBox.getSelectionModel().selectFirst();
+		UndirectedNonWeightedGraph undirectedNonWeighted= new UndirectedNonWeightedGraph();
+		UndirectedWeightedGraph undirectedWeighted = new UndirectedWeightedGraph();
+		DirectedNonWeightedGraph directedNonWeighted = new DirectedNonWeightedGraph();
+		DirectedWeightedGraph directedWeighted = new DirectedWeightedGraph();
 	}
 	
 	public void setMain(Main main) {
@@ -35,16 +43,20 @@ public class GraphPanelController {
 	
 	@FXML
 	private void handleUndirectedNonWeightedGraphAddVertex(MouseEvent event) {
-		UndirectedNonWeightedGraph g = new UndirectedNonWeightedGraph();
 
 		boolean okClicked = main.showAddVertexDataUndirectedNonWeightedGraph(this);
 		
 		if(okClicked) {
         		double x = event.getX();
         		double y = event.getY();
-   				Circle vertex = new Circle(x, y, 20, Color.BLACK);
-   				centerPane.getChildren().add(vertex);
-
+   				Circle vertex = new Circle(x, y, 20, Color.RED);
+   				
+   				final Text text = new Text ("ggg");
+   				final StackPane stack = new StackPane();
+   				stack.getChildren().addAll(vertex, text);
+   				stack.setLayoutX(x);
+   				stack.setLayoutY(y);
+   				centerPane.getChildren().add(stack);
    				
    				// add vertex to main's observable list etc...
    				//new Vertex<T> v
