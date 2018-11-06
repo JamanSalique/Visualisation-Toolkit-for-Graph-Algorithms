@@ -1,7 +1,6 @@
 package application.view;
 
 import application.Main;
-import application.model.UndirectedNonWeightedGraph;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -115,27 +114,20 @@ public class AddVertexDataController {
     private boolean isInputValid() {
     	
     	String input = inputDataField.getText();
-    	System.out.println(graphPanelController.getSelectedDataChoice());
     	String selectedDataChoice = graphPanelController.getSelectedDataChoice();
     	
     	
     	String errorMessage = "";
     	if (input == null || input.length() == 0) {
-    		System.out.println("0");
     		errorMessage += "please enter some data";
     	}
     	else if(isInteger(input) && !selectedDataChoice.equals("Integer")) {
-    		System.out.println("a");
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
     	}
     	else if(isDouble(input) && !selectedDataChoice.equals("Double")) {
-    		System.out.println("b");
-    		System.out.println(Double.parseDouble("5"));
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
     	}
     	else if(isString(input) && !selectedDataChoice.equals("String")) {
-    		System.out.println("b");
-    		System.out.println(Double.parseDouble("5"));
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
     	}else {
     		
@@ -218,7 +210,6 @@ public class AddVertexDataController {
             alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
             alert.showAndWait();
     	}else if(type.equals("Double") && main.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
-    		System.out.println("ggggg");
     		Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Duplicate Vertex");
@@ -270,7 +261,6 @@ public class AddVertexDataController {
             alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
             alert.showAndWait();
     	}else if(type.equals("Double") && main.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
-    		System.out.println("ggggg");
     		Alert alert = new Alert(AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Duplicate Vertex");
@@ -324,7 +314,6 @@ public class AddVertexDataController {
 	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
 	            alert.showAndWait();
 	    	}else if(type.equals("Double") && main.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
-	    		System.out.println("ggggg");
 	    		Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(dialogStage);
 	            alert.setTitle("Duplicate Vertex");
@@ -376,7 +365,6 @@ public class AddVertexDataController {
 	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
 	            alert.showAndWait();
 	    	}else if(type.equals("Double") && main.getDirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
-	    		System.out.println("ggggg");
 	    		Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(dialogStage);
 	            alert.setTitle("Duplicate Vertex");

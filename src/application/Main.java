@@ -494,12 +494,7 @@ public class Main extends Application {
 //		
 //		System.out.println(v1.equals(v2));
 //		System.out.println(v3.equals(v4));
-		
-		UndirectedNonWeightedGraph<Double> unw = new UndirectedNonWeightedGraph<Double>();
-		
-		unw.addVertex(5.5);
-		System.out.println(unw.returnVertex(5.5));
-		
+
 		
 	}
 }

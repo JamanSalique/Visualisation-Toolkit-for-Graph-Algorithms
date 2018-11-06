@@ -27,8 +27,6 @@ public abstract class AbstractNonWeightedGraph<T> {
 	
 	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
-			System.out.println(entry.getKey().getElement());
-			System.out.println(element);
 			if(entry.getKey().getElement().equals(element)) {
 				return entry.getKey();
 			}

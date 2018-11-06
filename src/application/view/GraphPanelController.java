@@ -47,51 +47,10 @@ public class GraphPanelController {
 	
 	@FXML
 	private void initialize() {
+		
 		choiceBox.getItems().addAll("Integer","Double","String");
 		choiceBox.getSelectionModel().selectFirst();
-//		this.undirectedNonWeighted= new UndirectedNonWeightedGraph<Integer>();
-//		this.undirectedWeighted = new UndirectedWeightedGraph();
-//		this.directedNonWeighted = new DirectedNonWeightedGraph();
-//		this.directedWeighted = new DirectedWeightedGraph();
-//		
-//		main.getUndirectedNonWeightedGraphData().add(undirectedNonWeighted);
-//		main.getUndirectedWeightedGraphData().add(undirectedWeighted);
-//		main.getDirectedNonWeightedGraphData().add(directedNonWeighted);
-//		main.getDirectedWeightedGraphData().add(directedWeighted);
-		
-//		this.undirectedNonWeightedInt = new UndirectedNonWeightedGraph<Integer>();
-//		this.undirectedNonWeightedDouble = new UndirectedNonWeightedGraph<Double>();
-//		this.undirectedNonWeightedString = new UndirectedNonWeightedGraph<String>();
-//		
-//		this.undirectedWeightedInt = new UndirectedWeightedGraph<Integer>();
-//		this.undirectedWeightedDouble = new UndirectedWeightedGraph<Double>();
-//		this.undirectedWeightedString = new UndirectedWeightedGraph<String>();
-//		
-//		this.directedNonWeightedInt = new DirectedNonWeightedGraph<Integer>();
-//		this.directedNonWeightedDouble = new DirectedNonWeightedGraph<Double>();
-//		this.directedNonWeightedString = new DirectedNonWeightedGraph<String>();
-//		
-//		this.directedWeightedInt = new DirectedWeightedGraph<Integer>();
-//		this.directedWeightedDouble = new DirectedWeightedGraph<Double>();
-//		this.directedWeightedString = new DirectedWeightedGraph<String>();
-//		
-//		main.getUndirectedNonWeightedGraphData().add(undirectedNonWeightedInt);
-//		main.getUndirectedNonWeightedGraphData().add(undirectedNonWeightedDouble);
-//		main.getUndirectedNonWeightedGraphData().add(undirectedNonWeightedString);
-//		
-//		main.getUndirectedWeightedGraphData().add(undirectedWeightedInt);
-//		main.getUndirectedWeightedGraphData().add(undirectedWeightedDouble);
-//		main.getUndirectedWeightedGraphData().add(undirectedWeightedString);
-//		
-//		main.getDirectedNonWeightedGraphData().add(directedNonWeightedInt);
-//		main.getDirectedNonWeightedGraphData().add(directedNonWeightedDouble);
-//		main.getDirectedNonWeightedGraphData().add(directedNonWeightedString);
-//		
-//		main.getDirectedWeightedGraphData().add(directedWeightedInt);
-//		main.getDirectedWeightedGraphData().add(directedWeightedDouble);
-//		main.getDirectedWeightedGraphData().add(directedWeightedString);
-		
-		
+
 	}
 	
 	public void setMain(Main main) {
@@ -106,13 +65,21 @@ public class GraphPanelController {
 		boolean okClicked = main.showAddVertexDataUndirectedNonWeightedGraph(this);
 		
 		if(okClicked) {
+			
 			String vertexText = "";
+			
 			if(getSelectedDataChoice().equals("Integer")) {
+				
 				vertexText = main.getListOfIntVertices().get(main.getListOfIntVertices().size() - 1).toString();
+				
 			}else if(getSelectedDataChoice().equals("Double")){
+				
 				vertexText = main.getListOfDoubleVertices().get(main.getListOfDoubleVertices().size() - 1).toString();
+				
 			}else {
+				
 				vertexText = main.getListOfStringVertices().get(main.getListOfStringVertices().size() - 1).toString();
+				
 			}
 			
 			
@@ -126,8 +93,6 @@ public class GraphPanelController {
    			stack.setLayoutX(x);
    			stack.setLayoutY(y);
    			centerPane.getChildren().add(stack);
-   			
-   			System.out.println(main.getUndirectedNonWeightedInt());
    			
    			}
 	}
