@@ -1,7 +1,7 @@
 package application.view;
 
 import application.Main;
-import application.model.Vertex;
+import application.model.UndirectedNonWeightedGraph;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -14,7 +14,6 @@ public class AddVertexDataController {
     private TextField inputDataField;
 	
 	private Stage dialogStage;
-    private Vertex vertex;
     private boolean okClicked = false;
     private GraphPanelController graphPanelController;
     private Main main;
@@ -54,17 +53,57 @@ public class AddVertexDataController {
             // create new vertex set data of vertex and return it.
         	if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(inputDataField.getText())) {
         		
-        		main.getUndirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+        		addVertexToUndirectedNonWeightedGraph("Integer");
         		
-        		main.getVertexDataInt().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(inputDataField.getText())) {
         		
-        		main.getListOfIntVertices().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+        		addVertexToUndirectedNonWeightedGraph("Double");
         		
-        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph")) {
+        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(inputDataField.getText())) {
         		
-        	}else if(graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+        		addVertexToUndirectedNonWeightedGraph("String");
         		
-        	}else {
+        	}
+        	
+        	else if(graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(inputDataField.getText())) {
+        		
+        		addVertexToUndirectedWeightedGraph("Integer");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(inputDataField.getText())) {
+        		
+        		addVertexToUndirectedWeightedGraph("Double");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") && isString(inputDataField.getText())) {
+        		
+        		addVertexToUndirectedWeightedGraph("String");
+        		
+        	}
+        	
+        	else if(graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(inputDataField.getText())) {
+        		
+        		addVertexToDirectedNonWeightedGraph("Integer");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(inputDataField.getText())) {
+        		
+        		addVertexToDirectedNonWeightedGraph("Double");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(inputDataField.getText())) {
+        		
+        		addVertexToDirectedNonWeightedGraph("String");
+        		
+        	}
+        	
+        	else if(graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && isInteger(inputDataField.getText())) {
+        		
+        		addVertexToDirectedWeightedGraph("Integer");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && isDouble(inputDataField.getText())) {
+        		
+        		addVertexToDirectedWeightedGraph("Double");
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && isString(inputDataField.getText())) {
+        		
+        		addVertexToDirectedWeightedGraph("String");
         		
         	}
         	
@@ -168,6 +207,218 @@ public class AddVertexDataController {
     public void setMain(Main main) {
     	this.main = main;
     }
+    
+    private void addVertexToUndirectedNonWeightedGraph(String type) {
+    	
+    	if(type.equals("Integer") && main.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+            alert.showAndWait();
+    	}else if(type.equals("Double") && main.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
+    		System.out.println("ggggg");
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+            alert.showAndWait();
+    	}else if(type.equals("String") && main.getUndirectedNonWeightedString().containsVertex(inputDataField.getText())) {
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+            alert.showAndWait();
+    	}
+    	
+    	if(type.equals("Integer")) {
+    		
+    		main.getUndirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+    		
+    		main.getVertexDataInt().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		
+    		main.getListOfIntVertices().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		
+    	}else if(type.equals("Double")) {
+    		main.getUndirectedNonWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
+    		
+    		main.getVertexDataDouble().add(main.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		
+    		main.getListOfDoubleVertices().add(main.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		
+    	}else if(type.equals("String")) {
+    		
+    		main.getUndirectedNonWeightedString().addVertex(inputDataField.getText());
+    		
+    		main.getVertexDataString().add(main.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
+    		
+    		main.getListOfStringVertices().add(main.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
+    		
+    	}
+    }
+    
+	private void addVertexToUndirectedWeightedGraph(String type) {
+    	
+    	if(type.equals("Integer") && main.getUndirectedWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+            alert.showAndWait();
+    	}else if(type.equals("Double") && main.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
+    		System.out.println("ggggg");
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+            alert.showAndWait();
+    	}else if(type.equals("String") && main.getUndirectedWeightedString().containsVertex(inputDataField.getText())) {
+    		Alert alert = new Alert(AlertType.ERROR);
+            alert.initOwner(dialogStage);
+            alert.setTitle("Duplicate Vertex");
+            alert.setHeaderText("Cannot add duplicate vertices");
+            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+            alert.showAndWait();
+    	}
+    	
+    	
+    	if(type.equals("Integer")) {
+    		
+    		main.getUndirectedWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+    		
+    		main.getVertexDataInt().add(main.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		
+    		main.getListOfIntVertices().add(main.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		
+    	}else if(type.equals("Double")) {
+    		
+    		main.getUndirectedWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
+    		
+    		main.getVertexDataDouble().add(main.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		
+    		main.getListOfDoubleVertices().add(main.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		
+    	}else if(type.equals("String")) {
+    		
+    		main.getUndirectedWeightedString().addVertex(inputDataField.getText());
+    		
+    		main.getVertexDataString().add(main.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
+    		
+    		main.getListOfStringVertices().add(main.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
+    		
+    	}
+    }
+	
+	 private void addVertexToDirectedNonWeightedGraph(String type) {
+	    	
+	    	if(type.equals("Integer") && main.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+	            alert.showAndWait();
+	    	}else if(type.equals("Double") && main.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
+	    		System.out.println("ggggg");
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+	            alert.showAndWait();
+	    	}else if(type.equals("String") && main.getDirectedNonWeightedString().containsVertex(inputDataField.getText())) {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+	            alert.showAndWait();
+	    	}
+	    	
+	    	if(type.equals("Integer")) {
+	    		
+	    		main.getDirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+	    		
+	    		main.getVertexDataInt().add(main.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		
+	    		main.getListOfIntVertices().add(main.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		
+	    	}else if(type.equals("Double")) {
+	    		main.getDirectedNonWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
+	    		
+	    		main.getVertexDataDouble().add(main.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		
+	    		main.getListOfDoubleVertices().add(main.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		
+	    	}else if(type.equals("String")) {
+	    		
+	    		main.getDirectedNonWeightedString().addVertex(inputDataField.getText());
+	    		
+	    		main.getVertexDataString().add(main.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
+	    		
+	    		main.getListOfStringVertices().add(main.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
+	    		
+	    	}
+	    }
+	 
+	 private void addVertexToDirectedWeightedGraph(String type) {
+	    	
+	    	if(type.equals("Integer") && main.getDirectedWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+	            alert.showAndWait();
+	    	}else if(type.equals("Double") && main.getDirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
+	    		System.out.println("ggggg");
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+	            alert.showAndWait();
+	    	}else if(type.equals("String") && main.getDirectedWeightedString().containsVertex(inputDataField.getText())) {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	            alert.initOwner(dialogStage);
+	            alert.setTitle("Duplicate Vertex");
+	            alert.setHeaderText("Cannot add duplicate vertices");
+	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+	            alert.showAndWait();
+	    	}
+	    	
+	    	
+	    	if(type.equals("Integer")) {
+	    		
+	    		main.getDirectedWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+	    		
+	    		main.getVertexDataInt().add(main.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		
+	    		main.getListOfIntVertices().add(main.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		
+	    	}else if(type.equals("Double")) {
+	    		
+	    		main.getDirectedWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
+	    		
+	    		main.getVertexDataDouble().add(main.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		
+	    		main.getListOfDoubleVertices().add(main.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		
+	    	}else if(type.equals("String")) {
+	    		
+	    		main.getDirectedWeightedString().addVertex(inputDataField.getText());
+	    		
+	    		main.getVertexDataString().add(main.getDirectedWeightedString().returnVertex(inputDataField.getText()));
+	    		
+	    		main.getListOfStringVertices().add(main.getDirectedWeightedString().returnVertex(inputDataField.getText()));
+	    		
+	    	}
+	    }
     
 	
 }

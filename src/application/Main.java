@@ -20,13 +20,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class Main<T> extends Application {
+public class Main extends Application {
 	
 	private Stage primaryStage;
 	
+	@SuppressWarnings("rawtypes")
 	private ObservableList<UndirectedNonWeightedGraph> undirectedNonWeightedGraphData = FXCollections.observableArrayList();
+	
+	@SuppressWarnings("rawtypes")
 	private ObservableList<UndirectedWeightedGraph> undirectedWeightedGraphData = FXCollections.observableArrayList();
+	
+	@SuppressWarnings("rawtypes")
 	private ObservableList<DirectedNonWeightedGraph> directedNonWeightedGraphData = FXCollections.observableArrayList();
+	
+	@SuppressWarnings("rawtypes")
 	private ObservableList<DirectedWeightedGraph> directedWeightedGraphData = FXCollections.observableArrayList();
 	private ObservableList<Vertex<Integer>> vertexDataInt = FXCollections.observableArrayList();
 	private ObservableList<Vertex<Double>> vertexDataDouble = FXCollections.observableArrayList();
@@ -144,18 +151,22 @@ public class Main<T> extends Application {
         }
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ObservableList<UndirectedNonWeightedGraph> getUndirectedNonWeightedGraphData(){
 		return undirectedNonWeightedGraphData;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ObservableList<UndirectedWeightedGraph> getUndirectedWeightedGraphData(){
 		return undirectedWeightedGraphData;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ObservableList<DirectedNonWeightedGraph> getDirectedNonWeightedGraphData(){
 		return directedNonWeightedGraphData;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public ObservableList<DirectedWeightedGraph> getDirectedWeightedGraphData(){
 		return directedWeightedGraphData;
 	}
@@ -259,6 +270,7 @@ public class Main<T> extends Application {
 	/**
 	 * @param undirectedNonWeightedGraphData the undirectedNonWeightedGraphData to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setUndirectedNonWeightedGraphData(
 			ObservableList<UndirectedNonWeightedGraph> undirectedNonWeightedGraphData) {
 		this.undirectedNonWeightedGraphData = undirectedNonWeightedGraphData;
@@ -267,6 +279,7 @@ public class Main<T> extends Application {
 	/**
 	 * @param undirectedWeightedGraphData the undirectedWeightedGraphData to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setUndirectedWeightedGraphData(ObservableList<UndirectedWeightedGraph> undirectedWeightedGraphData) {
 		this.undirectedWeightedGraphData = undirectedWeightedGraphData;
 	}
@@ -274,6 +287,7 @@ public class Main<T> extends Application {
 	/**
 	 * @param directedNonWeightedGraphData the directedNonWeightedGraphData to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setDirectedNonWeightedGraphData(ObservableList<DirectedNonWeightedGraph> directedNonWeightedGraphData) {
 		this.directedNonWeightedGraphData = directedNonWeightedGraphData;
 	}
@@ -281,6 +295,7 @@ public class Main<T> extends Application {
 	/**
 	 * @param directedWeightedGraphData the directedWeightedGraphData to set
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setDirectedWeightedGraphData(ObservableList<DirectedWeightedGraph> directedWeightedGraphData) {
 		this.directedWeightedGraphData = directedWeightedGraphData;
 	}
@@ -479,6 +494,11 @@ public class Main<T> extends Application {
 //		
 //		System.out.println(v1.equals(v2));
 //		System.out.println(v3.equals(v4));
+		
+		UndirectedNonWeightedGraph<Double> unw = new UndirectedNonWeightedGraph<Double>();
+		
+		unw.addVertex(5.5);
+		System.out.println(unw.returnVertex(5.5));
 		
 		
 	}

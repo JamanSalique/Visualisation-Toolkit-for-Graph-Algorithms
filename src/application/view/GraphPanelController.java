@@ -106,8 +106,15 @@ public class GraphPanelController {
 		boolean okClicked = main.showAddVertexDataUndirectedNonWeightedGraph(this);
 		
 		if(okClicked) {
-	
-			String vertexText = main.getListOfIntVertices().get(main.getListOfIntVertices().size() - 1).toString();
+			String vertexText = "";
+			if(getSelectedDataChoice().equals("Integer")) {
+				vertexText = main.getListOfIntVertices().get(main.getListOfIntVertices().size() - 1).toString();
+			}else if(getSelectedDataChoice().equals("Double")){
+				vertexText = main.getListOfDoubleVertices().get(main.getListOfDoubleVertices().size() - 1).toString();
+			}else {
+				vertexText = main.getListOfStringVertices().get(main.getListOfStringVertices().size() - 1).toString();
+			}
+			
 			
        		double x = event.getX();
         	double y = event.getY();
