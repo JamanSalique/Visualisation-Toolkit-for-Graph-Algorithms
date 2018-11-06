@@ -19,7 +19,7 @@ public abstract class AbstractWeightedGraph<T> {
 	
 	public boolean containsVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
-			if(entry.getKey().getElement() == element) {
+			if(entry.getKey().getElement().equals(element)) {
 				return true;
 			}
 		}
@@ -28,7 +28,7 @@ public abstract class AbstractWeightedGraph<T> {
 	
 	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
-			if(entry.getKey().getElement() == element) {
+			if(entry.getKey().getElement().equals(element)) {
 				return entry.getKey();
 			}
 		}

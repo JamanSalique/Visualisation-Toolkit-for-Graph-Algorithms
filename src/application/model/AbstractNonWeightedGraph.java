@@ -18,7 +18,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	
 	public boolean containsVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
-			if(entry.getKey().getElement() == element) {
+			if(entry.getKey().getElement().equals(element)) {
 				return true;
 			}
 		}
@@ -27,7 +27,9 @@ public abstract class AbstractNonWeightedGraph<T> {
 	
 	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
-			if(entry.getKey().getElement() == element) {
+			System.out.println(entry.getKey().getElement());
+			System.out.println(element);
+			if(entry.getKey().getElement().equals(element)) {
 				return entry.getKey();
 			}
 		}
