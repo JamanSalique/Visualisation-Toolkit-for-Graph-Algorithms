@@ -16,9 +16,10 @@ public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 	@Override
 	public void addVertex(T v) {
 		if (super.containsVertex(v)) {
-            throw new IllegalArgumentException("Vertex already exists.");
+			throw new IllegalArgumentException("Vertex already exists.");
         }
-        super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Vertex<T>>());
+		
+		super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Vertex<T>>());
 	}
 
 	/**

@@ -18,10 +18,10 @@ public class DirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 	@Override
 	public void addVertex(T v) {
 		if (containsVertex(v)) {
-            throw new IllegalArgumentException("Vertex already exists.");
+			throw new IllegalArgumentException("Vertex already exists.");
         }
-        super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Integer>>());
 		
+		super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Integer>>());
 	}
 
 	/**
