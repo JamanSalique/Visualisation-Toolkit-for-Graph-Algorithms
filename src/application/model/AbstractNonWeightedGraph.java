@@ -16,7 +16,7 @@ public abstract class AbstractNonWeightedGraph<T> {
         this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Vertex<T>>>>(new HashMap<Vertex<T>,Set<Vertex<T>>>());
     }
 	
-	protected boolean containsVertex(T element) {
+	public boolean containsVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return true;
@@ -25,7 +25,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 		return false;
 	}
 	
-	protected Vertex<T> returnVertex(T element) {
+	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return entry.getKey();
@@ -109,7 +109,7 @@ public abstract class AbstractNonWeightedGraph<T> {
     		String toReturn = "";
     		for(Vertex<T> vertex : adjacencyList.get().keySet()) {
     			toReturn = toReturn + vertex.toString() + " -> [" + 
-    					String.join(" ->",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
+    					String.join(" -> ",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
     			toReturn = toReturn + "\n";
     			

@@ -17,7 +17,7 @@ public abstract class AbstractWeightedGraph<T> {
 				new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>());
 	}
 	
-	protected boolean containsVertex(T element) {
+	public boolean containsVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return true;
@@ -26,7 +26,7 @@ public abstract class AbstractWeightedGraph<T> {
 		return false;
 	}
 	
-	protected Vertex<T> returnVertex(T element) {
+	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement() == element) {
 				return entry.getKey();
@@ -123,7 +123,7 @@ public abstract class AbstractWeightedGraph<T> {
     		String toReturn = "";
     		for(Vertex<T> vertex : adjacencyList.get().keySet()) {
     			toReturn = toReturn + vertex.toString() + " -> [" + 
-    					String.join(" ->",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
+    					String.join(" -> ",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
     			
 //    			toReturn = toReturn +

@@ -72,7 +72,7 @@ public class Vertex<T>{
 	
 	@Override
 	public String toString() {
-		return "[" + element.get() + "]";
+		return element.get().toString();
 	}
 	
 }

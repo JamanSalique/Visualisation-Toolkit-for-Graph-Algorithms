@@ -1,7 +1,6 @@
 package application.view;
 
-import java.util.Scanner;
-
+import application.Main;
 import application.model.Vertex;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -18,6 +17,8 @@ public class AddVertexDataController {
     private Vertex vertex;
     private boolean okClicked = false;
     private GraphPanelController graphPanelController;
+    private Main main;
+    
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
@@ -51,6 +52,21 @@ public class AddVertexDataController {
     private void handleOk() {
         if (isInputValid()) {
             // create new vertex set data of vertex and return it.
+        	if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(inputDataField.getText())) {
+        		
+        		main.getUndirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
+        		
+        		main.getVertexDataInt().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+        		
+        		main.getListOfIntVertices().add(main.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph")) {
+        		
+        	}else if(graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+        		
+        	}else {
+        		
+        	}
         	
             okClicked = true;
             dialogStage.close();
@@ -147,6 +163,10 @@ public class AddVertexDataController {
     
     public void setGraphPanelController(GraphPanelController gpc) {
     	this.graphPanelController = gpc;
+    }
+    
+    public void setMain(Main main) {
+    	this.main = main;
     }
     
 	
