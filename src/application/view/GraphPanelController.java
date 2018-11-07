@@ -86,7 +86,8 @@ public class GraphPanelController {
        		double x = event.getX();
         	double y = event.getY();
    			Circle vertex = new Circle(x, y, 20, Color.RED);
-   				
+   			vertex.setStroke(Color.BLACK);
+   			vertex.setFill(Color.WHITE);
    			final Text text = new Text (vertexText);
    			final StackPane stack = new StackPane();
    			stack.getChildren().addAll(vertex, text);
