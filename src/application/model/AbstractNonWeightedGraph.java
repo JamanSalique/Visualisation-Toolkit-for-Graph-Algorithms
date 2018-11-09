@@ -35,6 +35,10 @@ public abstract class AbstractNonWeightedGraph<T> {
 		return null;
 	}
 	
+	public void clearGraph() {
+		adjacencyList.get().clear();
+	}
+	
 	 /**
      * Add new vertex to the graph.
      * 
