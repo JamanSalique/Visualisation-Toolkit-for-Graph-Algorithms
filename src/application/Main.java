@@ -63,7 +63,7 @@ public class Main extends Application {
 	        }
 	}
 	
-	public boolean showAddVertexDataUndirectedNonWeightedGraph(GraphPanelController gpc) {
+	public boolean showAddVertexPopUp(GraphPanelController gpc) {
 		try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
