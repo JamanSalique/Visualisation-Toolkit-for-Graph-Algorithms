@@ -233,24 +233,24 @@ public class AddVertexDataController {
     		
     		dataModel.getUndirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
     		
-    		dataModel.getVertexDataInt().add(dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		dataModel.getVertexDataUndirectedNonWeightedInt().add(dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
     		
-    		dataModel.getListOfIntVertices().add(dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		dataModel.getListOfUndirectedNonWeightedIntVertices().add(dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
     		
     	}else if(type.equals("Double")) {
     		dataModel.getUndirectedNonWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
     		
-    		dataModel.getVertexDataDouble().add(dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		dataModel.getVertexDataUndirectedNonWeightedDouble().add(dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
     		
-    		dataModel.getListOfDoubleVertices().add(dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		dataModel.getListOfUndirectedNonWeightedDoubleVertices().add(dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
     		
     	}else if(type.equals("String")) {
     		
     		dataModel.getUndirectedNonWeightedString().addVertex(inputDataField.getText());
     		
-    		dataModel.getVertexDataString().add(dataModel.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
+    		dataModel.getVertexDataUndirectedNonWeightedString().add(dataModel.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
     		
-    		dataModel.getListOfStringVertices().add(dataModel.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
+    		dataModel.getListOfUndirectedNonWeightedStringVertices().add(dataModel.getUndirectedNonWeightedString().returnVertex(inputDataField.getText()));
     		
     	}
     }
@@ -285,25 +285,25 @@ public class AddVertexDataController {
     		
     		dataModel.getUndirectedWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
     		
-    		dataModel.getVertexDataInt().add(dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		dataModel.getVertexDataUndirectedWeightedInt().add(dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
     		
-    		dataModel.getListOfIntVertices().add(dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+    		dataModel.getListOfUndirectedWeightedIntVertices().add(dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
     		
     	}else if(type.equals("Double")) {
     		
     		dataModel.getUndirectedWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
     		
-    		dataModel.getVertexDataDouble().add(dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		dataModel.getVertexDataUndirectedWeightedDouble().add(dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
     		
-    		dataModel.getListOfDoubleVertices().add(dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+    		dataModel.getListOfUndirectedWeightedDoubleVertices().add(dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
     		
     	}else if(type.equals("String")) {
     		
     		dataModel.getUndirectedWeightedString().addVertex(inputDataField.getText());
     		
-    		dataModel.getVertexDataString().add(dataModel.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
+    		dataModel.getVertexDataUndirectedWeightedString().add(dataModel.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
     		
-    		dataModel.getListOfStringVertices().add(dataModel.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
+    		dataModel.getListOfUndirectedWeightedStringVertices().add(dataModel.getUndirectedWeightedString().returnVertex(inputDataField.getText()));
     		
     	}
     }
@@ -337,24 +337,24 @@ public class AddVertexDataController {
 	    		
 	    		dataModel.getDirectedNonWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
 	    		
-	    		dataModel.getVertexDataInt().add(dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		dataModel.getVertexDataDirectedNonWeightedInt().add(dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
 	    		
-	    		dataModel.getListOfIntVertices().add(dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		dataModel.getListOfDirectedNonWeightedIntVertices().add(dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
 	    		
 	    	}else if(type.equals("Double")) {
 	    		dataModel.getDirectedNonWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
 	    		
-	    		dataModel.getVertexDataDouble().add(dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		dataModel.getVertexDataDirectedNonWeightedDouble().add(dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
 	    		
-	    		dataModel.getListOfDoubleVertices().add(dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		dataModel.getListOfDirectedNonWeightedDoubleVertices().add(dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
 	    		
 	    	}else if(type.equals("String")) {
 	    		
 	    		dataModel.getDirectedNonWeightedString().addVertex(inputDataField.getText());
 	    		
-	    		dataModel.getVertexDataString().add(dataModel.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
+	    		dataModel.getVertexDataDirectedNonWeightedString().add(dataModel.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
 	    		
-	    		dataModel.getListOfStringVertices().add(dataModel.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
+	    		dataModel.getListOfDirectedNonWeightedStringVertices().add(dataModel.getDirectedNonWeightedString().returnVertex(inputDataField.getText()));
 	    		
 	    	}
 	    }
@@ -389,25 +389,25 @@ public class AddVertexDataController {
 	    		
 	    		dataModel.getDirectedWeightedInt().addVertex(Integer.parseInt(inputDataField.getText()));
 	    		
-	    		dataModel.getVertexDataInt().add(dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		dataModel.getVertexDataDirectedWeightedInt().add(dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
 	    		
-	    		dataModel.getListOfIntVertices().add(dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
+	    		dataModel.getListOfDirectedWeightedIntVertices().add(dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(inputDataField.getText())));
 	    		
 	    	}else if(type.equals("Double")) {
 	    		
 	    		dataModel.getDirectedWeightedDouble().addVertex(Double.parseDouble(inputDataField.getText()));
 	    		
-	    		dataModel.getVertexDataDouble().add(dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		dataModel.getVertexDataDirectedWeightedDouble().add(dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
 	    		
-	    		dataModel.getListOfDoubleVertices().add(dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
+	    		dataModel.getListOfDirectedWeightedDoubleVertices().add(dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(inputDataField.getText())));
 	    		
 	    	}else if(type.equals("String")) {
 	    		
 	    		dataModel.getDirectedWeightedString().addVertex(inputDataField.getText());
 	    		
-	    		dataModel.getVertexDataString().add(dataModel.getDirectedWeightedString().returnVertex(inputDataField.getText()));
+	    		dataModel.getVertexDataDirectedWeightedString().add(dataModel.getDirectedWeightedString().returnVertex(inputDataField.getText()));
 	    		
-	    		dataModel.getListOfStringVertices().add(dataModel.getDirectedWeightedString().returnVertex(inputDataField.getText()));
+	    		dataModel.getListOfDirectedWeightedStringVertices().add(dataModel.getDirectedWeightedString().returnVertex(inputDataField.getText()));
 	    		
 	    	}
 	    }

@@ -18,9 +18,22 @@ public class DataModel {
 	
 	@SuppressWarnings("rawtypes")
 	private ObservableList<DirectedWeightedGraph> directedWeightedGraphData = FXCollections.observableArrayList();
-	private ObservableList<Vertex<Integer>> vertexDataInt = FXCollections.observableArrayList();
-	private ObservableList<Vertex<Double>> vertexDataDouble = FXCollections.observableArrayList();
-	private ObservableList<Vertex<String>> vertexDataString = FXCollections.observableArrayList();
+	
+	private ObservableList<Vertex<Integer>> vertexDataUndirectedNonWeightedInt = FXCollections.observableArrayList();
+	private ObservableList<Vertex<Double>> vertexDataUndirectedNonWeightedDouble = FXCollections.observableArrayList();
+	private ObservableList<Vertex<String>> vertexDataUndirectedNonWeightedString = FXCollections.observableArrayList();
+	
+	private ObservableList<Vertex<Integer>> vertexDataUndirectedWeightedInt = FXCollections.observableArrayList();
+	private ObservableList<Vertex<Double>> vertexDataUndirectedWeightedDouble = FXCollections.observableArrayList();
+	private ObservableList<Vertex<String>> vertexDataUndirectedWeightedString = FXCollections.observableArrayList();
+	
+	private ObservableList<Vertex<Integer>> vertexDataDirectedNonWeightedInt = FXCollections.observableArrayList();
+	private ObservableList<Vertex<Double>> vertexDataDirectedNonWeightedDouble = FXCollections.observableArrayList();
+	private ObservableList<Vertex<String>> vertexDataDirectedNonWeightedString = FXCollections.observableArrayList();
+	
+	private ObservableList<Vertex<Integer>> vertexDataDirectedWeightedInt = FXCollections.observableArrayList();
+	private ObservableList<Vertex<Double>> vertexDataDirectedWeightedDouble = FXCollections.observableArrayList();
+	private ObservableList<Vertex<String>> vertexDataDirectedWeightedString = FXCollections.observableArrayList();
 	
 	private UndirectedNonWeightedGraph<Integer> undirectedNonWeightedInt;
 	private UndirectedNonWeightedGraph<Double> undirectedNonWeightedDouble;
@@ -38,9 +51,21 @@ public class DataModel {
 	private DirectedWeightedGraph<Double> directedWeightedDouble;
 	private DirectedWeightedGraph<String> directedWeightedString;
 	
-	private ArrayList<Vertex<Integer>> listOfIntVertices; 
-	private ArrayList<Vertex<Double>> listOfDoubleVertices; 
-	private ArrayList<Vertex<String>> listOfStringVertices; 
+	private ArrayList<Vertex<Integer>> listOfUndirectedNonWeightedIntVertices; 
+	private ArrayList<Vertex<Double>> listOfUndirectedNonWeightedDoubleVertices; 
+	private ArrayList<Vertex<String>> listOfUndirectedNonWeightedStringVertices; 
+	
+	private ArrayList<Vertex<Integer>> listOfUndirectedWeightedIntVertices; 
+	private ArrayList<Vertex<Double>> listOfUndirectedWeightedDoubleVertices; 
+	private ArrayList<Vertex<String>> listOfUndirectedWeightedStringVertices; 
+	
+	private ArrayList<Vertex<Integer>> listOfDirectedNonWeightedIntVertices; 
+	private ArrayList<Vertex<Double>> listOfDirectedNonWeightedDoubleVertices; 
+	private ArrayList<Vertex<String>> listOfDirectedNonWeightedStringVertices; 
+	
+	private ArrayList<Vertex<Integer>> listOfDirectedWeightedIntVertices; 
+	private ArrayList<Vertex<Double>> listOfDirectedWeightedDoubleVertices; 
+	private ArrayList<Vertex<String>> listOfDirectedWeightedStringVertices; 
 	
 	public DataModel() {
 		
@@ -68,9 +93,21 @@ public class DataModel {
 		
 		directedWeightedGraphData.addAll(directedWeightedInt,directedWeightedDouble,directedWeightedString);
 		
-		listOfIntVertices = new ArrayList<Vertex<Integer>>();
-		listOfDoubleVertices = new ArrayList<Vertex<Double>>();
-		listOfStringVertices = new ArrayList<Vertex<String>>();
+		listOfUndirectedNonWeightedIntVertices = new ArrayList<Vertex<Integer>>();
+		listOfUndirectedNonWeightedDoubleVertices = new ArrayList<Vertex<Double>>();
+		listOfUndirectedNonWeightedStringVertices = new ArrayList<Vertex<String>>();
+		
+		listOfUndirectedWeightedIntVertices = new ArrayList<Vertex<Integer>>();
+		listOfUndirectedWeightedDoubleVertices = new ArrayList<Vertex<Double>>();
+		listOfUndirectedWeightedStringVertices = new ArrayList<Vertex<String>>();
+		
+		listOfDirectedNonWeightedIntVertices = new ArrayList<Vertex<Integer>>();
+		listOfDirectedNonWeightedDoubleVertices = new ArrayList<Vertex<Double>>();
+		listOfDirectedNonWeightedStringVertices = new ArrayList<Vertex<String>>();
+		
+		listOfDirectedWeightedIntVertices = new ArrayList<Vertex<Integer>>();
+		listOfDirectedWeightedDoubleVertices = new ArrayList<Vertex<Double>>();
+		listOfDirectedWeightedStringVertices = new ArrayList<Vertex<String>>();
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -93,17 +130,6 @@ public class DataModel {
 		return directedWeightedGraphData;
 	}
 	
-	public ObservableList<Vertex<Integer>> getVertexDataInt(){
-		return vertexDataInt;
-	}
-	
-	public ObservableList<Vertex<Double>> getVertexDataDouble(){
-		return vertexDataDouble;
-	}
-	
-	public ObservableList<Vertex<String>> getVertexDataString(){
-		return vertexDataString;
-	}
 	
 	/**
 	 * @return the undirectedNonWeightedInt
@@ -307,45 +333,349 @@ public class DataModel {
 	}
 
 	/**
-	 * @return the listOfIntVertices
+	 * @return the vertexDataUndirectedNonWeightedInt
 	 */
-	public ArrayList<Vertex<Integer>> getListOfIntVertices() {
-		return listOfIntVertices;
+	public ObservableList<Vertex<Integer>> getVertexDataUndirectedNonWeightedInt() {
+		return vertexDataUndirectedNonWeightedInt;
 	}
 
 	/**
-	 * @return the listOfDoubleVertices
+	 * @return the vertexDataUndirectedNonWeightedDouble
 	 */
-	public ArrayList<Vertex<Double>> getListOfDoubleVertices() {
-		return listOfDoubleVertices;
+	public ObservableList<Vertex<Double>> getVertexDataUndirectedNonWeightedDouble() {
+		return vertexDataUndirectedNonWeightedDouble;
 	}
 
 	/**
-	 * @return the listOfStringVertices
+	 * @return the vertexDataUndirectedNonWeightedString
 	 */
-	public ArrayList<Vertex<String>> getListOfStringVertices() {
-		return listOfStringVertices;
+	public ObservableList<Vertex<String>> getVertexDataUndirectedNonWeightedString() {
+		return vertexDataUndirectedNonWeightedString;
 	}
 
 	/**
-	 * @param listOfIntVertices the listOfIntVertices to set
+	 * @return the vertexDataUndirectedWeightedInt
 	 */
-	public void setListOfIntVertices(ArrayList<Vertex<Integer>> listOfIntVertices) {
-		this.listOfIntVertices = listOfIntVertices;
+	public ObservableList<Vertex<Integer>> getVertexDataUndirectedWeightedInt() {
+		return vertexDataUndirectedWeightedInt;
 	}
 
 	/**
-	 * @param listOfDoubleVertices the listOfDoubleVertices to set
+	 * @return the vertexDataUndirectedWeightedDouble
 	 */
-	public void setListOfDoubleVertices(ArrayList<Vertex<Double>> listOfDoubleVertices) {
-		this.listOfDoubleVertices = listOfDoubleVertices;
+	public ObservableList<Vertex<Double>> getVertexDataUndirectedWeightedDouble() {
+		return vertexDataUndirectedWeightedDouble;
 	}
 
 	/**
-	 * @param listOfStringVertices the listOfStringVertices to set
+	 * @return the vertexDataUndirectedWeightedString
 	 */
-	public void setListOfStringVertices(ArrayList<Vertex<String>> listOfStringVertices) {
-		this.listOfStringVertices = listOfStringVertices;
+	public ObservableList<Vertex<String>> getVertexDataUndirectedWeightedString() {
+		return vertexDataUndirectedWeightedString;
 	}
 
+	/**
+	 * @return the vertexDataDirectedNonWeightedInt
+	 */
+	public ObservableList<Vertex<Integer>> getVertexDataDirectedNonWeightedInt() {
+		return vertexDataDirectedNonWeightedInt;
+	}
+
+	/**
+	 * @return the vertexDataDirectedNonWeightedDouble
+	 */
+	public ObservableList<Vertex<Double>> getVertexDataDirectedNonWeightedDouble() {
+		return vertexDataDirectedNonWeightedDouble;
+	}
+
+	/**
+	 * @return the vertexDataDirectedNonWeightedString
+	 */
+	public ObservableList<Vertex<String>> getVertexDataDirectedNonWeightedString() {
+		return vertexDataDirectedNonWeightedString;
+	}
+
+	/**
+	 * @return the vertexDataDirectedWeightedInt
+	 */
+	public ObservableList<Vertex<Integer>> getVertexDataDirectedWeightedInt() {
+		return vertexDataDirectedWeightedInt;
+	}
+
+	/**
+	 * @return the vertexDataDirectedWeightedDouble
+	 */
+	public ObservableList<Vertex<Double>> getVertexDataDirectedWeightedDouble() {
+		return vertexDataDirectedWeightedDouble;
+	}
+
+	/**
+	 * @return the vertexDataDirectedWeightedString
+	 */
+	public ObservableList<Vertex<String>> getVertexDataDirectedWeightedString() {
+		return vertexDataDirectedWeightedString;
+	}
+
+	/**
+	 * @return the listOfUndirectedNonWeightedIntVertices
+	 */
+	public ArrayList<Vertex<Integer>> getListOfUndirectedNonWeightedIntVertices() {
+		return listOfUndirectedNonWeightedIntVertices;
+	}
+
+	/**
+	 * @return the listOfUndirectedNonWeightedDoubleVertices
+	 */
+	public ArrayList<Vertex<Double>> getListOfUndirectedNonWeightedDoubleVertices() {
+		return listOfUndirectedNonWeightedDoubleVertices;
+	}
+
+	/**
+	 * @return the listOfUndirectedNonWeightedStringVertices
+	 */
+	public ArrayList<Vertex<String>> getListOfUndirectedNonWeightedStringVertices() {
+		return listOfUndirectedNonWeightedStringVertices;
+	}
+
+	/**
+	 * @return the listOfUndirectedWeightedIntVertices
+	 */
+	public ArrayList<Vertex<Integer>> getListOfUndirectedWeightedIntVertices() {
+		return listOfUndirectedWeightedIntVertices;
+	}
+
+	/**
+	 * @return the listOfUndirectedWeightedDoubleVertices
+	 */
+	public ArrayList<Vertex<Double>> getListOfUndirectedWeightedDoubleVertices() {
+		return listOfUndirectedWeightedDoubleVertices;
+	}
+
+	/**
+	 * @return the listOfUndirectedWeightedStringVertices
+	 */
+	public ArrayList<Vertex<String>> getListOfUndirectedWeightedStringVertices() {
+		return listOfUndirectedWeightedStringVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedNonWeightedIntVertices
+	 */
+	public ArrayList<Vertex<Integer>> getListOfDirectedNonWeightedIntVertices() {
+		return listOfDirectedNonWeightedIntVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedNonWeightedDoubleVertices
+	 */
+	public ArrayList<Vertex<Double>> getListOfDirectedNonWeightedDoubleVertices() {
+		return listOfDirectedNonWeightedDoubleVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedNonWeightedStringVertices
+	 */
+	public ArrayList<Vertex<String>> getListOfDirectedNonWeightedStringVertices() {
+		return listOfDirectedNonWeightedStringVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedWeightedIntVertices
+	 */
+	public ArrayList<Vertex<Integer>> getListOfDirectedWeightedIntVertices() {
+		return listOfDirectedWeightedIntVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedWeightedDoubleVertices
+	 */
+	public ArrayList<Vertex<Double>> getListOfDirectedWeightedDoubleVertices() {
+		return listOfDirectedWeightedDoubleVertices;
+	}
+
+	/**
+	 * @return the listOfDirectedWeightedStringVertices
+	 */
+	public ArrayList<Vertex<String>> getListOfDirectedWeightedStringVertices() {
+		return listOfDirectedWeightedStringVertices;
+	}
+
+	/**
+	 * @param vertexDataUndirectedNonWeightedInt the vertexDataUndirectedNonWeightedInt to set
+	 */
+	public void setVertexDataUndirectedNonWeightedInt(ObservableList<Vertex<Integer>> vertexDataUndirectedNonWeightedInt) {
+		this.vertexDataUndirectedNonWeightedInt = vertexDataUndirectedNonWeightedInt;
+	}
+
+	/**
+	 * @param vertexDataUndirectedNonWeightedDouble the vertexDataUndirectedNonWeightedDouble to set
+	 */
+	public void setVertexDataUndirectedNonWeightedDouble(
+			ObservableList<Vertex<Double>> vertexDataUndirectedNonWeightedDouble) {
+		this.vertexDataUndirectedNonWeightedDouble = vertexDataUndirectedNonWeightedDouble;
+	}
+
+	/**
+	 * @param vertexDataUndirectedNonWeightedString the vertexDataUndirectedNonWeightedString to set
+	 */
+	public void setVertexDataUndirectedNonWeightedString(
+			ObservableList<Vertex<String>> vertexDataUndirectedNonWeightedString) {
+		this.vertexDataUndirectedNonWeightedString = vertexDataUndirectedNonWeightedString;
+	}
+
+	/**
+	 * @param vertexDataUndirectedWeightedInt the vertexDataUndirectedWeightedInt to set
+	 */
+	public void setVertexDataUndirectedWeightedInt(ObservableList<Vertex<Integer>> vertexDataUndirectedWeightedInt) {
+		this.vertexDataUndirectedWeightedInt = vertexDataUndirectedWeightedInt;
+	}
+
+	/**
+	 * @param vertexDataUndirectedWeightedDouble the vertexDataUndirectedWeightedDouble to set
+	 */
+	public void setVertexDataUndirectedWeightedDouble(ObservableList<Vertex<Double>> vertexDataUndirectedWeightedDouble) {
+		this.vertexDataUndirectedWeightedDouble = vertexDataUndirectedWeightedDouble;
+	}
+
+	/**
+	 * @param vertexDataUndirectedWeightedString the vertexDataUndirectedWeightedString to set
+	 */
+	public void setVertexDataUndirectedWeightedString(ObservableList<Vertex<String>> vertexDataUndirectedWeightedString) {
+		this.vertexDataUndirectedWeightedString = vertexDataUndirectedWeightedString;
+	}
+
+	/**
+	 * @param vertexDataDirectedNonWeightedInt the vertexDataDirectedNonWeightedInt to set
+	 */
+	public void setVertexDataDirectedNonWeightedInt(ObservableList<Vertex<Integer>> vertexDataDirectedNonWeightedInt) {
+		this.vertexDataDirectedNonWeightedInt = vertexDataDirectedNonWeightedInt;
+	}
+
+	/**
+	 * @param vertexDataDirectedNonWeightedDouble the vertexDataDirectedNonWeightedDouble to set
+	 */
+	public void setVertexDataDirectedNonWeightedDouble(ObservableList<Vertex<Double>> vertexDataDirectedNonWeightedDouble) {
+		this.vertexDataDirectedNonWeightedDouble = vertexDataDirectedNonWeightedDouble;
+	}
+
+	/**
+	 * @param vertexDataDirectedNonWeightedString the vertexDataDirectedNonWeightedString to set
+	 */
+	public void setVertexDataDirectedNonWeightedString(ObservableList<Vertex<String>> vertexDataDirectedNonWeightedString) {
+		this.vertexDataDirectedNonWeightedString = vertexDataDirectedNonWeightedString;
+	}
+
+	/**
+	 * @param vertexDataDirectedWeightedInt the vertexDataDirectedWeightedInt to set
+	 */
+	public void setVertexDataDirectedWeightedInt(ObservableList<Vertex<Integer>> vertexDataDirectedWeightedInt) {
+		this.vertexDataDirectedWeightedInt = vertexDataDirectedWeightedInt;
+	}
+
+	/**
+	 * @param vertexDataDirectedWeightedDouble the vertexDataDirectedWeightedDouble to set
+	 */
+	public void setVertexDataDirectedWeightedDouble(ObservableList<Vertex<Double>> vertexDataDirectedWeightedDouble) {
+		this.vertexDataDirectedWeightedDouble = vertexDataDirectedWeightedDouble;
+	}
+
+	/**
+	 * @param vertexDataDirectedWeightedString the vertexDataDirectedWeightedString to set
+	 */
+	public void setVertexDataDirectedWeightedString(ObservableList<Vertex<String>> vertexDataDirectedWeightedString) {
+		this.vertexDataDirectedWeightedString = vertexDataDirectedWeightedString;
+	}
+
+	/**
+	 * @param listOfUndirectedNonWeightedIntVertices the listOfUndirectedNonWeightedIntVertices to set
+	 */
+	public void setListOfUndirectedNonWeightedIntVertices(
+			ArrayList<Vertex<Integer>> listOfUndirectedNonWeightedIntVertices) {
+		this.listOfUndirectedNonWeightedIntVertices = listOfUndirectedNonWeightedIntVertices;
+	}
+
+	/**
+	 * @param listOfUndirectedNonWeightedDoubleVertices the listOfUndirectedNonWeightedDoubleVertices to set
+	 */
+	public void setListOfUndirectedNonWeightedDoubleVertices(
+			ArrayList<Vertex<Double>> listOfUndirectedNonWeightedDoubleVertices) {
+		this.listOfUndirectedNonWeightedDoubleVertices = listOfUndirectedNonWeightedDoubleVertices;
+	}
+
+	/**
+	 * @param listOfUndirectedNonWeightedStringVertices the listOfUndirectedNonWeightedStringVertices to set
+	 */
+	public void setListOfUndirectedNonWeightedStringVertices(
+			ArrayList<Vertex<String>> listOfUndirectedNonWeightedStringVertices) {
+		this.listOfUndirectedNonWeightedStringVertices = listOfUndirectedNonWeightedStringVertices;
+	}
+
+	/**
+	 * @param listOfUndirectedWeightedIntVertices the listOfUndirectedWeightedIntVertices to set
+	 */
+	public void setListOfUndirectedWeightedIntVertices(ArrayList<Vertex<Integer>> listOfUndirectedWeightedIntVertices) {
+		this.listOfUndirectedWeightedIntVertices = listOfUndirectedWeightedIntVertices;
+	}
+
+	/**
+	 * @param listOfUndirectedWeightedDoubleVertices the listOfUndirectedWeightedDoubleVertices to set
+	 */
+	public void setListOfUndirectedWeightedDoubleVertices(
+			ArrayList<Vertex<Double>> listOfUndirectedWeightedDoubleVertices) {
+		this.listOfUndirectedWeightedDoubleVertices = listOfUndirectedWeightedDoubleVertices;
+	}
+
+	/**
+	 * @param listOfUndirectedWeightedStringVertices the listOfUndirectedWeightedStringVertices to set
+	 */
+	public void setListOfUndirectedWeightedStringVertices(
+			ArrayList<Vertex<String>> listOfUndirectedWeightedStringVertices) {
+		this.listOfUndirectedWeightedStringVertices = listOfUndirectedWeightedStringVertices;
+	}
+
+	/**
+	 * @param listOfDirectedNonWeightedIntVertices the listOfDirectedNonWeightedIntVertices to set
+	 */
+	public void setListOfDirectedNonWeightedIntVertices(ArrayList<Vertex<Integer>> listOfDirectedNonWeightedIntVertices) {
+		this.listOfDirectedNonWeightedIntVertices = listOfDirectedNonWeightedIntVertices;
+	}
+
+	/**
+	 * @param listOfDirectedNonWeightedDoubleVertices the listOfDirectedNonWeightedDoubleVertices to set
+	 */
+	public void setListOfDirectedNonWeightedDoubleVertices(
+			ArrayList<Vertex<Double>> listOfDirectedNonWeightedDoubleVertices) {
+		this.listOfDirectedNonWeightedDoubleVertices = listOfDirectedNonWeightedDoubleVertices;
+	}
+
+	/**
+	 * @param listOfDirectedNonWeightedStringVertices the listOfDirectedNonWeightedStringVertices to set
+	 */
+	public void setListOfDirectedNonWeightedStringVertices(
+			ArrayList<Vertex<String>> listOfDirectedNonWeightedStringVertices) {
+		this.listOfDirectedNonWeightedStringVertices = listOfDirectedNonWeightedStringVertices;
+	}
+
+	/**
+	 * @param listOfDirectedWeightedIntVertices the listOfDirectedWeightedIntVertices to set
+	 */
+	public void setListOfDirectedWeightedIntVertices(ArrayList<Vertex<Integer>> listOfDirectedWeightedIntVertices) {
+		this.listOfDirectedWeightedIntVertices = listOfDirectedWeightedIntVertices;
+	}
+
+	/**
+	 * @param listOfDirectedWeightedDoubleVertices the listOfDirectedWeightedDoubleVertices to set
+	 */
+	public void setListOfDirectedWeightedDoubleVertices(ArrayList<Vertex<Double>> listOfDirectedWeightedDoubleVertices) {
+		this.listOfDirectedWeightedDoubleVertices = listOfDirectedWeightedDoubleVertices;
+	}
+
+	/**
+	 * @param listOfDirectedWeightedStringVertices the listOfDirectedWeightedStringVertices to set
+	 */
+	public void setListOfDirectedWeightedStringVertices(ArrayList<Vertex<String>> listOfDirectedWeightedStringVertices) {
+		this.listOfDirectedWeightedStringVertices = listOfDirectedWeightedStringVertices;
+	}
+
+	
 }
