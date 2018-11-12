@@ -1,18 +1,21 @@
 package application.view;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
 import application.model.Vertex;
-import javafx.collections.FXCollections;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -186,11 +189,203 @@ public class GraphPanelController {
 					        		
 					        		addEdgeHandler(dataAsString,result.get());
 					        		Line line = new Line();
-
+					        		StackPane vertexToTemp = vertexTo;
+					        		
+//					        		DoubleProperty x1 = new SimpleDoubleProperty(vertexClickedOn.getLayoutX());
+//					        		DoubleProperty y1  =  new SimpleDoubleProperty(vertexClickedOn.getLayoutY());
+//					        		DoubleProperty x2 = new SimpleDoubleProperty(vertexTo.getLayoutX());
+//					        		DoubleProperty y2  =  new SimpleDoubleProperty(vertexTo.getLayoutY());
+//
+					        		DoubleProperty startX = new SimpleDoubleProperty(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+					        	    DoubleProperty startY = new SimpleDoubleProperty(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+					        	    DoubleProperty endX   = new SimpleDoubleProperty(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
+					        	    DoubleProperty endY   = new SimpleDoubleProperty(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
+					        	    
+					        	    DoubleProperty newTranslateXProperty = new SimpleDoubleProperty(newTranslateX);
+					        	    DoubleProperty newTranslateYProperty = new SimpleDoubleProperty(newTranslateY);
+					        	    
+					        	    BooleanProperty isZeroX1 = new SimpleBooleanProperty();
+					        	    BooleanProperty isZeroY1 = new SimpleBooleanProperty();
+					        	    BooleanProperty isZeroX2 = new SimpleBooleanProperty();
+					        	    BooleanProperty isZeroY2 = new SimpleBooleanProperty();
+					        	    
+					        	 
+					        	    
+//					        	    startX.bind(x1);
+//					        	    startY.bind(y1);
+//					        	    endX.bind(x2);
+//					        	    endY.bind(y2);
+					        		
+					        		
+					        		
 					        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
 					        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
 					        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
 					        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
+					        		
+					        		
+					        		line.startXProperty().bind(startX.add(vertexClickedOn.translateXProperty()));
+					        		line.startYProperty().bind(startY.add(vertexClickedOn.translateYProperty()));
+					        		line.endXProperty().bind(endX.add(vertexTo.translateXProperty()));
+					        		line.endYProperty().bind(endY.add(vertexTo.translateYProperty()));
+					        		
+					        		isZeroX1.bind(vertexClickedOn.translateXProperty().isEqualTo(0));
+					        	    isZeroY1.bind(vertexClickedOn.translateYProperty().isEqualTo(0));
+					        	    isZeroX2.bind(vertexTo.translateXProperty().isEqualTo(0));
+					        	    isZeroY2.bind(vertexTo.translateYProperty().isEqualTo(0));
+					        	    
+					        	    isZeroX1.addListener(new ChangeListener<Boolean>() {
+
+					                    @Override
+					                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					                        // Only if completed
+					                        if (newValue) {
+					                            line.startXProperty().unbind();
+					                            line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+					                            DoubleProperty startX = new SimpleDoubleProperty(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+					                            line.startXProperty().bind(startX.add(vertexClickedOn.translateXProperty()));
+					                        }
+					                    }
+					                });
+					        	    
+					        	    isZeroY1.addListener(new ChangeListener<Boolean>() {
+
+					                    @Override
+					                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					                        // Only if completed
+					                    	System.out.println(newValue);
+					                        if (newValue) {
+					                            line.startYProperty().unbind();
+					                            line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+					                            DoubleProperty startY = new SimpleDoubleProperty(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+								        		line.startYProperty().bind(startY.add(vertexClickedOn.translateYProperty()));
+					                        }
+					                    }
+					                });
+//					        	    
+					        	    isZeroX2.addListener(new ChangeListener<Boolean>() {
+
+					                    @Override
+					                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					                        // Only if completed
+					                        if (newValue) {
+					                            line.endXProperty().unbind();
+					                            line.endXProperty().bind(endX.add(vertexToTemp.translateXProperty()));
+					                            DoubleProperty endX   = new SimpleDoubleProperty(vertexToTemp.getLayoutX() + (vertexToTemp.getWidth() / 2));
+					                            line.endXProperty().bind(endX.add(vertexToTemp.translateXProperty()));
+					                        }
+					                    }
+					                });
+					        	    
+					        	    isZeroY2.addListener(new ChangeListener<Boolean>() {
+
+					                    @Override
+					                    public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					                        // Only if completed
+					                    	System.out.println(newValue);
+					                        if (newValue) {
+					                        	line.endYProperty().unbind();
+					                            line.endYProperty().bind(endY.add(vertexToTemp.translateYProperty()));
+					                            DoubleProperty endY   = new SimpleDoubleProperty(vertexToTemp.getLayoutY() + (vertexToTemp.getWidth() / 2));
+					                            line.endYProperty().bind(endY.add(vertexToTemp.translateYProperty()));
+					                        }
+					                    }
+					                });
+					        		
+					        		
+					        		
+					        		
+					        		double width = vertexTo.getWidth();
+					        		double height = vertexTo.getHeight();
+					        		double vertexToLayoutX = vertexTo.getLayoutX();
+					        		double vertexToLayoutY = vertexTo.getLayoutY();
+					        		
+					        		
+					        		
+//					        		vertexClickedOn.layoutXProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setStartX(nv + (vertexClickedOn.getWidth() / 2));
+//					        	        }
+//					        	    });
+//					        		
+//					        		vertexClickedOn.layoutYProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setStartY(nv + (vertexClickedOn.getHeight() / 2));
+//					        	        }
+//					        	    });
+//					        		
+//					        		
+//					        		vertexClickedOn.translateXProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	Rotate rotate = new Rotate(360, vertexToLayoutX, vertexToLayoutY);
+//					        	        	vertexToTemp.getTransforms().add(rotate);
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setTranslateX(nv);
+//					        	            //line.setEndX(vertexToLayoutX + (width / 2));
+//					        	        }
+//					        	    });
+//					        		
+//					        		vertexClickedOn.translateYProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	Rotate rotate = new Rotate(360, vertexToLayoutX, vertexToLayoutY);
+//					        	        	vertexToTemp.getTransforms().add(rotate);
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setTranslateY(nv);
+//					        	            //line.setEndY(vertexToLayoutY + (width / 2));
+//					        	            
+//					        	        }
+//					        	    });
+//					        		
+//					       
+//					        		
+//					        		vertexTo.layoutXProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setEndX(nv + (width / 2));
+//					        	        }
+//					        	    });
+//					        		
+//					        		vertexTo.layoutYProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setEndY(nv + (height / 2));
+//					        	        }
+//					        	    });
+//					        		
+//					        		vertexTo.translateXProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setTranslateX(nv);
+//					        	        }
+//					        	    });
+//					        		
+//					        		vertexTo.translateYProperty().addListener(new ChangeListener<Number>() {
+//					        	        @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//					        	        	
+//					        	        	final double ov = oldValue.doubleValue();
+//					        	            final double nv = newValue.doubleValue();
+//					        	            line.setTranslateY(nv);
+//					        	           
+//					        	        }
+//					        	    });
 
 					        		centerPane.getChildren().add(0,line);
 					        	}
@@ -319,15 +514,8 @@ public class GraphPanelController {
 		        	
 		            double offsetX = t.getSceneX() - orgSceneX;
 		            double offsetY = t.getSceneY() - orgSceneY;
-//		            newTranslateX = orgTranslateX + offsetX;
-//		            newTranslateY = orgTranslateY + offsetY;
 		            currentStackPane.setTranslateX(offsetX);
 		            currentStackPane.setTranslateY(offsetY);
-		            
-		            
-		            System.out.println(((StackPane)(t.getSource())).getLayoutX());
-		            System.out.println(((StackPane)(t.getSource())).getLayoutY());
-//		            ((StackPane)(t.getSource())).relocate(((StackPane)(t.getSource())).getLayoutX()+ offsetX, y);
 		        
 		        }
 		    };
@@ -346,12 +534,15 @@ public class GraphPanelController {
 		 
 		        @Override
 		        public void handle(MouseEvent t) {
-		        	System.out.println("g");
 //		        	((StackPane)(t.getSource())).setLayoutX(newTranslateX - offsetX  );
 //		            ((StackPane)(t.getSource())).setLayoutY(newTranslateY - offsetY  );
 		        	
 		        	currentStackPane.setLayoutX(layoutX + ((StackPane)(t.getSource())).getTranslateX());
 		        	currentStackPane.setLayoutY(layoutY + ((StackPane)(t.getSource())).getTranslateY());
+		        	newTranslateX = ((StackPane)(t.getSource())).getTranslateX();
+		        	newTranslateY = ((StackPane)(t.getSource())).getTranslateY();
+		        	System.out.println("Old translateX: " + newTranslateX);
+		        	System.out.println("Old translateY: " + newTranslateY);
 		        	currentStackPane.setTranslateX(0);
 		        	currentStackPane.setTranslateY(0);
 		        }
