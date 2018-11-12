@@ -1,10 +1,12 @@
 package application.view;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
 import application.model.Vertex;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,13 +19,18 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class GraphPanelController {
@@ -44,10 +51,21 @@ public class GraphPanelController {
 	
 	@FXML
 	private TabPane tabs;
+	
+	@FXML
+	private ContextMenu hoverMenu;
+	
+	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
     private double orgTranslateX, orgTranslateY;
+    private double newTranslateX, newTranslateY;
+    private double offsetX, offsetY;
+    private double layoutX,layoutY;
     private String preSelectionChoice;
+    
+    private MenuItem hoverMenuItemAddEdge;
+
 	
 	@FXML
 	private void initialize() {
@@ -56,7 +74,64 @@ public class GraphPanelController {
 		choiceBox.getSelectionModel().selectFirst();
 		choiceBox.setOnMouseClicked(this::selectionChoice);
 		choiceBox.setOnAction(this::handleChoiceBox);
+		
+		hoverMenu = new ContextMenu();
+		hoverMenuItemAddEdge = new MenuItem("Add Edge?");
+        
+        hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
+        
 
+	}
+	
+	private void addEdgeHandler(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
+		
+		if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+    		
+			dataModel.getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
+     		
+     	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+     		
+     		dataModel.getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
+     		
+     	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+     		
+     		dataModel.getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
+     		
+     	}
+     	
+     	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Undirected Weighted Graph")  && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+
+     		
+     	}
+     	
+     	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+
+     		
+     	}
+     	
+     	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+
+     		
+     	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+
+     		
+     	}
+		
 	}
 	
 	public void setMain(Main main) {
@@ -64,6 +139,228 @@ public class GraphPanelController {
 		
 		// all data from observable lists to data in this class.
 	}
+	
+	@FXML
+	private EventHandler<MouseEvent> mousePressedOnVertexEvent(StackPane stack) {
+		
+		EventHandler<MouseEvent> circleOnMousePressedEventHandler = 
+		        new EventHandler<MouseEvent>() {
+		 
+		        @Override
+		        public void handle(MouseEvent t) {
+		        	
+		        	if(t.getButton() == MouseButton.SECONDARY) {
+		        		
+		        		StackPane vertexClickedOn = (StackPane)(t.getSource());
+		        		ObservableList<Node> childs = ((StackPane)(t.getSource())).getChildren();
+	                	Text data = (Text) childs.get(childs.size()-1);
+	                	String dataAsString = data.getText();
+						double x = t.getX();
+						double y = t.getY();
+						hoverMenu.show(stack,t.getScreenX(), t.getScreenY());
+						
+						 hoverMenuItemAddEdge.setOnAction(event -> {
+					        	
+					        	TextInputDialog dialog = new TextInputDialog();
+					        	dialog.setTitle("Add Edge");
+					        	dialog.setHeaderText("Add Edge.");
+					        	dialog.setContentText("Please enter the edge you would like to connect to:");
+
+					        	// Traditional way to get the response value.
+					        	Optional<String> result = dialog.showAndWait();
+					        	if (result.isPresent()){
+					        		StackPane vertexTo = null;
+					        		for(Node child : centerPane.getChildren()) {
+				                		
+				                		if(child instanceof StackPane) {
+				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+				                			String toCompare = dataOfStack.getText();
+				                			if(toCompare.equals(result.get())) {
+				                				vertexTo = (StackPane) child;
+				                			}
+				                		}
+				                	}
+					        		
+
+					        		
+					        		addEdgeHandler(dataAsString,result.get());
+					        		Line line = new Line();
+
+					        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+					        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+					        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
+					        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
+
+					        		centerPane.getChildren().add(0,line);
+					        	}
+					        	
+					            event.consume();
+					        });
+					}
+		        	
+		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY) {
+		        		
+		        		 Alert alert = new Alert(AlertType.ERROR);
+		        		 
+		        		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		        		 ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		        		 
+		                 alert.setTitle("Deleting Vertex.");
+		                 alert.setHeaderText("Are you sure you want to delete this vertex?");
+		                 alert.setContentText("Once deleting the vertex you cannot retrieve it back.");
+		                 alert.getButtonTypes().setAll(okButton,cancelButton);
+		                 
+		                 Optional<ButtonType> result = alert.showAndWait();
+		                 
+		                 if(result.get() == okButton) {
+		                	 
+		                	 
+		                	 ObservableList<Node> childs = ((StackPane)(t.getSource())).getChildren();
+		                	 Text data = (Text) childs.get(childs.size()-1);
+		                	 String dataAsString = data.getText();
+		                	 
+		                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataAsString)) {
+		                		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedNonWeightedGraph("Integer",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedNonWeightedGraph("Double",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedNonWeightedGraph("String",dataAsString);
+		                 		
+		                 	}
+		                 	
+		                 	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedWeightedGraph("Integer",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedWeightedGraph("Double",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromUndirectedWeightedGraph("String",dataAsString);
+		                 		
+		                 	}
+		                 	
+		                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedNonWeightedGraph("Integer",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedNonWeightedGraph("Double",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedNonWeightedGraph("String",dataAsString);
+		                 		
+		                 	}
+		                 	
+		                 	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedWeightedGraph("Integer",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedWeightedGraph("Double",dataAsString);
+		                 		
+		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(dataAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
+		                 		
+		                 	}
+		                	
+		                	 
+		                 }
+		        	 }
+		        	currentStackPane  = ((StackPane)(t.getSource()));
+		        	orgSceneX = t.getSceneX();
+		            orgSceneY = t.getSceneY();
+		        	layoutX =  currentStackPane.getLayoutX();
+		        	layoutY =  currentStackPane.getLayoutY();
+		            
+		            orgTranslateX = ((StackPane)(t.getSource())).getTranslateX();
+		            orgTranslateY = ((StackPane)(t.getSource())).getTranslateY();
+		            
+		            
+		        }
+		    };
+		    
+		    return circleOnMousePressedEventHandler;
+	}
+	
+	@FXML
+	private EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
+		
+		EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = 
+		        new EventHandler<MouseEvent>() {
+		 
+		        @Override
+		        public void handle(MouseEvent t) {
+
+		        	
+		            double offsetX = t.getSceneX() - orgSceneX;
+		            double offsetY = t.getSceneY() - orgSceneY;
+//		            newTranslateX = orgTranslateX + offsetX;
+//		            newTranslateY = orgTranslateY + offsetY;
+		            currentStackPane.setTranslateX(offsetX);
+		            currentStackPane.setTranslateY(offsetY);
+		            
+		            
+		            System.out.println(((StackPane)(t.getSource())).getLayoutX());
+		            System.out.println(((StackPane)(t.getSource())).getLayoutY());
+//		            ((StackPane)(t.getSource())).relocate(((StackPane)(t.getSource())).getLayoutX()+ offsetX, y);
+		        
+		        }
+		    };
+		    
+		    return circleOnMouseDraggedEventHandler;
+		    
+	}
+	
+	@FXML
+	private EventHandler<MouseEvent> mouseReleasedOnVertexEvent() {
+		
+		
+     
+     EventHandler<MouseEvent> circleOnMouseReleaseEventHandler = 
+		        new EventHandler<MouseEvent>() {
+		 
+		        @Override
+		        public void handle(MouseEvent t) {
+		        	System.out.println("g");
+//		        	((StackPane)(t.getSource())).setLayoutX(newTranslateX - offsetX  );
+//		            ((StackPane)(t.getSource())).setLayoutY(newTranslateY - offsetY  );
+		        	
+		        	currentStackPane.setLayoutX(layoutX + ((StackPane)(t.getSource())).getTranslateX());
+		        	currentStackPane.setLayoutY(layoutY + ((StackPane)(t.getSource())).getTranslateY());
+		        	currentStackPane.setTranslateX(0);
+		        	currentStackPane.setTranslateY(0);
+		        }
+		    };
+		    return circleOnMouseReleaseEventHandler;
+		    
+	}
+	
+	 
 	
 	@FXML
 	private void selectionChoice(MouseEvent e) {
@@ -278,153 +575,6 @@ public class GraphPanelController {
 				
 			}
 			
-			EventHandler<MouseEvent> circleOnMousePressedEventHandler = 
-			        new EventHandler<MouseEvent>() {
-			 
-			        @Override
-			        public void handle(MouseEvent t) {
-			        	
-			        	if (t.getClickCount() == 2) {
-			        		
-			        		 Alert alert = new Alert(AlertType.ERROR);
-			        		 
-			        		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			        		 ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
-			        		 
-			                 alert.setTitle("Deleting Vertex.");
-			                 alert.setHeaderText("Are you sure you want to delete this vertex?");
-			                 alert.setContentText("Once deleting the vertex you cannot retrieve it back.");
-			                 alert.getButtonTypes().setAll(okButton,cancelButton);
-			                 
-			                 Optional<ButtonType> result = alert.showAndWait();
-			                 
-			                 if(result.get() == okButton) {
-			                	 
-			                	 
-			                	 ObservableList<Node> childs = ((StackPane)(t.getSource())).getChildren();
-			                	 Text data = (Text) childs.get(childs.size()-1);
-			                	 String dataAsString = data.getText();
-			                	 
-			                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataAsString)) {
-			                		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedNonWeightedGraph("Integer",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedNonWeightedGraph("Double",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedNonWeightedGraph("String",dataAsString);
-			                 		
-			                 	}
-			                 	
-			                 	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedWeightedGraph("Integer",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedWeightedGraph("Double",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromUndirectedWeightedGraph("String",dataAsString);
-			                 		
-			                 	}
-			                 	
-			                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedNonWeightedGraph("Integer",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedNonWeightedGraph("Double",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedNonWeightedGraph("String",dataAsString);
-			                 		
-			                 	}
-			                 	
-			                 	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedWeightedGraph("Integer",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedWeightedGraph("Double",dataAsString);
-			                 		
-			                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(dataAsString)) {
-			                 		
-			                 		centerPane.getChildren().remove(t.getSource());
-			                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
-			                 		
-			                 	}
-			                	
-			                	 
-			                 }
-			        	 }
-			        	
-			            orgSceneX = t.getSceneX();
-			            orgSceneY = t.getSceneY();
-			            orgTranslateX = ((StackPane)(t.getSource())).getTranslateX();
-			            orgTranslateY = ((StackPane)(t.getSource())).getTranslateY();
-			        }
-			    };
-			     
-			    EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = 
-			        new EventHandler<MouseEvent>() {
-			 
-			        @Override
-			        public void handle(MouseEvent t) {
-			        	Bounds boundsInScene = centerPane.localToScene(centerPane.getBoundsInLocal());
-//			        	double minPaneX = boundsInScene.getMinX();
-//			        	double minPaneY = boundsInScene.getMinY();
-//			        	double maxPaneX = boundsInScene.getMaxX();
-//			        	double maxPaneY = boundsInScene.getMaxY();
-			        	
-//			        	double rootAnchorPane.p
-//			        	double X=Main.window.getX()+menu.getLayoutX();
-//			        	double Y=Main.window.getY()+menu.getLayoutY();
-			        	
-			            double offsetX = t.getSceneX() - orgSceneX;
-			            double offsetY = t.getSceneY() - orgSceneY;
-			            double newTranslateX = orgTranslateX + offsetX;
-			            double newTranslateY = orgTranslateY + offsetY;
-			            
-//			            if(newTranslateX < minPaneX) {
-//			            	newTranslateX = minPaneX;
-//			            }
-//			            
-//			            if(newTranslateX >maxPaneX) {
-//			            	newTranslateX = maxPaneX;
-//			            }
-//			            
-//			            if(newTranslateY < minPaneY) {
-//			            	newTranslateY = minPaneY;
-//			            }
-//			            
-//			            if(newTranslateY >maxPaneY) {
-//			            	newTranslateY = maxPaneY;
-//			            }
-			            	
-			            ((StackPane)(t.getSource())).setTranslateX(newTranslateX);
-			            ((StackPane)(t.getSource())).setTranslateY(newTranslateY);
-			        }
-			    };
-			
        		double x = event.getX();
         	double y = event.getY();
         	
@@ -437,12 +587,14 @@ public class GraphPanelController {
    			
    			stack.getChildren().addAll(vertex, text);
    			stack.setLayoutX(x);
+
    			stack.setLayoutY(y);
    			
    			stack.setOnMouseClicked(Event::consume);
-   			stack.setOnMousePressed(circleOnMousePressedEventHandler);
-   			stack.setOnMouseDragged(circleOnMouseDraggedEventHandler);
-   			
+   			stack.setOnMousePressed(mousePressedOnVertexEvent(stack));
+   			stack.setOnMouseDragged(mouseDraggedOnVertexEvent());
+   			stack.setOnMouseReleased(mouseReleasedOnVertexEvent());
+			
    			centerPane.getChildren().add(stack);
    			
 		}	
@@ -450,8 +602,6 @@ public class GraphPanelController {
    			
 	}
 		
-		
-	
 	public String getSelectedDataChoice() {
 
 		return choiceBox.getSelectionModel().getSelectedItem();
@@ -468,155 +618,155 @@ public class GraphPanelController {
 		this.dataModel = dataModel;
 	}
 	
-	 private void removeVertexFromUndirectedNonWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		dataModel.getVertexDataUndirectedNonWeightedInt().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedNonWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		dataModel.getVertexDataUndirectedNonWeightedDouble().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedNonWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+	private void removeVertexFromUndirectedNonWeightedGraph(String type, String dataAsString) {
+    	
+    	if(type.equals("Integer")) {
     		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = dataModel.getUndirectedNonWeightedString().returnVertex(dataAsString);
-	    		
-	    		dataModel.getVertexDataUndirectedNonWeightedString().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedNonWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+    		Vertex<Integer> vertexToRemove = dataModel.getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
     		
-	    		
-	    	}
-	    }
+    		dataModel.getVertexDataUndirectedNonWeightedInt().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedNonWeightedIntVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
+    		
+    		
+    	}else if(type.equals("Double")) {
+    		
+    		Vertex<Double> vertexToRemove = dataModel.getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+    		
+    		dataModel.getVertexDataUndirectedNonWeightedDouble().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedNonWeightedDoubleVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+		
+    	}else if(type.equals("String")) {
+    		
+    		Vertex<String> vertexToRemove = dataModel.getUndirectedNonWeightedString().returnVertex(dataAsString);
+    		
+    		dataModel.getVertexDataUndirectedNonWeightedString().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedNonWeightedStringVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+		
+    		
+    	}
+    }
 	 
-	 private void removeVertexFromUndirectedWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		dataModel.getVertexDataUndirectedWeightedInt().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		dataModel.getVertexDataUndirectedWeightedDouble().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
- 		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = dataModel.getUndirectedNonWeightedString().returnVertex(dataAsString);
-	    		
-	    		dataModel.getVertexDataUndirectedWeightedString().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfUndirectedWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getUndirectedWeightedString().removeVertex(vertexToRemove.getElement());
- 		
-	    		
-	    	}
-	    }
-	 
-	 	private void removeVertexFromDirectedNonWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		dataModel.getVertexDataDirectedNonWeightedInt().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedNonWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		dataModel.getVertexDataDirectedNonWeightedDouble().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedNonWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
- 		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = dataModel.getDirectedNonWeightedString().returnVertex(dataAsString);
-	    		
-	    		dataModel.getVertexDataDirectedNonWeightedString().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedNonWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
- 		
-	    		
-	    	}
-	    }
-	 	
-	 	private void removeVertexFromDirectedWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		dataModel.getVertexDataDirectedWeightedInt().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		dataModel.getVertexDataDirectedWeightedDouble().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
- 		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = dataModel.getDirectedWeightedString().returnVertex(dataAsString);
-	    		
-	    		dataModel.getVertexDataDirectedWeightedString().remove(vertexToRemove);
-	    		
-	    		dataModel.getListOfDirectedWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		dataModel.getDirectedWeightedString().removeVertex(vertexToRemove.getElement());
- 		
-	    		
-	    	}
-	    }
+	private void removeVertexFromUndirectedWeightedGraph(String type, String dataAsString) {
+    	
+    	if(type.equals("Integer")) {
+    		
+    		Vertex<Integer> vertexToRemove = dataModel.getUndirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+    		
+    		dataModel.getVertexDataUndirectedWeightedInt().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedWeightedIntVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedWeightedInt().removeVertex(vertexToRemove.getElement());
+    		
+    		
+    	}else if(type.equals("Double")) {
+    		
+    		Vertex<Double> vertexToRemove = dataModel.getUndirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+    		
+    		dataModel.getVertexDataUndirectedWeightedDouble().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedWeightedDoubleVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
 	
-	private static boolean isInteger(String s) {
+    	}else if(type.equals("String")) {
+    		
+    		Vertex<String> vertexToRemove = dataModel.getUndirectedNonWeightedString().returnVertex(dataAsString);
+    		
+    		dataModel.getVertexDataUndirectedWeightedString().remove(vertexToRemove);
+    		
+    		dataModel.getListOfUndirectedWeightedStringVertices().remove(vertexToRemove);
+    		
+    		dataModel.getUndirectedWeightedString().removeVertex(vertexToRemove.getElement());
+	
+    		
+    	}
+    }
+ 
+ 	private void removeVertexFromDirectedNonWeightedGraph(String type, String dataAsString) {
+    	
+    	if(type.equals("Integer")) {
+    		
+    		Vertex<Integer> vertexToRemove = dataModel.getDirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+    		
+    		dataModel.getVertexDataDirectedNonWeightedInt().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedNonWeightedIntVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
+    		
+    		
+    	}else if(type.equals("Double")) {
+    		
+    		Vertex<Double> vertexToRemove = dataModel.getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+    		
+    		dataModel.getVertexDataDirectedNonWeightedDouble().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedNonWeightedDoubleVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+    	}else if(type.equals("String")) {
+    		
+    		Vertex<String> vertexToRemove = dataModel.getDirectedNonWeightedString().returnVertex(dataAsString);
+    		
+    		dataModel.getVertexDataDirectedNonWeightedString().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedNonWeightedStringVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+	
+    		
+    	}
+    }
+ 	
+ 	private void removeVertexFromDirectedWeightedGraph(String type, String dataAsString) {
+    	
+    	if(type.equals("Integer")) {
+    		
+    		Vertex<Integer> vertexToRemove = dataModel.getDirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+    		
+    		dataModel.getVertexDataDirectedWeightedInt().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedWeightedIntVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedWeightedInt().removeVertex(vertexToRemove.getElement());
+    		
+    		
+    	}else if(type.equals("Double")) {
+    		
+    		Vertex<Double> vertexToRemove = dataModel.getDirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+    		
+    		dataModel.getVertexDataDirectedWeightedDouble().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedWeightedDoubleVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+    	}else if(type.equals("String")) {
+    		
+    		Vertex<String> vertexToRemove = dataModel.getDirectedWeightedString().returnVertex(dataAsString);
+    		
+    		dataModel.getVertexDataDirectedWeightedString().remove(vertexToRemove);
+    		
+    		dataModel.getListOfDirectedWeightedStringVertices().remove(vertexToRemove);
+    		
+    		dataModel.getDirectedWeightedString().removeVertex(vertexToRemove.getElement());
+	
+    		
+    	}
+    }
+	
+	 private static boolean isInteger(String s) {
         try { 
             Integer.parseInt(s); 
         } catch(NumberFormatException e) { 
