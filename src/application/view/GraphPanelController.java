@@ -30,6 +30,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -137,6 +138,142 @@ public class GraphPanelController {
 		
 	}
 	
+	@FXML
+	private EventHandler<MouseEvent> mouseClickedOnEdgeEvent(){
+		
+		EventHandler<MouseEvent> lineOnMouseClickedEventHandler = 
+		        new EventHandler<MouseEvent>() {
+		 
+		        @Override
+		        public void handle(MouseEvent t) {
+		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && t.getSource() instanceof Line) {
+		        		System.out.println("febfdebj");
+		        		 Alert alert = new Alert(AlertType.ERROR);
+		        		 
+		        		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		        		 ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		        		 
+		                 alert.setTitle("Deleting Edge.");
+		                 alert.setHeaderText("Are you sure you want to delete this edge?");
+		                 alert.setContentText("Once deleting the edge you cannot retrieve it back.");
+		                 alert.getButtonTypes().setAll(okButton,cancelButton);
+		                 
+		                 Optional<ButtonType> result = alert.showAndWait();
+		                 
+		                 if(result.get() == okButton) {
+		                	 
+		                	 Line lineToRemove = (Line) t.getSource();
+		                	 
+		                	 StackPane vertexStart = null;
+		                	 StackPane vertexEnd = null;
+		                	 
+		                	 for(Node child:centerPane.getChildren()) {
+		                		 if(child instanceof StackPane) {
+		                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getStartX() && 
+		                					 child.getLayoutY() + ((Region) child).getHeight() / 2  == lineToRemove.getStartY()) {
+		                				 
+		                				 vertexStart = (StackPane) child;
+		                			 }
+		                		 }
+		                	 }
+		                	 
+		                	 for(Node child:centerPane.getChildren()) {
+
+		                		 if(child instanceof StackPane) {
+		                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getEndX() && 
+		                					 child.getLayoutY() + ((Region) child).getWidth() / 2 == lineToRemove.getEndY()) {
+		                				 vertexEnd = (StackPane) child;
+		                			 }
+		                		 }
+		                	 }
+		                	 
+		                	 ObservableList<Node> childsOfVertexStart = vertexStart.getChildren();
+		                	 Text dataOfVertexStart = (Text) childsOfVertexStart.get(childsOfVertexStart.size()-1);
+		                	 String dataOfVertexStartAsString = dataOfVertexStart.getText();
+		                	 
+		                	 ObservableList<Node> childsOfVertexEnd = vertexEnd.getChildren();
+		                	 Text dataOfVertexEnd = (Text) childsOfVertexEnd.get(childsOfVertexEnd.size()-1);
+		                	 String dataOfVertexEndAsString = dataOfVertexEnd.getText();
+		                	 
+		                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataOfVertexStartAsString) && isInteger(dataOfVertexEndAsString)) {
+		                		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		dataModel.getUndirectedNonWeightedInt().removeEdge(Integer.parseInt(dataOfVertexStartAsString), Integer.parseInt(dataOfVertexEndAsString));
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(dataOfVertexStartAsString) && isDouble(dataOfVertexEndAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		dataModel.getUndirectedNonWeightedDouble().removeEdge(Double.parseDouble(dataOfVertexStartAsString), Double.parseDouble(dataOfVertexEndAsString));
+		                 		
+		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(dataOfVertexStartAsString) && isString(dataOfVertexEndAsString)) {
+		                 		
+		                 		centerPane.getChildren().remove(t.getSource());
+		                 		dataModel.getUndirectedNonWeightedString().removeEdge(dataOfVertexStartAsString, dataOfVertexEndAsString);
+		                 		
+		                 	}
+//		                 	
+//		                 	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromUndirectedWeightedGraph("Integer",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromUndirectedWeightedGraph("Double",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromUndirectedWeightedGraph("String",dataAsString);
+//		                 		
+//		                 	}
+//		                 	
+//		                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedNonWeightedGraph("Integer",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedNonWeightedGraph("Double",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedNonWeightedGraph("String",dataAsString);
+//		                 		
+//		                 	}
+//		                 	
+//		                 	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedWeightedGraph("Integer",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedWeightedGraph("Double",dataAsString);
+//		                 		
+//		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(dataAsString)) {
+//		                 		
+//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
+//		                 		
+//		                 	}
+		                	
+		                	 t.consume();
+		                 }
+		        	 }
+		        }
+		        
+		    };
+		
+		return lineOnMouseClickedEventHandler;
+		
+	}
+	
 	public void setMain(Main main) {
 		this.main = main;
 		
@@ -187,6 +324,10 @@ public class GraphPanelController {
 
 					        		addEdgeHandler(dataAsString,result.get());
 					        		Line line = new Line();
+					        		line.setStrokeWidth(2);
+					        		
+					        		line.setOnMouseClicked(Event::consume);
+					        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
 
 					        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
 					        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
@@ -206,7 +347,7 @@ public class GraphPanelController {
 					        });
 					}
 		        	
-		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY) {
+		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && t.getSource() instanceof StackPane) {
 		        		
 		        		 Alert alert = new Alert(AlertType.ERROR);
 		        		 
@@ -298,6 +439,7 @@ public class GraphPanelController {
 		                	 
 		                 }
 		        	 }
+
 		        	currentStackPane  = ((StackPane)(t.getSource()));
 		        	orgSceneX = t.getSceneX();
 		            orgSceneY = t.getSceneY();
@@ -353,8 +495,6 @@ public class GraphPanelController {
 		        	currentStackPane.setLayoutY(layoutY + ((StackPane)(t.getSource())).getTranslateY());
 		        	newTranslateX = ((StackPane)(t.getSource())).getTranslateX();
 		        	newTranslateY = ((StackPane)(t.getSource())).getTranslateY();
-		        	System.out.println("Old translateX: " + newTranslateX);
-		        	System.out.println("Old translateY: " + newTranslateY);
 		        	currentStackPane.setTranslateX(0);
 		        	currentStackPane.setTranslateY(0);
 		        }
