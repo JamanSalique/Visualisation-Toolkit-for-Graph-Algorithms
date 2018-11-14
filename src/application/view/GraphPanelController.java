@@ -306,7 +306,7 @@ public class GraphPanelController {
 					        	// Traditional way to get the response value.
 					        	Optional<String> result = dialog.showAndWait();
 					        	
-					        	if(isInputValid(result.get())) {
+					        	if(result.isPresent() && isInputValid(result.get())) {
 					        		if (result.isPresent()){
 						        		StackPane vertexTo = null;
 						        		for(Node child : centerPane.getChildren()) {
