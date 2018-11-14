@@ -305,43 +305,50 @@ public class GraphPanelController {
 					        	dialog.setTitle("Add Edge");
 					        	dialog.setHeaderText("Add Edge.");
 					        	dialog.setContentText("Please enter the edge you would like to connect to:");
-
+					        	 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+				        		 ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+				        		 dialog.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
 					        	// Traditional way to get the response value.
 					        	Optional<String> result = dialog.showAndWait();
-					        	if (result.isPresent()){
-					        		StackPane vertexTo = null;
-					        		for(Node child : centerPane.getChildren()) {
-				                		
-				                		if(child instanceof StackPane) {
-				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
-				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
-				                			String toCompare = dataOfStack.getText();
-				                			if(toCompare.equals(result.get())) {
-				                				vertexTo = (StackPane) child;
-				                			}
-				                		}
-				                	}
-
-					        		addEdgeHandler(dataAsString,result.get());
-					        		Line line = new Line();
-					        		line.setStrokeWidth(2);
-					        		
-					        		line.setOnMouseClicked(Event::consume);
-					        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
-
-					        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
-					        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
-					        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
-					        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
-
-					        		line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
-					        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-					        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
-					        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
 					        	
+					        	if(isInputValid(result.get())) {
+					        		if (result.isPresent()){
+						        		StackPane vertexTo = null;
+						        		for(Node child : centerPane.getChildren()) {
+					                		
+					                		if(child instanceof StackPane) {
+					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+					                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+					                			String toCompare = dataOfStack.getText();
+					                			if(toCompare.equals(result.get())) {
+					                				vertexTo = (StackPane) child;
+					                			}
+					                		}
+					                	}
 
-					        		centerPane.getChildren().add(0,line);
+						        		addEdgeHandler(dataAsString,result.get());
+						        		Line line = new Line();
+						        		line.setStrokeWidth(2);
+						        		
+						        		line.setOnMouseClicked(Event::consume);
+						        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
+
+						        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+						        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+						        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
+						        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
+
+						        		line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
+						        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
+						        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
+						        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
+						        	
+
+						        		centerPane.getChildren().add(0,line);
+						        	}
 					        	}
+					        	
+					        	
 					        	
 					            event.consume();
 					        });
@@ -941,6 +948,111 @@ public class GraphPanelController {
     		return true;
     	}
     	return false;
+    }
+    
+    private boolean isInputValid(String input) {
+    	
+    	String selectedDataChoice = getSelectedDataChoice();
+    	
+    	String errorMessage = "";
+    	if (input == null || input.length() == 0) {
+    		
+    		errorMessage += "please enter some data";
+    		
+    	}
+    	else if(isInteger(input) && !selectedDataChoice.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		
+    	}
+    	else if(isDouble(input) && !selectedDataChoice.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		
+    	}
+    	else if(isString(input) && !selectedDataChoice.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		
+    	}else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
+    			&& !dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
+    			&& !dataModel.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
+    			&& !dataModel.getUndirectedNonWeightedString().containsVertex(input)){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
+    			&& !dataModel.getUndirectedWeightedInt().containsVertex(Integer.parseInt(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
+    			&& !dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
+    			&& !dataModel.getUndirectedWeightedString().containsVertex(input)){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
+    			&& !dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
+    			&& !dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
+    			&& !dataModel.getDirectedNonWeightedString().containsVertex(input)){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") 
+    			&& !dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") 
+    			&& !dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") 
+    			&& !dataModel.getDirectedWeightedString().containsVertex(input)){
+
+    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		
+    	}
+    	
+    	 if (errorMessage.length() == 0) {
+             return true;
+         } else {
+             // Show the error message.
+             Alert alert = new Alert(AlertType.ERROR);
+             alert.setTitle("Invalid Fields");
+             alert.setHeaderText("Please correct invalid fields");
+             alert.setContentText(errorMessage);
+             
+             alert.showAndWait();
+             
+             return false;
+         }
+    	
     }
 
 	
