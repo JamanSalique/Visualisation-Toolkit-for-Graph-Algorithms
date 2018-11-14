@@ -1,16 +1,11 @@
 package application.view;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
 import application.model.Vertex;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -375,6 +370,25 @@ public class GraphPanelController {
 		                	 Text data = (Text) childs.get(childs.size()-1);
 		                	 String dataAsString = data.getText();
 		                	 
+		                	 StackPane stackPane = (StackPane) t.getSource();
+		                	 double stackPaneX = stackPane.getLayoutX() + (stackPane.getWidth()/2);
+		                	 double stackPaneY = stackPane.getLayoutY() + (stackPane.getHeight()/2);
+		                	 Line edgeToRemove = null;
+		                	 ArrayList<Line>  edgesToRemove = new ArrayList<Line>();
+		                	 
+		                	 for(Node child:centerPane.getChildren()) {
+		                		 
+		                		 if(child instanceof Line) {
+		                			 
+		                			 if((((Line) child).getStartX() == stackPaneX && ((Line) child).getStartY() == stackPaneY) || 
+		                					 (((Line) child).getEndX() == stackPaneX && ((Line) child).getEndY() == stackPaneY)) {
+		                				 edgeToRemove = (Line) child;
+		                				 edgesToRemove.add(edgeToRemove);
+		                			 }
+		                		 }
+		                		 
+		                	 }
+		                	 
 		                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataAsString)) {
 		                		
 		                 		centerPane.getChildren().remove(t.getSource());
@@ -442,6 +456,13 @@ public class GraphPanelController {
 		                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
 		                 		
 		                 	}
+		                	
+		                	if(edgesToRemove.size() != 0) {
+	                 			
+	                 			for(Line edge: edgesToRemove) {
+	                 				centerPane.getChildren().remove(edge);
+	                 			}
+	                 		}
 		                	
 		                	 
 		                 }
