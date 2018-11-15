@@ -10,15 +10,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.util.Pair;
 
 public abstract class AbstractWeightedGraph<T> {
-	private final ObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>> adjacencyList;
+	private final ObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>>> adjacencyList;
 	
 	public AbstractWeightedGraph() {
-		this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>>(
-				new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>>());
+		this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>>>(
+				new HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>>());
 	}
 	
 	public boolean containsVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Double>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement().equals(element)) {
 				return true;
 			}
@@ -27,7 +27,7 @@ public abstract class AbstractWeightedGraph<T> {
 	}
 	
 	public Vertex<T> returnVertex(T element) {
-		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> entry : adjacencyList.get().entrySet()) {
+		for (Map.Entry<Vertex<T>,Set<Pair<Vertex<T>,Double>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement().equals(element)) {
 				return entry.getKey();
 			}
@@ -36,8 +36,8 @@ public abstract class AbstractWeightedGraph<T> {
 		return null;
 	}
 	
-	protected Pair<Vertex<T>,Integer> returnPairInSet(Set<Pair<Vertex<T>, Integer>> set, Vertex<T> v ){
-		for(Pair<Vertex<T>,Integer> p : set) {
+	protected Pair<Vertex<T>,Double> returnPairInSet(Set<Pair<Vertex<T>, Double>> set, Vertex<T> v ){
+		for(Pair<Vertex<T>,Double> p : set) {
 			if(p.getKey().equals(v)) {
 				return p;
 			}
@@ -75,7 +75,7 @@ public abstract class AbstractWeightedGraph<T> {
      * @param w Weight of edge
      */
 	
-	public abstract void addEdge(T v, T u, int w);
+	public abstract void addEdge(T v, T u, double w);
     
     /**
      * Remove the edge between vertex. Removing the edge from u to v will 
@@ -105,7 +105,7 @@ public abstract class AbstractWeightedGraph<T> {
      * @param v The vertex.
      * @return An iterable for connected vertices.
      */
-    public Iterable<Pair<Vertex<T>,Integer>> getNeighbours(T v) {
+    public Iterable<Pair<Vertex<T>,Double>> getNeighbours(T v) {
         return this.adjacencyList.get().get(returnVertex(v));
     }
     
@@ -118,7 +118,7 @@ public abstract class AbstractWeightedGraph<T> {
         return this.adjacencyList.get().keySet();
     }
     
-    public HashMap<Vertex<T>,Set<Pair<Vertex<T>,Integer>>> getAdjacencyList(){
+    public HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>> getAdjacencyList(){
 		return adjacencyList.get();
     }
     

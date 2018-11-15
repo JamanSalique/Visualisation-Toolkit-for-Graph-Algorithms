@@ -17,7 +17,7 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 			throw new IllegalArgumentException("Vertex already exists.");
         }
 		
-       super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Integer>>());
+       super.getAdjacencyList().put(new Vertex<T>(v), new HashSet<Pair<Vertex<T>,Double>>());
 		
 	}
 
@@ -48,14 +48,14 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
      * @param w Weight of edge
      */
 	@Override
-	public void addEdge(T v, T u, int w) {
+	public void addEdge(T v, T u, double w) {
 		if (!containsVertex(v) || !containsVertex(u)) {
             throw new IllegalArgumentException();
         }
 		
 		if(!isAdjacent(v,u)) {
-			super.getAdjacencyList().get(returnVertex(v)).add(new Pair<Vertex<T>,Integer>(returnVertex(u),w));
-			super.getAdjacencyList().get(returnVertex(u)).add(new Pair<Vertex<T>,Integer>(returnVertex(v),w));
+			super.getAdjacencyList().get(returnVertex(v)).add(new Pair<Vertex<T>,Double>(returnVertex(u),w));
+			super.getAdjacencyList().get(returnVertex(u)).add(new Pair<Vertex<T>,Double>(returnVertex(v),w));
 		}
         
         
