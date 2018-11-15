@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -306,7 +307,11 @@ public class GraphPanelController {
 					        	// Traditional way to get the response value.
 					        	Optional<String> result = dialog.showAndWait();
 					        	
-					        	if(result.isPresent() && isInputValid(result.get())) {
+					        	StackPane sourceVertex = (StackPane)(t.getSource());
+				        		ObservableList<Node> childsOfSourceVertex = ((StackPane)(t.getSource())).getChildren();
+			                	String dataOfSourceVertex = ((Text) childs.get(childs.size()-1)).getText();
+					        	
+					        	if(result.isPresent() && isInputValid(result.get(),dataOfSourceVertex) ){
 					        		if (result.isPresent()){
 						        		StackPane vertexTo = null;
 						        		for(Node child : centerPane.getChildren()) {
@@ -484,6 +489,33 @@ public class GraphPanelController {
 		    return circleOnMousePressedEventHandler;
 	}
 	
+	private boolean outSideParentBounds( Bounds childBounds, double newX, double newY) {
+
+        Bounds parentBounds = centerPane.getLayoutBounds();
+
+        //check if too left
+        if( parentBounds.getMaxX() <= (newX + childBounds.getMaxX()) ) {
+            return true ;
+        }
+
+        //check if too right
+        if( parentBounds.getMinX() >= (newX + childBounds.getMinX()) ) {
+            return true ;
+        }
+
+        //check if too down
+        if( parentBounds.getMaxY() <= (newY + childBounds.getMaxY()) ) {
+            return true ;
+        }
+
+        //check if too up
+        if( parentBounds.getMinY() >= (newY + childBounds.getMinY()) ) {
+            return true ;
+        }
+
+        return false;
+    }
+	
 	@FXML
 	private EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
 		
@@ -492,13 +524,52 @@ public class GraphPanelController {
 		 
 		        @Override
 		        public void handle(MouseEvent t) {
-
+		        
 		        	
+//		            double offsetX = t.getSceneX() - orgSceneX;
+//		            double offsetY = t.getSceneY() - orgSceneY;
+//		            
+//		            if( outSideParentBounds(currentStackPane.getLayoutBounds(), layoutX + ((StackPane)(t.getSource())).getTranslateX(), 
+//		            		layoutY + ((StackPane)(t.getSource())).getTranslateY()) ) {  
+//		            	
+//		            	return; 
+//		            }
+////		            
+//		            currentStackPane.setTranslateX(offsetX);
+//		            currentStackPane.setTranslateY(offsetY);
+		        
+		        	// Offset of drag
 		            double offsetX = t.getSceneX() - orgSceneX;
 		            double offsetY = t.getSceneY() - orgSceneY;
-		            currentStackPane.setTranslateX(offsetX);
-		            currentStackPane.setTranslateY(offsetY);
-		        
+
+		            // Taking parent bounds
+		            Bounds parentBounds = currentStackPane.getParent().getLayoutBounds();
+
+		            // Drag node bounds
+		            double currPaneLayoutX = currentStackPane.getLayoutX();
+		            double currPaneWidth = currentStackPane.getWidth();
+		            double currPaneLayoutY = currentStackPane.getLayoutY();
+		            double currPaneHeight = currentStackPane.getHeight();
+
+		            if ((currPaneLayoutX + offsetX > -1) && (currPaneLayoutX + offsetX < parentBounds.getWidth() - currPaneWidth)) {
+		                // If the dragNode bounds is within the parent bounds, then you can set the offset value.
+		                currentStackPane.setTranslateX(offsetX);
+		            } else if (currPaneLayoutX + offsetX < 0) {
+		                // If the sum of your offset and current layout position is negative, then you ALWAYS update your translate value to negative layout value
+		                // which makes the final layout position to 0 in mouse released event.
+		                currentStackPane.setTranslateX(-currPaneLayoutX);
+		            } else {
+		                // If your dragNode bounds are outside parent bounds,ALWAYS setting the translate value that fits your node at end.
+		                currentStackPane.setTranslateX(parentBounds.getWidth() - currPaneLayoutX - currPaneWidth);
+		            }
+
+		            if ((currPaneLayoutY + offsetY < parentBounds.getHeight() - currPaneHeight) && (currPaneLayoutY + offsetY > -1)) {
+		                currentStackPane.setTranslateY(offsetY);
+		            } else if (currPaneLayoutY + offsetY < 0) {
+		                currentStackPane.setTranslateY(-currPaneLayoutY);
+		            } else {
+		                currentStackPane.setTranslateY(parentBounds.getHeight() - currPaneLayoutY - currPaneHeight);
+		            }
 		        }
 		    };
 		    
@@ -516,13 +587,9 @@ public class GraphPanelController {
 		 
 		        @Override
 		        public void handle(MouseEvent t) {
-//		        	((StackPane)(t.getSource())).setLayoutX(newTranslateX - offsetX  );
-//		            ((StackPane)(t.getSource())).setLayoutY(newTranslateY - offsetY  );
 		        	
 		        	currentStackPane.setLayoutX(layoutX + ((StackPane)(t.getSource())).getTranslateX());
 		        	currentStackPane.setLayoutY(layoutY + ((StackPane)(t.getSource())).getTranslateY());
-		        	newTranslateX = ((StackPane)(t.getSource())).getTranslateX();
-		        	newTranslateY = ((StackPane)(t.getSource())).getTranslateY();
 		        	currentStackPane.setTranslateX(0);
 		        	currentStackPane.setTranslateY(0);
 		        }
@@ -971,92 +1038,139 @@ public class GraphPanelController {
     	return false;
     }
     
-    private boolean isInputValid(String input) {
+    private boolean isInputValid(String input,String startVertex) {
     	
     	String selectedDataChoice = getSelectedDataChoice();
     	
     	String errorMessage = "";
     	if (input == null || input.length() == 0) {
     		
-    		errorMessage += "please enter some data";
+    		errorMessage += "Field cannot be left empty please add some data.";
     		
     	}
+    	else if(input.equals(startVertex)) {
+			errorMessage+="You cannot add an edge to itself.";
+		}
     	else if(isInteger(input) && !selectedDataChoice.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
     		
     	}
     	else if(isDouble(input) && !selectedDataChoice.equals("Double")) {
     		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
     		
     	}
     	else if(isString(input) && !selectedDataChoice.equals("String")) {
     		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice;
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
     		
-    	}else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
-    			&& !dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(input))){
-
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    	}else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
     		
-    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
-    			&& !dataModel.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))){
+    		if(!dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedNonWeightedInt().isAdjacent(Integer.parseInt(startVertex), Integer.parseInt(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+
+    		if(!dataModel.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedNonWeightedDouble().isAdjacent(Double.parseDouble(startVertex), Double.parseDouble(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
-    	}else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
-    			&& !dataModel.getUndirectedNonWeightedString().containsVertex(input)){
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getUndirectedNonWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedNonWeightedString().isAdjacent(startVertex, input)) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}
-    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
-    			&& !dataModel.getUndirectedWeightedInt().containsVertex(Integer.parseInt(input))){
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph")){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getUndirectedWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedWeightedInt().isAdjacent(Integer.parseInt(startVertex), Integer.parseInt(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
     			&& !dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedWeightedDouble().isAdjacent(Double.parseDouble(startVertex), Double.parseDouble(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
     			&& !dataModel.getUndirectedWeightedString().containsVertex(input)){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getUndirectedWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getUndirectedWeightedString().isAdjacent(startVertex, input)) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}
     	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
     			&& !dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(startVertex), Integer.parseInt(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
     			&& !dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedNonWeightedDouble().isAdjacent(Double.parseDouble(startVertex), Double.parseDouble(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
     			&& !dataModel.getDirectedNonWeightedString().containsVertex(input)){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedNonWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedNonWeightedString().isAdjacent(startVertex, input)) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}
     	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") 
     			&& !dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedWeightedInt().isAdjacent(Integer.parseInt(startVertex), Integer.parseInt(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") 
     			&& !dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedWeightedDouble().isAdjacent(Double.parseDouble(startVertex), Double.parseDouble(input))) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") 
     			&& !dataModel.getDirectedWeightedString().containsVertex(input)){
 
-    		errorMessage+="The vertex you inputted does not exist in this graph";
+    		if(!dataModel.getDirectedWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}else if(dataModel.getDirectedWeightedString().isAdjacent(startVertex, input)) {
+    			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
+    		}
     		
     	}
     	
@@ -1065,8 +1179,8 @@ public class GraphPanelController {
          } else {
              // Show the error message.
              Alert alert = new Alert(AlertType.ERROR);
-             alert.setTitle("Invalid Fields");
-             alert.setHeaderText("Please correct invalid fields");
+             alert.setTitle("Invalid Edge Fields.");
+             alert.setHeaderText("You have provided incorrect data.");
              alert.setContentText(errorMessage);
              
              alert.showAndWait();

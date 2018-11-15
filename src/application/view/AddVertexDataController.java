@@ -364,23 +364,23 @@ public class AddVertexDataController {
 	    	if(type.equals("Integer") && dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
 	    		Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(dialogStage);
-	            alert.setTitle("Duplicate Vertex");
-	            alert.setHeaderText("Cannot add duplicate vertices");
-	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+	            alert.setTitle("Duplicate Vertex.");
+	            alert.setHeaderText("Cannot add duplicate vertices.");
+	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph.");
 	            alert.showAndWait();
 	    	}else if(type.equals("Double") && dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
 	    		Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(dialogStage);
-	            alert.setTitle("Duplicate Vertex");
-	            alert.setHeaderText("Cannot add duplicate vertices");
-	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+	            alert.setTitle("Duplicate Vertex.");
+	            alert.setHeaderText("Cannot add duplicate vertices.");
+	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph.");
 	            alert.showAndWait();
 	    	}else if(type.equals("String") && dataModel.getDirectedWeightedString().containsVertex(inputDataField.getText())) {
 	    		Alert alert = new Alert(AlertType.ERROR);
 	            alert.initOwner(dialogStage);
-	            alert.setTitle("Duplicate Vertex");
-	            alert.setHeaderText("Cannot add duplicate vertices");
-	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+	            alert.setTitle("Duplicate Vertex.");
+	            alert.setHeaderText("Cannot add duplicate vertices.");
+	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph.");
 	            alert.showAndWait();
 	    	}
 	    	
