@@ -44,10 +44,28 @@ public class GraphPanelController {
 	private AnchorPane rootAnchorPane;
 	
 	@FXML
-	private Pane centerPane;
+	private Pane centerPaneUndirectedNonWeightedGraph;
 	
 	@FXML
-	private ChoiceBox<String> choiceBox;
+	private Pane centerPaneUndirectedWeightedGraph;
+	
+	@FXML
+	private Pane centerPaneDirectedNonWeightedGraph;
+	
+	@FXML
+	private Pane centerPaneDirectedWeightedGraph;
+	
+	@FXML
+	private ChoiceBox<String> choiceBoxUndirectedNonWeightedGraph;
+	
+	@FXML
+	private ChoiceBox<String> choiceBoxUndirectedWeightedGraph;
+	
+	@FXML
+	private ChoiceBox<String> choiceBoxDirectedNonWeightedGraph;
+	
+	@FXML
+	private ChoiceBox<String> choiceBoxDirectedWeightedGraph;
 	
 	@FXML
 	private TabPane tabs;
@@ -62,7 +80,11 @@ public class GraphPanelController {
     private double newTranslateX, newTranslateY;
     private double offsetX, offsetY;
     private double layoutX,layoutY;
-    private String preSelectionChoice;
+    
+    private String preSelectionChoiceUndirectedNonWeightedGraph;
+    private String preSelectionChoiceUndirectedWeightedGraph;
+    private String preSelectionChoiceDirectedNonWeightedGraph;
+    private String preSelectionChoiceDirectedWeightedGraph;
     
     private MenuItem hoverMenuItemAddEdge;
 
@@ -70,10 +92,25 @@ public class GraphPanelController {
 	@FXML
 	private void initialize() {
 		
-		choiceBox.getItems().addAll("Integer","Double","String");
-		choiceBox.getSelectionModel().selectFirst();
-		choiceBox.setOnMouseClicked(this::selectionChoice);
-		choiceBox.setOnAction(this::handleChoiceBox);
+		choiceBoxUndirectedNonWeightedGraph.getItems().addAll("Integer","Double","String");
+		choiceBoxUndirectedNonWeightedGraph.getSelectionModel().selectFirst();
+		choiceBoxUndirectedNonWeightedGraph.setOnMouseClicked(this::selectionChoiceUndirectedNonWeightedGraph);
+		choiceBoxUndirectedNonWeightedGraph.setOnAction(this::handleChoiceBox);
+		
+		choiceBoxUndirectedWeightedGraph.getItems().addAll("Integer","Double","String");
+		choiceBoxUndirectedWeightedGraph.getSelectionModel().selectFirst();
+		choiceBoxUndirectedWeightedGraph.setOnMouseClicked(this::selectionChoiceUndirectedWeightedGraph);
+		choiceBoxUndirectedWeightedGraph.setOnAction(this::handleChoiceBox);
+		
+		choiceBoxDirectedNonWeightedGraph.getItems().addAll("Integer","Double","String");
+		choiceBoxDirectedNonWeightedGraph.getSelectionModel().selectFirst();
+		choiceBoxDirectedNonWeightedGraph.setOnMouseClicked(this::selectionChoiceDirectedNonWeightedGraph);
+		choiceBoxDirectedNonWeightedGraph.setOnAction(this::handleChoiceBox);
+		
+		choiceBoxDirectedWeightedGraph.getItems().addAll("Integer","Double","String");
+		choiceBoxDirectedWeightedGraph.getSelectionModel().selectFirst();
+		choiceBoxDirectedWeightedGraph.setOnMouseClicked(this::selectionChoiceDirectedWeightedGraph);
+		choiceBoxDirectedWeightedGraph.setOnAction(this::handleChoiceBox);
 		
 		hoverMenu = new ContextMenu();
 		hoverMenuItemAddEdge = new MenuItem("Add Edge?");
@@ -143,7 +180,6 @@ public class GraphPanelController {
 		        @Override
 		        public void handle(MouseEvent t) {
 		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && t.getSource() instanceof Line) {
-		        		System.out.println("febfdebj");
 		        		 Alert alert = new Alert(AlertType.ERROR);
 		        		 
 		        		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -163,7 +199,7 @@ public class GraphPanelController {
 		                	 StackPane vertexStart = null;
 		                	 StackPane vertexEnd = null;
 		                	 
-		                	 for(Node child:centerPane.getChildren()) {
+		                	 for(Node child:centerPaneUndirectedNonWeightedGraph.getChildren()) {
 		                		 if(child instanceof StackPane) {
 		                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getStartX() && 
 		                					 child.getLayoutY() + ((Region) child).getHeight() / 2  == lineToRemove.getStartY()) {
@@ -173,7 +209,7 @@ public class GraphPanelController {
 		                		 }
 		                	 }
 		                	 
-		                	 for(Node child:centerPane.getChildren()) {
+		                	 for(Node child:centerPaneUndirectedNonWeightedGraph.getChildren()) {
 
 		                		 if(child instanceof StackPane) {
 		                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getEndX() && 
@@ -193,68 +229,68 @@ public class GraphPanelController {
 		                	 
 		                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataOfVertexStartAsString) && isInteger(dataOfVertexEndAsString)) {
 		                		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		dataModel.getUndirectedNonWeightedInt().removeEdge(Integer.parseInt(dataOfVertexStartAsString), Integer.parseInt(dataOfVertexEndAsString));
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(dataOfVertexStartAsString) && isDouble(dataOfVertexEndAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		dataModel.getUndirectedNonWeightedDouble().removeEdge(Double.parseDouble(dataOfVertexStartAsString), Double.parseDouble(dataOfVertexEndAsString));
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(dataOfVertexStartAsString) && isString(dataOfVertexEndAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		dataModel.getUndirectedNonWeightedString().removeEdge(dataOfVertexStartAsString, dataOfVertexEndAsString);
 		                 		
 		                 	}
 //		                 	
 //		                 	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromUndirectedWeightedGraph("Integer",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromUndirectedWeightedGraph("Double",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromUndirectedWeightedGraph("String",dataAsString);
 //		                 		
 //		                 	}
 //		                 	
 //		                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedNonWeightedGraph("Integer",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedNonWeightedGraph("Double",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedNonWeightedGraph("String",dataAsString);
 //		                 		
 //		                 	}
 //		                 	
 //		                 	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedWeightedGraph("Integer",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedWeightedGraph("Double",dataAsString);
 //		                 		
 //		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(dataAsString)) {
 //		                 		
-//		                 		centerPane.getChildren().remove(t.getSource());
+//		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 //		                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
 //		                 		
 //		                 	}
@@ -306,15 +342,11 @@ public class GraphPanelController {
 				        		 dialog.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
 					        	// Traditional way to get the response value.
 					        	Optional<String> result = dialog.showAndWait();
-					        	
-					        	StackPane sourceVertex = (StackPane)(t.getSource());
-				        		ObservableList<Node> childsOfSourceVertex = ((StackPane)(t.getSource())).getChildren();
-			                	String dataOfSourceVertex = ((Text) childs.get(childs.size()-1)).getText();
-					        	
-					        	if(result.isPresent() && isInputValid(result.get(),dataOfSourceVertex) ){
+
+					        	if(result.isPresent() && isInputValid(result.get(),dataAsString) ){
 					        		if (result.isPresent()){
 						        		StackPane vertexTo = null;
-						        		for(Node child : centerPane.getChildren()) {
+						        		for(Node child : centerPaneUndirectedNonWeightedGraph.getChildren()) {
 					                		
 					                		if(child instanceof StackPane) {
 					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
@@ -344,7 +376,7 @@ public class GraphPanelController {
 						        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
 						        	
 
-						        		centerPane.getChildren().add(0,line);
+						        		centerPaneUndirectedNonWeightedGraph.getChildren().add(0,line);
 						        	}
 					        	}
 					        	
@@ -381,7 +413,7 @@ public class GraphPanelController {
 		                	 Line edgeToRemove = null;
 		                	 ArrayList<Line>  edgesToRemove = new ArrayList<Line>();
 		                	 
-		                	 for(Node child:centerPane.getChildren()) {
+		                	 for(Node child:centerPaneUndirectedNonWeightedGraph.getChildren()) {
 		                		 
 		                		 if(child instanceof Line) {
 		                			 
@@ -396,68 +428,68 @@ public class GraphPanelController {
 		                	 
 		                	if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(dataAsString)) {
 		                		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedNonWeightedGraph("Integer",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedNonWeightedGraph("Double",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedNonWeightedGraph("String",dataAsString);
 		                 		
 		                 	}
 		                 	
 		                 	else if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedWeightedGraph("Integer",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isDouble(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedWeightedGraph("Double",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromUndirectedWeightedGraph("String",dataAsString);
 		                 		
 		                 	}
 		                 	
 		                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedNonWeightedGraph("Integer",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedNonWeightedGraph("Double",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedNonWeightedGraph("String",dataAsString);
 		                 		
 		                 	}
 		                 	
 		                 	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedWeightedGraph("Integer",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedWeightedGraph("Double",dataAsString);
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(dataAsString)) {
 		                 		
-		                 		centerPane.getChildren().remove(t.getSource());
+		                 		centerPaneUndirectedNonWeightedGraph.getChildren().remove(t.getSource());
 		                 		removeVertexFromDirectedWeightedGraph("String",dataAsString);
 		                 		
 		                 	}
@@ -465,7 +497,7 @@ public class GraphPanelController {
 		                	if(edgesToRemove.size() != 0) {
 	                 			
 	                 			for(Line edge: edgesToRemove) {
-	                 				centerPane.getChildren().remove(edge);
+	                 				centerPaneUndirectedNonWeightedGraph.getChildren().remove(edge);
 	                 			}
 	                 		}
 		                	
@@ -489,33 +521,6 @@ public class GraphPanelController {
 		    return circleOnMousePressedEventHandler;
 	}
 	
-	private boolean outSideParentBounds( Bounds childBounds, double newX, double newY) {
-
-        Bounds parentBounds = centerPane.getLayoutBounds();
-
-        //check if too left
-        if( parentBounds.getMaxX() <= (newX + childBounds.getMaxX()) ) {
-            return true ;
-        }
-
-        //check if too right
-        if( parentBounds.getMinX() >= (newX + childBounds.getMinX()) ) {
-            return true ;
-        }
-
-        //check if too down
-        if( parentBounds.getMaxY() <= (newY + childBounds.getMaxY()) ) {
-            return true ;
-        }
-
-        //check if too up
-        if( parentBounds.getMinY() >= (newY + childBounds.getMinY()) ) {
-            return true ;
-        }
-
-        return false;
-    }
-	
 	@FXML
 	private EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
 		
@@ -524,19 +529,6 @@ public class GraphPanelController {
 		 
 		        @Override
 		        public void handle(MouseEvent t) {
-		        
-		        	
-//		            double offsetX = t.getSceneX() - orgSceneX;
-//		            double offsetY = t.getSceneY() - orgSceneY;
-//		            
-//		            if( outSideParentBounds(currentStackPane.getLayoutBounds(), layoutX + ((StackPane)(t.getSource())).getTranslateX(), 
-//		            		layoutY + ((StackPane)(t.getSource())).getTranslateY()) ) {  
-//		            	
-//		            	return; 
-//		            }
-////		            
-//		            currentStackPane.setTranslateX(offsetX);
-//		            currentStackPane.setTranslateY(offsetY);
 		        
 		        	// Offset of drag
 		            double offsetX = t.getSceneX() - orgSceneX;
@@ -601,9 +593,25 @@ public class GraphPanelController {
 	 
 	
 	@FXML
-	private void selectionChoice(MouseEvent e) {
-		preSelectionChoice = getSelectedDataChoice();
+	private void selectionChoiceUndirectedNonWeightedGraph(MouseEvent e) {
+		preSelectionChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
 	}
+	
+	@FXML
+	private void selectionChoiceUndirectedWeightedGraph(MouseEvent e) {
+		preSelectionChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
+	}
+	
+	@FXML
+	private void selectionChoiceDirectedNonWeightedGraph(MouseEvent e) {
+		preSelectionChoiceDirectedNonWeightedGraph = getSelectedDataChoiceDirectedNonWeightedGraph();
+	}
+	
+	@FXML
+	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
+		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+
 	
 	@FXML
 	private void handleChoiceBox(ActionEvent e) {
@@ -621,21 +629,21 @@ public class GraphPanelController {
  			
  			if(result.get() == okButton) {
  				
- 				centerPane.getChildren().clear();
+ 				centerPaneUndirectedNonWeightedGraph.getChildren().clear();
  				
- 	        	 if(preSelectionChoice.equals("Integer")) {
+ 	        	 if(preSelectionChoiceUndirectedNonWeightedGraph.equals("Integer")) {
  	        		 
  	        		 dataModel.getListOfUndirectedNonWeightedIntVertices().clear();
  	        		 dataModel.getVertexDataUndirectedNonWeightedInt().clear();
  	        		 dataModel.getUndirectedNonWeightedInt().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("Double")) {
+ 	        	 }else if(preSelectionChoiceUndirectedNonWeightedGraph.equals("Double")) {
  	        		 
  	        		dataModel.getListOfUndirectedNonWeightedDoubleVertices().clear();
 	        		dataModel.getVertexDataUndirectedNonWeightedDouble().clear();
 	        		dataModel.getUndirectedNonWeightedDouble().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("String")) {
+ 	        	 }else if(preSelectionChoiceUndirectedNonWeightedGraph.equals("String")) {
  	        		 
  	        		dataModel.getListOfUndirectedNonWeightedStringVertices().clear();
 	        		dataModel.getVertexDataUndirectedNonWeightedString().clear();
@@ -645,7 +653,7 @@ public class GraphPanelController {
  
  	         }else if(result.get() == cancelButton){
  	        	 
- 	        	 choiceBox.setValue(preSelectionChoice);
+ 	        	 choiceBoxUndirectedNonWeightedGraph.setValue(preSelectionChoiceUndirectedNonWeightedGraph);
 
  	         }
  			
@@ -655,21 +663,21 @@ public class GraphPanelController {
  			
  			if(result.get() == okButton) {
  				
- 				centerPane.getChildren().clear();
+ 				centerPaneUndirectedWeightedGraph.getChildren().clear();
  				
- 	        	 if(preSelectionChoice.equals("Integer")) {
+ 	        	 if(preSelectionChoiceUndirectedWeightedGraph.equals("Integer")) {
  	        		 
  	        		 dataModel.getListOfUndirectedWeightedIntVertices().clear();
  	        		 dataModel.getVertexDataUndirectedWeightedInt().clear();
  	        		 dataModel.getUndirectedWeightedInt().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("Double")) {
+ 	        	 }else if(preSelectionChoiceUndirectedWeightedGraph.equals("Double")) {
  	        		 
  	        		dataModel.getListOfUndirectedWeightedDoubleVertices().clear();
 	        		dataModel.getVertexDataUndirectedWeightedDouble().clear();
 	        		dataModel.getUndirectedWeightedDouble().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("String")) {
+ 	        	 }else if(preSelectionChoiceUndirectedWeightedGraph.equals("String")) {
  	        		 
  	        		dataModel.getListOfUndirectedWeightedStringVertices().clear();
 	        		dataModel.getVertexDataUndirectedWeightedString().clear();
@@ -678,7 +686,7 @@ public class GraphPanelController {
  	        	 }
 
  	         }else if(result.get() == cancelButton){
- 	        	 choiceBox.setValue(preSelectionChoice);
+ 	        	 choiceBoxUndirectedWeightedGraph.setValue(preSelectionChoiceUndirectedWeightedGraph);
 
  	         }
  	 			
@@ -688,21 +696,21 @@ public class GraphPanelController {
  			
  			if(result.get() == okButton) {
  				
- 				centerPane.getChildren().clear();
+ 				centerPaneDirectedNonWeightedGraph.getChildren().clear();
  				
- 	        	 if(preSelectionChoice.equals("Integer")) {
+ 	        	 if(preSelectionChoiceDirectedNonWeightedGraph.equals("Integer")) {
  	        		 
  	        		 dataModel.getListOfDirectedNonWeightedIntVertices().clear();
  	        		 dataModel.getVertexDataDirectedNonWeightedInt().clear();
  	        		 dataModel.getDirectedNonWeightedInt().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("Double")) {
+ 	        	 }else if(preSelectionChoiceDirectedNonWeightedGraph.equals("Double")) {
  	        		 
  	        		dataModel.getListOfDirectedNonWeightedDoubleVertices().clear();
 	        		dataModel.getVertexDataDirectedNonWeightedDouble().clear();
 	        		dataModel.getDirectedNonWeightedDouble().clearGraph();
  	        		 
- 	        	 }else if(preSelectionChoice.equals("String")) {
+ 	        	 }else if(preSelectionChoiceDirectedNonWeightedGraph.equals("String")) {
  	        		 
  	        		dataModel.getListOfDirectedNonWeightedStringVertices().clear();
 	        		dataModel.getVertexDataDirectedNonWeightedString().clear();
@@ -711,7 +719,7 @@ public class GraphPanelController {
  	        	 }
 
  	         }else if(result.get() == cancelButton){
- 	        	 choiceBox.setValue(preSelectionChoice);
+ 	        	 choiceBoxDirectedNonWeightedGraph.setValue(preSelectionChoiceDirectedNonWeightedGraph);
 
  	         }
  		}
@@ -720,21 +728,21 @@ public class GraphPanelController {
 	 			
 	 			if(result.get() == okButton) {
 	 				
-	 				centerPane.getChildren().clear();
+	 				centerPaneDirectedWeightedGraph.getChildren().clear();
 	 				
-	 	        	 if(preSelectionChoice.equals("Integer")) {
+	 	        	 if(preSelectionChoiceDirectedWeightedGraph.equals("Integer")) {
 	 	        		 
 	 	        		 dataModel.getListOfDirectedWeightedIntVertices().clear();
 	 	        		 dataModel.getVertexDataDirectedWeightedInt().clear();
 	 	        		 dataModel.getDirectedWeightedInt().clearGraph();
 	 	        		 
-	 	        	 }else if(preSelectionChoice.equals("Double")) {
+	 	        	 }else if(preSelectionChoiceDirectedWeightedGraph.equals("Double")) {
 	 	        		 
 	 	        		dataModel.getListOfDirectedWeightedDoubleVertices().clear();
 		        		dataModel.getVertexDataDirectedWeightedDouble().clear();
 		        		dataModel.getDirectedWeightedDouble().clearGraph();
 	 	        		 
-	 	        	 }else if(preSelectionChoice.equals("String")) {
+	 	        	 }else if(preSelectionChoiceDirectedWeightedGraph.equals("String")) {
 	 	        		 
 	 	        		dataModel.getListOfDirectedWeightedStringVertices().clear();
 		        		dataModel.getVertexDataDirectedWeightedString().clear();
@@ -743,7 +751,7 @@ public class GraphPanelController {
 	 	        	 }
 	 	        	 
 	 	         }else if(result.get() == cancelButton){
-	 	        	 choiceBox.setValue(preSelectionChoice);
+	 	        	 choiceBoxDirectedWeightedGraph.setValue(preSelectionChoiceDirectedWeightedGraph);
 
 	 	         }
 	 		}
@@ -757,57 +765,57 @@ public class GraphPanelController {
 			
 			String vertexText = "";
 			
-			if(getSelectedDataChoice().equals("Integer") && getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			if(getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer") && getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 				
 				vertexText = dataModel.getListOfUndirectedNonWeightedIntVertices().get(dataModel.getListOfUndirectedNonWeightedIntVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("Double") && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+			}else if(getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double") && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
 				
 				vertexText = dataModel.getListOfUndirectedNonWeightedDoubleVertices().get(dataModel.getListOfUndirectedNonWeightedDoubleVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("String") && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+			}else if(getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String") && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
 				
 				vertexText = dataModel.getListOfUndirectedNonWeightedStringVertices().get(dataModel.getListOfUndirectedNonWeightedStringVertices().size() - 1).toString();
 				
 			}
 			
-			else if(getSelectedDataChoice().equals("Integer") && getSelectedTabName().equals("Undirected Weighted Graph")) {
+			else if(getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer") && getSelectedTabName().equals("Undirected Weighted Graph")) {
 				
 				vertexText = dataModel.getListOfUndirectedWeightedIntVertices().get(dataModel.getListOfUndirectedWeightedIntVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("Double") && getSelectedTabName().equals("Undirected Weighted Graph")){
+			}else if(getSelectedDataChoiceUndirectedWeightedGraph().equals("Double") && getSelectedTabName().equals("Undirected Weighted Graph")){
 				
 				vertexText = dataModel.getListOfUndirectedWeightedDoubleVertices().get(dataModel.getListOfUndirectedWeightedDoubleVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("String") && getSelectedTabName().equals("Undirected Weighted Graph")){
+			}else if(getSelectedDataChoiceUndirectedWeightedGraph().equals("String") && getSelectedTabName().equals("Undirected Weighted Graph")){
 				
 				vertexText = dataModel.getListOfUndirectedWeightedStringVertices().get(dataModel.getListOfUndirectedWeightedStringVertices().size() - 1).toString();
 				
 			}
 			
-			else if(getSelectedDataChoice().equals("Integer") && getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			else if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer") && getSelectedTabName().equals("Directed Non-Weighted Graph")) {
 				
 				vertexText = dataModel.getListOfDirectedNonWeightedIntVertices().get(dataModel.getListOfDirectedNonWeightedIntVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("Double") && getSelectedTabName().equals("Directed Non-Weighted Graph")){
+			}else if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double") && getSelectedTabName().equals("Directed Non-Weighted Graph")){
 				
 				vertexText = dataModel.getListOfDirectedNonWeightedDoubleVertices().get(dataModel.getListOfDirectedNonWeightedDoubleVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("String") && getSelectedTabName().equals("Directed Non-Weighted Graph")){
+			}else if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("String") && getSelectedTabName().equals("Directed Non-Weighted Graph")){
 				
 				vertexText = dataModel.getListOfDirectedNonWeightedStringVertices().get(dataModel.getListOfDirectedNonWeightedStringVertices().size() - 1).toString();
 				
 			}
 			
-			else if(getSelectedDataChoice().equals("Integer") && getSelectedTabName().equals("Directed Weighted Graph")) {
+			else if(getSelectedDataChoiceDirectedWeightedGraph().equals("Integer") && getSelectedTabName().equals("Directed Weighted Graph")) {
 				
 				vertexText = dataModel.getListOfDirectedWeightedIntVertices().get(dataModel.getListOfDirectedWeightedIntVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("Double") && getSelectedTabName().equals("Directed Weighted Graph")){
+			}else if(getSelectedDataChoiceDirectedWeightedGraph().equals("Double") && getSelectedTabName().equals("Directed Weighted Graph")){
 				
 				vertexText = dataModel.getListOfDirectedWeightedDoubleVertices().get(dataModel.getListOfDirectedWeightedDoubleVertices().size() - 1).toString();
 				
-			}else if(getSelectedDataChoice().equals("String") && getSelectedTabName().equals("Directed Weighted Graph")){
+			}else if(getSelectedDataChoiceDirectedWeightedGraph().equals("String") && getSelectedTabName().equals("Directed Weighted Graph")){
 				
 				vertexText = dataModel.getListOfDirectedWeightedStringVertices().get(dataModel.getListOfDirectedWeightedStringVertices().size() - 1).toString();
 				
@@ -833,16 +841,34 @@ public class GraphPanelController {
    			stack.setOnMouseDragged(mouseDraggedOnVertexEvent());
    			stack.setOnMouseReleased(mouseReleasedOnVertexEvent());
 			
-   			centerPane.getChildren().add(stack);
+   			centerPaneUndirectedNonWeightedGraph.getChildren().add(stack);
    			
 		}	
    			
    			
 	}
 		
-	public String getSelectedDataChoice() {
+	public String getSelectedDataChoiceUndirectedNonWeightedGraph() {
 
-		return choiceBox.getSelectionModel().getSelectedItem();
+		return choiceBoxUndirectedNonWeightedGraph.getSelectionModel().getSelectedItem();
+
+	}
+	
+	public String getSelectedDataChoiceUndirectedWeightedGraph() {
+
+		return choiceBoxUndirectedWeightedGraph.getSelectionModel().getSelectedItem();
+
+	}
+	
+	public String getSelectedDataChoiceDirectedNonWeightedGraph() {
+
+		return choiceBoxDirectedNonWeightedGraph.getSelectionModel().getSelectedItem();
+
+	}
+	
+	public String getSelectedDataChoiceDirectedWeightedGraph() {
+
+		return choiceBoxDirectedWeightedGraph.getSelectionModel().getSelectedItem();
 
 	}
 	
@@ -1040,7 +1066,10 @@ public class GraphPanelController {
     
     private boolean isInputValid(String input,String startVertex) {
     	
-    	String selectedDataChoice = getSelectedDataChoice();
+    	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
+    	String selectedDataChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
+    	String selectedDataChoiceDirectedNonWeightedGraph = getSelectedDataChoiceDirectedNonWeightedGraph();
+    	String selectedDataChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
     	
     	String errorMessage = "";
     	if (input == null || input.length() == 0) {
@@ -1051,21 +1080,84 @@ public class GraphPanelController {
     	else if(input.equals(startVertex)) {
 			errorMessage+="You cannot add an edge to itself.";
 		}
-    	else if(isInteger(input) && !selectedDataChoice.equals("Integer")) {
+    	
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
+    			&& !selectedDataChoiceUndirectedNonWeightedGraph.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
-    		
-    	}
-    	else if(isDouble(input) && !selectedDataChoice.equals("Double")) {
-    		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
     		
     	}
-    	else if(isString(input) && !selectedDataChoice.equals("String")) {
+    	else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
+    			!selectedDataChoiceUndirectedNonWeightedGraph.equals("Double")) {
     		
-    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoice + ".";
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
     		
-    	}else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
+    			!selectedDataChoiceUndirectedNonWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
+    			&& !selectedDataChoiceUndirectedWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") && 
+    			!selectedDataChoiceUndirectedWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph") && 
+    			!selectedDataChoiceUndirectedWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
+    			&& !selectedDataChoiceDirectedNonWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    			!selectedDataChoiceDirectedNonWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    			!selectedDataChoiceDirectedNonWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") 
+    			&& !selectedDataChoiceDirectedWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    			!selectedDataChoiceDirectedWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") && 
+    			!selectedDataChoiceDirectedWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	
+    	
+    	
+    	
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
     		
     		if(!dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";

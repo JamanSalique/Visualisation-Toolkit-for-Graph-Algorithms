@@ -13,7 +13,7 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
      */
 	@Override
 	public void addVertex(T v) {
-		if (!containsVertex(v)) {
+		if (super.containsVertex(v)) {
 			throw new IllegalArgumentException("Vertex already exists.");
         }
 		
