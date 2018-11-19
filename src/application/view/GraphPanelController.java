@@ -209,7 +209,8 @@ public class GraphPanelController {
 		 
 		        @Override
 		        public void handle(MouseEvent t) {
-		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && (t.getSource() instanceof Line || t.getSource() instanceof Label)) {
+		        	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && (t.getSource() instanceof Line || t.getSource() instanceof Label
+		        			|| t.getSource() instanceof Polygon || t.getSource() instanceof Rectangle)) {
 		        		 Alert alert = new Alert(AlertType.WARNING);
 		        		 
 		        		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -226,9 +227,117 @@ public class GraphPanelController {
 		                	 
 		                	 Line lineToRemove = null;
 		                	 Label weightBox = null;
+		                	 Polygon arrowheadToRemove = null;
+		                	 Rectangle rectangleToRemove = null;
+		                	 boolean polygonOnLine = false;
 		                	 
-		                	 if(getSelectedTabName().equals("Undirected Non-Weighted Graph") || getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+		                	 if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 		                		 lineToRemove = (Line) t.getSource();
+		                	 }else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+		                		 
+		                		 if(t.getSource() instanceof Line) {
+		                			 lineToRemove = (Line) t.getSource();
+		                		 }else if(t.getSource() instanceof Polygon) {
+		                			 
+		                			 arrowheadToRemove = (Polygon) t.getSource();
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+		                				 
+		                				 if(child instanceof Line) {
+		                					 
+		                					 Line line = (Line) child;
+		                					 
+		                					 if(arrowheadToRemove.getLayoutX() == (line.getStartX() + line.getEndX()) / 2 && 
+		                						 arrowheadToRemove.getLayoutY() == (line.getStartY() + line.getEndY()) / 2) {
+		                						 
+		                						 polygonOnLine = true;
+			                				}
+		                					 
+		                				 }
+		                				 
+		                			 }
+		                			 
+		                		 }else if(t.getSource() instanceof Rectangle) {
+		                			 rectangleToRemove = (Rectangle) t.getSource();
+		                		 }
+
+		                		 if(lineToRemove == null && polygonOnLine) {
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+		                				 
+		                				 if(child instanceof Line) {
+		                					 
+		                					 Line line = (Line) child;
+		                					 
+		                					 if(arrowheadToRemove.getLayoutX() == (line.getStartX() + line.getEndX()) / 2 && 
+		                						 arrowheadToRemove.getLayoutY() == (line.getStartY() + line.getEndY()) / 2) {
+		                						 lineToRemove = line;
+		                						 
+			                				}
+		                					 
+		                				 }
+		                				 
+		                			 }
+		                			 
+		                		 }else if(arrowheadToRemove == null && t.getSource() instanceof Line) {
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+		                				 
+		                				 if(child instanceof Polygon) {
+		                					 
+		                					 Polygon arrowhead = (Polygon) child;
+		                					 
+		                					 if(arrowhead.getLayoutX() == (lineToRemove.getStartX() + lineToRemove.getEndX()) / 2 && 
+		                							 arrowhead.getLayoutY() == (lineToRemove.getStartY() + lineToRemove.getEndY()) / 2) {
+		                						 
+		                						 arrowheadToRemove = arrowhead;
+		                						 
+			                				}
+		                					 
+		                				 }
+		                				 
+		                			 }
+		                			 
+		                		 }else if(arrowheadToRemove == null && t.getSource() instanceof Rectangle) {
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+
+		                				 if(child instanceof Polygon) {
+		                					 
+		                					 Polygon arrowhead = (Polygon) child;
+		                					 
+		                					 if(arrowhead.getLayoutX() == rectangleToRemove.getX() + selfEdgeArrowheadPlacement && 
+		                							 arrowhead.getLayoutY() == rectangleToRemove.getY()) {
+		                						 
+		                						 arrowheadToRemove = arrowhead;
+		                						 
+			                				}
+		                					 
+		                				 }
+		                				 
+		                			 }
+		                			 
+		                		 }else if(rectangleToRemove == null && !polygonOnLine) {
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+
+		                				 if(child instanceof Rectangle) {
+		                					 
+		                					 Rectangle rect = (Rectangle) child;
+		                					 
+		                					 if(arrowheadToRemove.getLayoutX() == rect.getX() + selfEdgeArrowheadPlacement && 
+		                							 arrowheadToRemove.getLayoutY() == rect.getY()) {
+		                						 
+		                						 rectangleToRemove = rect;
+		                						 
+			                				}
+		                					 
+		                				 }
+		                				 
+		                			 }
+		                			 
+		                		 }
+		                		 
 		                	 }else if(getSelectedTabName().equals("Undirected Weighted Graph") || getSelectedTabName().equals("Directed Weighted Graph")) {
 		                		 if(t.getSource() instanceof Line) {
 		                			 lineToRemove = (Line) t.getSource();
@@ -372,32 +481,52 @@ public class GraphPanelController {
 		                		 
 		                	 }else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
 		                		 
-		                		 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
-			                		 if(child instanceof StackPane) {
-			                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getStartX() && 
-			                					 child.getLayoutY() + ((Region) child).getHeight() / 2  == lineToRemove.getStartY()) {
-			                				 
-			                				 vertexStart = (StackPane) child;
-			                			 }
-			                		 }
-			                	 }
-			                	 
-			                	 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+		                		 if(lineToRemove != null) {
+		                			 
+			                		 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+				                		 if(child instanceof StackPane) {
+				                			 if((child.getLayoutX() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getStartX() && 
+				                					 (child.getLayoutY() + ((Region) child).getHeight() / 2) + directedEdgePlacement  == lineToRemove.getStartY()) {
+				                				 
+				                				 vertexStart = (StackPane) child;
+				                			 }
+				                		 }
+				                	 }
+				                	 
+				                	 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
 
-			                		 if(child instanceof StackPane) {
-			                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getEndX() && 
-			                					 child.getLayoutY() + ((Region) child).getWidth() / 2 == lineToRemove.getEndY()) {
-			                				 vertexEnd = (StackPane) child;
-			                			 }
-			                		 }
-			                	 }
+				                		 if(child instanceof StackPane) {
+				                			 if((child.getLayoutX() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getEndX() && 
+				                					 (child.getLayoutY() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getEndY()) {
+				                				 vertexEnd = (StackPane) child;
+				                			 }
+				                		 }
+				                	 }
+				                	 
+		                		 }else if(rectangleToRemove != null) {
+		                			 
+		                			 for(Node child:centerPaneDirectedNonWeightedGraph.getChildren()) {
+				                		 if(child instanceof StackPane) {
+				                			 if((child.getLayoutX() + ((Region) child).getWidth() / 2) == rectangleToRemove.getX() && 
+				                					 (child.getLayoutY() + ((Region) child).getHeight() / 2)  == rectangleToRemove.getY()) {
+				                				 
+				                				 vertexStart = (StackPane) child;
+				                			 }
+				                		 }
+				                	 }
+		                			 
+		                			 vertexEnd =vertexStart;
+		                			 
+		                		 }
+		                		 
+
 		                		 
 		                	 }else if(getSelectedTabName().equals("Directed Weighted Graph")) {
 		                		 
 		                		 for(Node child:centerPaneDirectedWeightedGraph.getChildren()) {
 			                		 if(child instanceof StackPane) {
-			                			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getStartX() && 
-			                					 child.getLayoutY() + ((Region) child).getHeight() / 2  == lineToRemove.getStartY()) {
+			                			 if((child.getLayoutX() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getStartX() && 
+			                					 (child.getLayoutY() + ((Region) child).getHeight() / 2) + directedEdgePlacement == lineToRemove.getStartY()) {
 			                				 
 			                				 vertexStart = (StackPane) child;
 			                			 }
@@ -483,17 +612,43 @@ public class GraphPanelController {
 		                 	
 		                 	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(dataOfVertexStartAsString) && isInteger(dataOfVertexEndAsString)) {
 		                 		
-		                 		centerPaneDirectedNonWeightedGraph.getChildren().remove(t.getSource());
+		                 		if(t.getSource() instanceof Line || (t.getSource() instanceof Polygon && lineToRemove!=null)) {
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(lineToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 		}else if(t.getSource() instanceof Rectangle || (t.getSource() instanceof Polygon && lineToRemove==null)) {
+		                 			
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(rectangleToRemove);
+		                 			
+		                 		}
+		                 		
+		                 		
 		                 		dataModel.getDirectedNonWeightedInt().removeEdge(Integer.parseInt(dataOfVertexStartAsString), Integer.parseInt(dataOfVertexEndAsString));
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(dataOfVertexStartAsString) && isDouble(dataOfVertexEndAsString)) {
 		                 		
-		                 		centerPaneDirectedNonWeightedGraph.getChildren().remove(t.getSource());
+		                 		if(t.getSource() instanceof Line || (t.getSource() instanceof Polygon && lineToRemove!=null)) {
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(lineToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 		}else if(t.getSource() instanceof Rectangle || (t.getSource() instanceof Polygon && lineToRemove==null)) {
+		                 			
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(rectangleToRemove);
+		                 			
+		                 		}
 		                 		dataModel.getDirectedNonWeightedDouble().removeEdge(Double.parseDouble(dataOfVertexStartAsString), Double.parseDouble(dataOfVertexEndAsString));
 		                 		
 		                 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(dataOfVertexStartAsString) && isString(dataOfVertexEndAsString)) {
 		                 		
-		                 		centerPaneDirectedNonWeightedGraph.getChildren().remove(t.getSource());
+		                 		if(t.getSource() instanceof Line || (t.getSource() instanceof Polygon && lineToRemove!=null)) {
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(lineToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 		}else if(t.getSource() instanceof Rectangle || (t.getSource() instanceof Polygon && lineToRemove==null)) {
+		                 			
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(arrowheadToRemove);
+		                 			centerPaneDirectedNonWeightedGraph.getChildren().remove(rectangleToRemove);
+		                 			
+		                 		}
 		                 		dataModel.getDirectedNonWeightedString().removeEdge(dataOfVertexStartAsString, dataOfVertexEndAsString);
 		                 		
 		                 	}
@@ -687,6 +842,9 @@ public class GraphPanelController {
 								        			rect.setStrokeWidth(2);
 								        			rect.setFill(null);
 								        			
+								        			rect.setOnMouseClicked(Event::consume);
+									        		rect.setOnMousePressed(mouseClickedOnEdgeEvent());
+								        			
 //								        			rect.getTransforms().add(new Rotate(45,rect.getX(),rect.getY()));
 								        		    
 								        			centerPaneDirectedNonWeightedGraph.getChildren().add(0,rect);
@@ -698,7 +856,8 @@ public class GraphPanelController {
 								        	            7.0, -7.0 });
 								        	        arrowHead.setFill(Color.BLACK);
 								        	       
-								        	        
+								        	        arrowHead.setOnMouseClicked(Event::consume);
+									        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
 //								        	        
 								        	        
 								        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
@@ -744,8 +903,8 @@ public class GraphPanelController {
 						
 								        	       
 
-//									            	label.setOnMouseClicked(Event::consume);
-//									        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
+									            	arrowHead.setOnMouseClicked(Event::consume);
+									        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
 
 									        		
 									        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
@@ -759,12 +918,6 @@ public class GraphPanelController {
 									        		centerPaneDirectedNonWeightedGraph.getChildren().add(arrowHead);
 									        		centerPaneDirectedNonWeightedGraph.getChildren().add(0,line);
 								        		}
-								        		
-							        			
-
-								        		
-								        		
-
 							        			
 							        		}
 						        			
@@ -1009,8 +1162,8 @@ public class GraphPanelController {
 								            	label.setPrefHeight(30);
 								            	label.setAlignment(Pos.CENTER);
 
-//								            	label.setOnMouseClicked(Event::consume);
-//								        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
+								            	arrowHead.setOnMouseClicked(Event::consume);
+								        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
 								        		
 								        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
 								            	          () -> ((line.getStartX() + line.getEndX()) / 2) ,
