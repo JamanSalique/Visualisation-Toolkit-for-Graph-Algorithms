@@ -185,7 +185,7 @@ public class AddVertexDataController {
     	}
     	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && 
     			!selectedDataChoiceDirectedNonWeightedGraph.equals("Double")) {
-    		
+
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
     		
     	}
@@ -201,7 +201,7 @@ public class AddVertexDataController {
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
     		
     	}
-    	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && 
     			!selectedDataChoiceDirectedWeightedGraph.equals("Double")) {
     		
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";

@@ -7,6 +7,8 @@ import application.Main;
 import application.model.DataModel;
 import application.model.Vertex;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -28,7 +30,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -39,7 +40,10 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 
 public class GraphPanelController {
@@ -147,12 +151,15 @@ public class GraphPanelController {
      	
      	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
 
+     		dataModel.getDirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
      		
      	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-
+     		
+     		dataModel.getDirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
      		
      	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
 
+     		dataModel.getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
      		
      	}
 		
@@ -557,7 +564,8 @@ public class GraphPanelController {
 						        // Traditional way to get the response value.
 						        Optional<String> result = dialogNonWeightedEdge.showAndWait();
 						        	
-						        	if(result.isPresent() && isInputValid(result.get(),dataAsString,"") ){
+						        	if(result.isPresent() && isInputValid(result.get(),dataAsString,"") 
+						        			){
 						        		if(result.isPresent()) {
 						        			
 						        			StackPane vertexTo = null;
@@ -611,23 +619,150 @@ public class GraphPanelController {
 							        			
 							        			addEdgeHandlerNonWeighted(dataAsString,result.get());
 							        			
-							        			Line line = new Line();
-								        		line.setStrokeWidth(2);
-								        		
-								        		line.setOnMouseClicked(Event::consume);
-								        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
-
-								        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
-								        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
-								        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
-								        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
-
-								        		line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
-								        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-								        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
-								        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
+							        			double xMoveStart = 13;
+							        			double yMoveStart =13;
+							        			double xMoveEnd = 13;
+							        			double yMoveEnd =13;
 							        			
-								        		centerPaneDirectedNonWeightedGraph.getChildren().add(0,line);
+							        			if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
+							        				
+							        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+								                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+								                	String dataAsStringVertexTo = dataVertexTo.getText();
+								                	
+							        				if(dataModel.getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
+							        					xMoveStart = -xMoveStart;
+									        			yMoveStart = -yMoveStart;
+									        			
+									        			xMoveEnd = -xMoveEnd;
+									        			yMoveEnd = -yMoveEnd;
+							        				}
+							        				
+							        			}else if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
+							        				
+							        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+								                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+								                	String dataAsStringVertexTo = dataVertexTo.getText();
+								                	
+							        				if(dataModel.getDirectedNonWeightedDouble().isAdjacent(Double.parseDouble(dataAsStringVertexTo), Double.parseDouble(dataAsString))) {
+							        					xMoveStart = -xMoveStart;
+									        			yMoveStart = -yMoveStart;
+									        			
+									        			xMoveEnd = -xMoveEnd;
+									        			yMoveEnd = -yMoveEnd;
+							        				}
+							        				
+							        				
+							        			}else if(getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
+							        				
+							        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+								                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+								                	String dataAsStringVertexTo = dataVertexTo.getText();
+								                	
+							        				if(dataModel.getDirectedNonWeightedString().isAdjacent(dataAsStringVertexTo,dataAsString)) {
+							        					xMoveStart = -xMoveStart;
+									        			yMoveStart = -yMoveStart;
+									        			
+									        			xMoveEnd = -xMoveEnd;
+									        			yMoveEnd = -yMoveEnd;
+							        				}
+							        				
+							        				
+							        			}
+								        		
+								        		if(result.get().equals(dataAsString)) {
+								        			
+								        			Rectangle rect = new Rectangle();
+								        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
+								        			rect.yProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
+								        			rect.setHeight(35);
+								        			rect.setWidth(35);
+								        			rect.setStroke(Color.BLACK);
+								        			rect.setStrokeWidth(2);
+								        			rect.setFill(null);
+								        			centerPaneDirectedNonWeightedGraph.getChildren().add(0,rect);
+								        			
+								        			Polygon arrowHead = new Polygon();
+								        	        arrowHead.getPoints().addAll(new Double[]{
+								        	            0.0, 7.0,
+								        	            -7.0, -7.0,
+								        	            7.0, -7.0 });
+								        	        arrowHead.setFill(Color.BLACK);
+								        	       
+								        	        
+//								        	        
+								        	        
+								        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+								        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
+								        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
+								        	        
+								        	        arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+									            	          () -> rect.getX() +20,
+									            	          rect.xProperty()));
+										            	
+								            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+								            	          () -> rect.getY() ,
+								            	          rect.yProperty()));
+								        	        
+								        	        
+								        	        centerPaneDirectedNonWeightedGraph.getChildren().add(arrowHead);
+								        			
+								        		}else {
+								        			
+								        			Line line = new Line();
+								        			line.setStroke(Color.BLACK);
+								        			line.setFill(null);
+								        			line.setStrokeWidth(2);
+								        			line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)).add(xMoveStart));
+									        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)).add(yMoveStart));
+									        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)).add(xMoveEnd));
+									        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)).add(yMoveEnd));
+								        			
+									        		line.setOnMouseClicked(Event::consume);
+									        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
+								        			
+								        			Polygon arrowHead = new Polygon();
+								        	        arrowHead.getPoints().addAll(new Double[]{
+								        	            0.0, 8.0,
+								        	            -8.0, -8.0,
+								        	            8.0, -8.0 });
+								        	        arrowHead.setFill(Color.BLACK);
+								        	       
+								        	        
+								        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+								        	        		() -> Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()) * 180 / 3.14 - 90,
+								        	        		line.endXProperty(),line.endYProperty(),line.startXProperty(),line.startYProperty()));
+						
+								        	        
+								        	        Label label = new Label(">");
+									            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
+									            	label.setPadding(new Insets(2, 4, 2, 4));
+									            	label.setPrefWidth(35);
+									            	label.setPrefHeight(30);
+									            	label.setAlignment(Pos.CENTER);
+
+//									            	label.setOnMouseClicked(Event::consume);
+//									        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
+									            	label.setVisible(false);
+									        		
+									        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+									            	          () -> ((line.getStartX() + line.getEndX() - label.getWidth()) / 2) + 13,
+									            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
+										            	
+								            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+								            	          () -> ((line.getStartY() + line.getEndY() - label.getHeight()) / 2) + 13,
+								            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
+								            	    
+								            	    centerPaneDirectedNonWeightedGraph.getChildren().add(0,label);
+									        		centerPaneDirectedNonWeightedGraph.getChildren().add(arrowHead);
+									        		centerPaneDirectedNonWeightedGraph.getChildren().add(0,line);
+								        		}
+								        		
+							        			
+
+								        		
+								        		
+
 							        			
 							        		}
 						        			
@@ -1485,7 +1620,7 @@ public class GraphPanelController {
     		errorMessage += "Weight of an edge must be of data type double.";
     		
     	}
-    	else if(input.equals(startVertex)) {
+    	else if(input.equals(startVertex) && (getSelectedTabName().equals("Undirected Non-Weighted Graph") || getSelectedTabName().equals("Undirected Weighted Graph"))) {
 			errorMessage+="You cannot add an edge to itself.";
 		}
     	
@@ -1549,7 +1684,7 @@ public class GraphPanelController {
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
     		
     	}
-    	else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    	else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") && 
     			!selectedDataChoiceDirectedWeightedGraph.equals("Double")) {
     		
     		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
@@ -1598,8 +1733,7 @@ public class GraphPanelController {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
-    			&& !dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") ){
 
     		if(!dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1607,8 +1741,7 @@ public class GraphPanelController {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
-    			&& !dataModel.getUndirectedWeightedString().containsVertex(input)){
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph")){
 
     		if(!dataModel.getUndirectedWeightedString().containsVertex(input)) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1617,17 +1750,15 @@ public class GraphPanelController {
     		}
     		
     	}
-    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
-    			&& !dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))){
-
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") ){
+    		System.out.println("Start Vertex: " + startVertex + "Ebd Vertex: " + input);
     		if(!dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
     		}else if(dataModel.getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(startVertex), Integer.parseInt(input))) {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
-    			&& !dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))){
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph")){
 
     		if(!dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1635,8 +1766,7 @@ public class GraphPanelController {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
-    			&& !dataModel.getDirectedNonWeightedString().containsVertex(input)){
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph")){
 
     		if(!dataModel.getDirectedNonWeightedString().containsVertex(input)) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1645,8 +1775,7 @@ public class GraphPanelController {
     		}
     		
     	}
-    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") 
-    			&& !dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))){
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
 
     		if(!dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1654,8 +1783,7 @@ public class GraphPanelController {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") 
-    			&& !dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))){
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
 
     		if(!dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
@@ -1663,8 +1791,7 @@ public class GraphPanelController {
     			errorMessage+="There already exists an edge between vertex with data '" + startVertex + "' and vertex with data '" + input + "'.";
     		}
     		
-    	}else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") 
-    			&& !dataModel.getDirectedWeightedString().containsVertex(input)){
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
 
     		if(!dataModel.getDirectedWeightedString().containsVertex(input)) {
     			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";

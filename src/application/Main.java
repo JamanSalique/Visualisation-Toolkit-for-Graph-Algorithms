@@ -113,7 +113,7 @@ public class Main extends Application {
 //		UndirectedWeightedGraph<String> uw = new UndirectedWeightedGraph<String>();
 //		DirectedWeightedGraph<String> dw = new DirectedWeightedGraph<String>();
 //		UndirectedNonWeightedGraph<String> unw = new UndirectedNonWeightedGraph<String>();
-//		DirectedNonWeightedGraph<String> dnw = new DirectedNonWeightedGraph<String>();
+		DirectedNonWeightedGraph<String> dnw = new DirectedNonWeightedGraph<String>();
 ////		
 //		unw.addVertex("a");
 //		unw.addVertex("b");
@@ -133,7 +133,8 @@ public class Main extends Application {
 //		dnw.addEdge("b","c");
 //		dnw.addEdge("c","d");
 //		dnw.addEdge("d","c");
-//		dnw.removeEdge("a","b");
+//		//dnw.removeEdge("a","b");
+//		System.out.print(dnw.isAdjacent("b", "a"));
 //		
 //		uw.addVertex("a");
 //		uw.addVertex("b");
