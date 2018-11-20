@@ -489,6 +489,10 @@ public class GraphPanelController {
 				                					 (child.getLayoutY() + ((Region) child).getHeight() / 2) + directedEdgePlacement  == lineToRemove.getStartY()) {
 				                				 
 				                				 vertexStart = (StackPane) child;
+				                			 }else if((child.getLayoutX() + ((Region) child).getWidth() / 2) - directedEdgePlacement == lineToRemove.getStartX() && 
+				                					 (child.getLayoutY() + ((Region) child).getHeight() / 2) - directedEdgePlacement  == lineToRemove.getStartY()) {
+				                				 
+				                				 vertexStart = (StackPane) child;
 				                			 }
 				                		 }
 				                	 }
@@ -498,6 +502,9 @@ public class GraphPanelController {
 				                		 if(child instanceof StackPane) {
 				                			 if((child.getLayoutX() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getEndX() && 
 				                					 (child.getLayoutY() + ((Region) child).getWidth() / 2) + directedEdgePlacement == lineToRemove.getEndY()) {
+				                				 vertexEnd = (StackPane) child;
+				                			 }else if((child.getLayoutX() + ((Region) child).getWidth() / 2) - directedEdgePlacement == lineToRemove.getEndX() && 
+				                					 (child.getLayoutY() + ((Region) child).getWidth() / 2) - directedEdgePlacement == lineToRemove.getEndY()) {
 				                				 vertexEnd = (StackPane) child;
 				                			 }
 				                		 }
