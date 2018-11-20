@@ -16,7 +16,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -41,9 +40,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.transform.Affine;
-import javafx.scene.transform.Rotate;
 import javafx.util.Pair;
 
 public class GraphPanelController {
@@ -843,8 +841,8 @@ public class GraphPanelController {
 								        			Rectangle rect = new Rectangle();
 								        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
 								        			rect.yProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-								        			rect.setHeight(35);
-								        			rect.setWidth(35);
+								        			rect.setHeight(40);
+								        			rect.setWidth(40);
 								        			rect.setStroke(Color.BLACK);
 								        			rect.setStrokeWidth(2);
 								        			rect.setFill(null);
@@ -1007,9 +1005,10 @@ public class GraphPanelController {
 							        		Label label = new Label(result.get().getValue());
 							            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
 							            	label.setPadding(new Insets(2, 4, 2, 4));
-							            	label.setPrefWidth(35);
-							            	label.setPrefHeight(30);
+//							            	label.setPrefWidth(25);
+//							            	label.setPrefHeight(25);
 							            	label.setAlignment(Pos.CENTER);
+							            	label.setFont(new Font(10));
 
 							            	label.setOnMouseClicked(Event::consume);
 							        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
@@ -1100,8 +1099,8 @@ public class GraphPanelController {
 							        			Rectangle rect = new Rectangle();
 							        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
 							        			rect.yProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-							        			rect.setHeight(35);
-							        			rect.setWidth(35);
+							        			rect.setHeight(40);
+							        			rect.setWidth(40);
 							        			rect.setStroke(Color.BLACK);
 							        			rect.setStrokeWidth(2);
 							        			rect.setFill(null);
@@ -1110,16 +1109,32 @@ public class GraphPanelController {
 							        		    
 							        			centerPaneDirectedWeightedGraph.getChildren().add(0,rect);
 							        			
+							        	        Label label = new Label(result.get().getValue());
+								            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
+								            	label.setPadding(new Insets(2, 4, 2, 4));
+//								            	label.setPrefWidth(25);
+//								            	label.setPrefHeight(25);
+								            	label.setAlignment(Pos.CENTER);
+								            	label.setFont(new Font(10));
+								            	
+								            	label.setOnMouseClicked(Event::consume);
+								        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
+								            	
+								            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
+							            	          () -> (rect.getX()  + rect.getWidth()) - (label.getWidth()/2),
+							            	          rect.xProperty(),label.widthProperty(),rect.widthProperty()));
+								            	
+							            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
+							            	          () -> (rect.getY() + rect.getHeight()) - (label.getHeight()/2),
+							            	          rect.yProperty(),label.heightProperty(),rect.heightProperty()));
+							        			
 							        			Polygon arrowHead = new Polygon();
 							        	        arrowHead.getPoints().addAll(new Double[]{
 							        	            0.0, 7.0,
 							        	            -7.0, -7.0,
 							        	            7.0, -7.0 });
 							        	        arrowHead.setFill(Color.BLACK);
-							        	       
-							        	        
-//							        	        
-							        	        
+
 							        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
 							        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
 							        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
@@ -1134,6 +1149,7 @@ public class GraphPanelController {
 							        	        
 							        	        
 							        	        centerPaneDirectedWeightedGraph.getChildren().add(arrowHead);
+							        	        centerPaneDirectedWeightedGraph.getChildren().add(label);
 							        			
 							        		}else {
 							        			
@@ -1162,22 +1178,34 @@ public class GraphPanelController {
 							        	        		line.endXProperty(),line.endYProperty(),line.startXProperty(),line.startYProperty()));
 					
 							        	        
-							        	        Label label = new Label(">");
+							        	        Label label = new Label(result.get().getValue());
 								            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
 								            	label.setPadding(new Insets(2, 4, 2, 4));
-								            	label.setPrefWidth(35);
-								            	label.setPrefHeight(30);
+//								            	label.setPrefWidth(25);
+//								            	label.setPrefHeight(25);
 								            	label.setAlignment(Pos.CENTER);
+								            	label.setFont(new Font(10));
+								            	
+								            	label.setOnMouseClicked(Event::consume);
+								        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
+								            	
+								            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
+							            	          () -> (line.getStartX() + line.getEndX() - label.getWidth()) / 2,
+							            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
+								            	
+							            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
+							            	          () -> (line.getStartY() + line.getEndY() - label.getHeight()) / 2,
+							            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
 
 								            	arrowHead.setOnMouseClicked(Event::consume);
 								        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
 								        		
 								        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
-								            	          () -> ((line.getStartX() + line.getEndX()) / 2) ,
+								            	          () -> ((line.getStartX() + 4*line.getEndX()) / 5) ,
 								            	          line.startXProperty(), line.endXProperty()));
 									            	
 							            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
-							            	          () -> (line.getStartY() + line.getEndY()) / 2,
+							            	          () -> (line.getStartY() + 4*line.getEndY()) / 5,
 							            	          line.startYProperty(), line.endYProperty()));
 							            	    
 							            	    centerPaneDirectedWeightedGraph.getChildren().add(0,label);
