@@ -138,69 +138,6 @@ public class GraphPanelController {
 
 	}
 	
-	public void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
-		if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-    		
-			dataModel.getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
-     		
-     	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		dataModel.getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
-     		
-     	}else if(getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-     		
-     		dataModel.getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
-     		
-     	}
-     	
-     	else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		dataModel.getDirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
-     		
-     	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		dataModel.getDirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
-     		
-     	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-
-     		dataModel.getDirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
-     		
-     	}
-		
-	}
-	
-	public void addEdgeHandlerWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo, double weight) {
-
-     	if(getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		dataModel.getUndirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
-     		
-     	}else if(getSelectedTabName().equals("Undirected Weighted Graph")  && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		dataModel.getUndirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
-     		
-     	}else if(getSelectedTabName().equals("Undirected Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-
-     		dataModel.getUndirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
-     		
-     	}
-     	else if(getSelectedTabName().equals("Directed Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		dataModel.getDirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
-     		
-     	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-
-     		dataModel.getDirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
-     		
-     	}else if(getSelectedTabName().equals("Directed Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-     		
-     		dataModel.getDirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
-     		
-     	}
-
-     		
-	}
-	
 	public void setMain(Main main) {
 		this.main = main;
 		
@@ -523,7 +460,6 @@ public class GraphPanelController {
    			stack.setLayoutY(y);
    			
    			stack.setOnMouseClicked(Event::consume);
-//   		stack.setOnMousePressed(mousePressedOnVertexEvent(stack));
    			stack.setOnMousePressed(new ClickedOnVertexHandler(this,stack));
    			stack.setOnMouseDragged(mouseDraggedOnVertexEvent());
    			stack.setOnMouseReleased(mouseReleasedOnVertexEvent());

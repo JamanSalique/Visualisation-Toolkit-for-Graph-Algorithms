@@ -35,12 +35,13 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 
 	private GraphPanelController gpc;
 	private StackPane stack;
-	private double directedEdgePlacement = 13;
+	private double directedEdgePlacement;
 	private final int selfEdgeArrowheadPlacement = 20;
 	
 	public ClickedOnVertexHandler(GraphPanelController gpc,StackPane stack) {
 		this.gpc = gpc;
 		this.stack = stack;
+		this.directedEdgePlacement = 13;
 	}
 	
 	 @Override
@@ -89,7 +90,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					                		}
 					                	}
 					        			
-					        			gpc.addEdgeHandlerNonWeighted(dataAsString,result.get());
+					        			addEdgeHandlerNonWeighted(dataAsString,result.get());
 					        			
 					        			Line line = new Line();
 						        		line.setStrokeWidth(2);
@@ -124,9 +125,9 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					                		}
 					                	}
 					        			
-					        			gpc.addEdgeHandlerNonWeighted(dataAsString,result.get());
 					        			
-					        			directedEdgePlacement = 13;
+					        			
+//					        			directedEdgePlacement = 13;
 					        			
 					        			double xMoveStart = directedEdgePlacement;
 					        			double yMoveStart =directedEdgePlacement;
@@ -140,11 +141,12 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 						                	String dataAsStringVertexTo = dataVertexTo.getText();
 						                	
 					        				if(gpc.getDataModel().getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
-					        					xMoveStart = -xMoveStart;
-							        			yMoveStart = -yMoveStart;
+					        					directedEdgePlacement = -directedEdgePlacement;
+					        					xMoveStart = directedEdgePlacement;
+							        			yMoveStart = directedEdgePlacement;
 							        			
-							        			xMoveEnd = -xMoveEnd;
-							        			yMoveEnd = -yMoveEnd;
+							        			xMoveEnd = directedEdgePlacement;
+							        			yMoveEnd = directedEdgePlacement;
 					        				}
 					        				
 					        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
@@ -178,6 +180,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					        				
 					        				
 					        			}
+					        			addEdgeHandlerNonWeighted(dataAsString,result.get());
 						        		
 						        		if(result.get().equals(dataAsString)) {
 						        			
@@ -330,7 +333,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					                		}
 					                	}
 					        			
-				        			gpc.addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
+				        			addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
 				        			
 				        			Line line = new Line();
 					        		line.setStrokeWidth(2);
@@ -389,7 +392,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					                		}
 					                	}
 					        			
-					        		gpc.addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
+					        		addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
 				        			
 					        		directedEdgePlacement = 13;
 					        		
@@ -987,6 +990,69 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
      	gpc.setLayoutY(gpc.getCurrentStackPane().getLayoutY());
          
      }
+	 
+	 private void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+    		
+			gpc.getDataModel().getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
+     		
+     	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+     		
+     		gpc.getDataModel().getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
+     		
+     	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+     		
+     		gpc.getDataModel().getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
+     		
+     	}
+     	
+     	else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getDirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
+     		
+     	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+     		
+     		gpc.getDataModel().getDirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
+     		
+     	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getDirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
+     		
+     	}
+			
+	}
+		
+	private void addEdgeHandlerWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo, double weight) {
+
+     	if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getUndirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
+     		
+     	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")  && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+     		
+     		gpc.getDataModel().getUndirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
+     		
+     	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getUndirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
+     		
+     	}
+     	else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getDirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
+     		
+     	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+
+     		gpc.getDataModel().getDirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
+     		
+     	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+     		
+     		gpc.getDataModel().getDirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
+     		
+     	}
+
+     		
+	}
 	 
 	 private void removeVertexFromUndirectedNonWeightedGraph(String type, String dataAsString) {
 	    	
