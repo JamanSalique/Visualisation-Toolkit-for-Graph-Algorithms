@@ -1,19 +1,17 @@
 package application;
 	
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 
+import application.model.BreadthFirstSearch;
 import application.model.DataModel;
 import application.model.DirectedNonWeightedGraph;
 import application.model.DirectedWeightedGraph;
 import application.model.UndirectedNonWeightedGraph;
 import application.model.UndirectedWeightedGraph;
-import application.model.Vertex;
 import application.view.AddVertexDataController;
 import application.view.GraphPanelController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -110,10 +108,82 @@ public class Main extends Application {
 //		Vertex<Integer> v3 = new Vertex<Integer>(3);
 //		Vertex<Integer> v4 = new Vertex<Integer>(3);
 //		
-//		UndirectedWeightedGraph<String> uw = new UndirectedWeightedGraph<String>();
-//		DirectedWeightedGraph<String> dw = new DirectedWeightedGraph<String>();
-//		UndirectedNonWeightedGraph<String> unw = new UndirectedNonWeightedGraph<String>();
-		DirectedNonWeightedGraph<String> dnw = new DirectedNonWeightedGraph<String>();
+		UndirectedWeightedGraph<Integer> uw = new UndirectedWeightedGraph<Integer>();
+		DirectedWeightedGraph<Integer> dw = new DirectedWeightedGraph<Integer>();
+		UndirectedNonWeightedGraph<Integer> unw = new UndirectedNonWeightedGraph<Integer>();
+		DirectedNonWeightedGraph<Integer> dnw = new DirectedNonWeightedGraph<Integer>();
+		BreadthFirstSearch<Integer> bfs = new BreadthFirstSearch<Integer>();
+		
+		unw.addVertex(1);
+		unw.addVertex(2);
+		unw.addVertex(3);
+		unw.addVertex(4);
+		unw.addVertex(5);
+		unw.addVertex(6);
+		
+		unw.addEdge(1,2);
+		unw.addEdge(1,3);
+		unw.addEdge(2,3);
+		unw.addEdge(3,4);
+		unw.addEdge(4,5);
+		unw.addEdge(4,6);
+		
+		System.out.println(Arrays.toString((bfs.performBreadthFirstSearchUndirectedNonWeighted(unw, 4)).toArray()));
+		
+		uw.addVertex(1);
+		uw.addVertex(2);
+		uw.addVertex(3);
+		uw.addVertex(4);
+		uw.addVertex(5);
+		uw.addVertex(6);
+		
+		uw.addEdge(1,2,1.0);
+		uw.addEdge(1,3,1.0);
+		uw.addEdge(2,3,1.0);
+		uw.addEdge(3,4,1.0);
+		uw.addEdge(4,5,1.0);
+		uw.addEdge(4,6,1.0);
+		
+		System.out.println(Arrays.toString((bfs.performBreadthFirstSearchUndirectedWeighted(uw, 4)).toArray()));
+		
+		dnw.addVertex(1);
+		dnw.addVertex(2);
+		dnw.addVertex(3);
+		dnw.addVertex(4);
+		dnw.addVertex(5);
+		dnw.addVertex(6);
+		
+		dnw.addEdge(1,2);
+		dnw.addEdge(1,3);
+		dnw.addEdge(2,3);
+		dnw.addEdge(3,4);
+		dnw.addEdge(4,5);
+		dnw.addEdge(4,6);
+		dnw.addEdge(4,3);
+		dnw.addEdge(3,1);
+		dnw.addEdge(2,1);
+		
+		System.out.println(Arrays.toString((bfs.performBreadthFirstSearchDirectedNonWeighted(dnw, 4)).toArray()));
+		
+		dw.addVertex(1);
+		dw.addVertex(2);
+		dw.addVertex(3);
+		dw.addVertex(4);
+		dw.addVertex(5);
+		dw.addVertex(6);
+		
+		dw.addEdge(1,2,1.0);
+		dw.addEdge(1,3,1.0);
+		dw.addEdge(2,3,1.0);
+		dw.addEdge(3,4,1.0);
+		dw.addEdge(4,5,1.0);
+		dw.addEdge(4,6,1.0);
+		dw.addEdge(4,3,1.0);
+		dw.addEdge(3,1,1.0);
+		dw.addEdge(2,1,1.0);
+		
+		System.out.println(Arrays.toString((bfs.performBreadthFirstSearchDirectedWeighted(dw, 4)).toArray()));
+		
 ////		
 //		unw.addVertex("a");
 //		unw.addVertex("b");
@@ -164,6 +234,8 @@ public class Main extends Application {
 //		
 //		System.out.println(v1.equals(v2));
 //		System.out.println(v3.equals(v4));
+		
+		
 
 		
 	}
