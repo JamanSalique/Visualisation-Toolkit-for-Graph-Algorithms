@@ -1,48 +1,34 @@
 package application.view;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
-import application.model.Vertex;
-import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.util.Pair;
 
 public class GraphPanelController {
 
@@ -51,6 +37,9 @@ public class GraphPanelController {
 	
 	private DataModel dataModel;
 	private ClickedOnEdgeHandler clickedOnEdgeHandler;
+	
+	@SuppressWarnings("rawtypes")
+	private BreadthFirstSearch bfs;
 	
 	@FXML
 	private AnchorPane rootAnchorPane;
@@ -85,6 +74,12 @@ public class GraphPanelController {
 	@FXML
 	private ContextMenu hoverMenu;
 	
+	@FXML
+	private ListView<String> listView;
+	
+	@FXML
+	private Button playButton;
+	
 	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
@@ -104,10 +99,10 @@ public class GraphPanelController {
     
     private final int selfEdgeArrowheadPlacement = 20;
 
-	
 	@FXML
 	private void initialize() {
 		
+		bfs = new BreadthFirstSearch(this);
 		clickedOnEdgeHandler = new ClickedOnEdgeHandler(this);
 		
 		choiceBoxUndirectedNonWeightedGraph.getItems().addAll("Integer","Double","String");
@@ -134,6 +129,8 @@ public class GraphPanelController {
 		hoverMenuItemAddEdge = new MenuItem("Add Edge?");
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
+        
+        listView.getItems().addAll("Breadth First Search");
         
 
 	}
@@ -233,6 +230,24 @@ public class GraphPanelController {
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+	
+	@FXML
+	private void handlePlayButton(ActionEvent e) {
+		
+		for(Node child:getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
+			if(child instanceof StackPane) {
+				StackPane vertex = (StackPane) child;
+				bfs.fillVertexTransition(vertex);
+				
+			}
+			if(child instanceof Line) {
+				System.out.println("gg");
+				Line edge = (Line) child;
+				bfs.highlightEdgeTransition(edge);
+			}
+		}
+
 	}
 
 	
