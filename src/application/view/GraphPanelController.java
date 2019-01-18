@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
+import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -234,19 +235,19 @@ public class GraphPanelController {
 	
 	@FXML
 	private void handlePlayButton(ActionEvent e) {
-		
-		for(Node child:getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
-			if(child instanceof StackPane) {
-				StackPane vertex = (StackPane) child;
-				bfs.fillVertexTransition(vertex);
-				
-			}
-			if(child instanceof Line) {
-				System.out.println("gg");
-				Line edge = (Line) child;
-				bfs.highlightEdgeTransition(edge);
-			}
+
+		if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.RUNNING) {
+			
+			bfs.pauseAnimationUndirectedNonWeighted();
+			playButton.setText("Play");
+			
+		}else{
+			
+			bfs.performBreadthFirstSearchUndirectedNonWeighted(dataModel.getUndirectedNonWeightedInt(), 4);
+			bfs.playAnimationUndirectedNonWeighted();
+			playButton.setText("Pause");
 		}
+		
 
 	}
 
