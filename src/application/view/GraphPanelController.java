@@ -21,6 +21,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -235,19 +236,61 @@ public class GraphPanelController {
 	
 	@FXML
 	private void handlePlayButton(ActionEvent e) {
-
-		if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.RUNNING) {
-			
-			bfs.pauseAnimationUndirectedNonWeighted();
-			playButton.setText("Play");
-			
-		}else{
-			
-			bfs.performBreadthFirstSearchUndirectedNonWeighted(dataModel.getUndirectedNonWeightedInt(), 4);
-			bfs.playAnimationUndirectedNonWeighted();
-			playButton.setText("Pause");
-		}
 		
+		if(listView.getSelectionModel().getSelectedItem() == null) {
+			
+			Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("No Graph Algorithm Selected.");
+            alert.setHeaderText("No graph algorithm has been selected.");
+            alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
+            		+ " of the screen and then press the play button.");
+            
+            alert.showAndWait();
+            
+		}else {
+			
+			if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+				
+				if(listView.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.STOPPED) {
+
+						TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
+				        dialogNonWeightedEdge.setTitle("Starting vertex");
+				        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
+				        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the breadth first search from.");
+				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+			        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+			        	Optional<String> result = dialogNonWeightedEdge.showAndWait();
+						
+			        	if(result.isPresent() && isInputValidBfsStartingVertex(result.get())) {
+			        		
+			        		String input = result.get();
+			        		
+			        		bfs.performBreadthFirstSearchUndirectedNonWeighted(dataModel.getUndirectedNonWeightedInt(), Integer.parseInt(input));
+							bfs.playAnimationUndirectedNonWeighted();
+							playButton.setText("Pause");
+			        		
+			        	}
+						
+					}else if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.RUNNING){
+						
+						bfs.pauseAnimationUndirectedNonWeighted();
+						playButton.setText("Play");
+						
+					}else if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.PAUSED) {
+						
+						bfs.playAnimationUndirectedNonWeighted();
+						playButton.setText("Pause");
+						
+					}
+					
+				}
+				
+			}
+			
+		}
 
 	}
 
@@ -621,6 +664,184 @@ public class GraphPanelController {
     	return false;
     }
     
+    public boolean isInputValidBfsStartingVertex(String input) {
+    	
+    	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
+    	String selectedDataChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
+    	String selectedDataChoiceDirectedNonWeightedGraph = getSelectedDataChoiceDirectedNonWeightedGraph();
+    	String selectedDataChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+    	
+    	String errorMessage = "";
+    	if (input == null || input.length() == 0) {
+    		
+    		errorMessage += "Field cannot be left empty please add some data.";
+    		
+    	}else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") 
+    			&& !selectedDataChoiceUndirectedNonWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
+    			!selectedDataChoiceUndirectedNonWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
+    			!selectedDataChoiceUndirectedNonWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph") 
+    			&& !selectedDataChoiceUndirectedWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") && 
+    			!selectedDataChoiceUndirectedWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph") && 
+    			!selectedDataChoiceUndirectedWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") 
+    			&& !selectedDataChoiceDirectedNonWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    			!selectedDataChoiceDirectedNonWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") && 
+    			!selectedDataChoiceDirectedNonWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") 
+    			&& !selectedDataChoiceDirectedWeightedGraph.equals("Integer")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") && 
+    			!selectedDataChoiceDirectedWeightedGraph.equals("Double")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") && 
+    			!selectedDataChoiceDirectedWeightedGraph.equals("String")) {
+    		
+    		errorMessage+="Invalid data type you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
+    		
+    	}
+    	
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+    		
+    		if(!dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+
+    		if(!dataModel.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Non-Weighted Graph")){
+
+    		if(!dataModel.getUndirectedNonWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Undirected Weighted Graph")){
+
+    		if(!dataModel.getUndirectedWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Undirected Weighted Graph") ){
+
+    		if(!dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Undirected Weighted Graph")){
+
+    		if(!dataModel.getUndirectedWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Non-Weighted Graph") ){
+    		if(!dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Non-Weighted Graph")){
+
+    		if(!dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Non-Weighted Graph")){
+
+    		if(!dataModel.getDirectedNonWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}
+    	else if(isInteger(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
+
+    		if(!dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isDouble(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
+
+    		if(!dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(input))) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}else if(isString(input) && getSelectedTabName().equals("Directed Weighted Graph") ){
+
+    		if(!dataModel.getDirectedWeightedString().containsVertex(input)) {
+    			errorMessage+="Vertex with data '" + input + "' does not exist in this graph.";
+    		}
+    		
+    	}
+    	
+    	
+    	if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Invalid Edge Fields.");
+            alert.setHeaderText("You have provided incorrect data.");
+            alert.setContentText(errorMessage);
+            
+            alert.showAndWait();
+            
+            return false;
+        }
+ 
+    }
+    
     public boolean isInputValid(String input,String startVertex,String weightInput) {
     	
     	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
@@ -951,6 +1172,10 @@ public class GraphPanelController {
 	 */
 	public void setLayoutY(double layoutY) {
 		this.layoutY = layoutY;
+	}
+	
+	public Button getPlayButton() {
+		return playButton;
 	}
 
 }
