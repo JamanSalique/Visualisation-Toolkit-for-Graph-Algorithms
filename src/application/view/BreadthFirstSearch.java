@@ -62,7 +62,8 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		visitedVertices.add(startingVertex);
 		queue.add(startingVertex);
 		
-		mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexUndirectedNonWeighted(startingVertex.toString()));
+		mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexTransition(
+				startingVertex.toString(),"Undirected Non Weighted"));
 		 
 		while (queue.size() != 0) {
 			currentVertex = queue.poll();
@@ -79,8 +80,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 					
 					visitedVertices.add(v.getElement());
 	                queue.add(v.getElement()); 
-	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),v.getElement().toString()));
-	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexUndirectedNonWeighted(v.getElement().toString()));
+	                
+	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
+	                		v.getElement().toString(), "Undirected Non Weighted"));
+	                
+	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexTransition(
+	                		v.getElement().toString(),"Undirected Non Weighted"));
 	                
 				} 
 				
