@@ -9,37 +9,25 @@ import application.model.DirectedWeightedGraph;
 import application.model.UndirectedNonWeightedGraph;
 import application.model.UndirectedWeightedGraph;
 import application.model.Vertex;
-import javafx.animation.FillTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.StrokeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
 public class BreadthFirstSearch<T extends Comparable<? super T>> {
 	
 	private GraphPanelController gpc;
 	
-	private SequentialTransition mainAnimationUndirectedNonWeighted;
-	private SequentialTransition mainAnimationDirectedNonWeighted;
-	private SequentialTransition mainAnimationUndirectedWeighted;
-	private SequentialTransition mainAnimationDirectedWeighted;
+	private SequentialTransition mainAnimation;
+
 	
 	private Animations animations;
 	
 	public BreadthFirstSearch(GraphPanelController gpc) {
 		this.gpc = gpc;
-		mainAnimationUndirectedNonWeighted = new SequentialTransition();
-		mainAnimationDirectedNonWeighted = new SequentialTransition();
-		mainAnimationUndirectedWeighted = new SequentialTransition();
-		mainAnimationDirectedWeighted = new SequentialTransition();
+		mainAnimation = new SequentialTransition();
+
 		
 		animations = new Animations(gpc);
 	}
@@ -50,9 +38,11 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
 		
-		if(mainAnimationUndirectedNonWeighted.getChildren().size()>0) {
-			mainAnimationUndirectedNonWeighted.getChildren().clear();
+		if(mainAnimation.getChildren().size()>0) {
+			mainAnimation.getChildren().clear();
 		}
+		
+		animations.resetGraphColours("Undirected Non Weighted");
 		
 		T currentVertex;
 		ArrayList<T> traversalOrder = new ArrayList<T>();
@@ -62,7 +52,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		visitedVertices.add(startingVertex);
 		queue.add(startingVertex);
 		
-		mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexTransition(
+		mainAnimation.getChildren().add(animations.fillVertexTransition(
 				startingVertex.toString(),"Undirected Non Weighted"));
 		 
 		while (queue.size() != 0) {
@@ -81,10 +71,10 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 					visitedVertices.add(v.getElement());
 	                queue.add(v.getElement()); 
 	                
-	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
+	                mainAnimation.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
 	                		v.getElement().toString(), "Undirected Non Weighted"));
 	                
-	                mainAnimationUndirectedNonWeighted.getChildren().add(animations.fillVertexTransition(
+	                mainAnimation.getChildren().add(animations.fillVertexTransition(
 	                		v.getElement().toString(),"Undirected Non Weighted"));
 	                
 				} 
@@ -102,6 +92,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
 		
+		if(mainAnimation.getChildren().size()>0) {
+			mainAnimation.getChildren().clear();
+		}
+		
+		animations.resetGraphColours("Directed Non Weighted");
+		
 		T currentVertex;
 		ArrayList<T> traversalOrder = new ArrayList<T>();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
@@ -109,6 +105,9 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		 
 		visitedVertices.add(startingVertex);
 		queue.add(startingVertex);
+		
+		mainAnimation.getChildren().add(animations.fillVertexTransition(
+				startingVertex.toString(),"Directed Non Weighted"));
 		
 		while (queue.size() != 0) {
 			currentVertex = queue.poll();
@@ -124,6 +123,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 				if (!visitedVertices.contains(graph.returnVertex(v.getElement()).getElement())) { 
 					visitedVertices.add(v.getElement());
 	                queue.add(v.getElement()); 
+	                
+	                mainAnimation.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
+	                		v.getElement().toString(), "Directed Non Weighted"));
+	                
+	                mainAnimation.getChildren().add(animations.fillVertexTransition(
+	                		v.getElement().toString(),"Directed Non Weighted"));
 				} 
 				
 			}
@@ -139,6 +144,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
 		
+		if(mainAnimation.getChildren().size()>0) {
+			mainAnimation.getChildren().clear();
+		}
+		
+		animations.resetGraphColours("Undirected Weighted");
+		
 		T currentVertex;
 		ArrayList<T> traversalOrder = new ArrayList<T>();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
@@ -146,6 +157,9 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		 
 		visitedVertices.add(startingVertex);
 		queue.add(startingVertex);
+		
+		mainAnimation.getChildren().add(animations.fillVertexTransition(
+				startingVertex.toString(),"Undirected Weighted"));
 		 
 		while (queue.size() != 0) {
 			currentVertex = queue.poll();
@@ -165,6 +179,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 				if (!visitedVertices.contains(graph.returnVertex(v.getElement()).getElement())) { 
 					visitedVertices.add(v.getElement());
 	                queue.add(v.getElement()); 
+	                
+	                mainAnimation.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
+	                		v.getElement().toString(), "Undirected Weighted"));
+	                
+	                mainAnimation.getChildren().add(animations.fillVertexTransition(
+	                		v.getElement().toString(),"Undirected Weighted"));
 				} 
 				
 			}
@@ -180,6 +200,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
 		
+		if(mainAnimation.getChildren().size()>0) {
+			mainAnimation.getChildren().clear();
+		}
+		
+		animations.resetGraphColours("Directed Weighted");
+		
 		T currentVertex;
 		ArrayList<T> traversalOrder = new ArrayList<T>();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
@@ -187,6 +213,9 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		 
 		visitedVertices.add(startingVertex);
 		queue.add(startingVertex);
+		
+		mainAnimation.getChildren().add(animations.fillVertexTransition(
+				startingVertex.toString(),"Directed Weighted"));
 		 
 		while (queue.size() != 0) {
 			currentVertex = queue.poll();
@@ -206,6 +235,12 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 				if (!visitedVertices.contains(graph.returnVertex(v.getElement()).getElement())) { 
 					visitedVertices.add(v.getElement());
 	                queue.add(v.getElement()); 
+	                
+	                mainAnimation.getChildren().add(animations.highlightEdgeTransition(currentVertex.toString(),
+	                		v.getElement().toString(), "Directed Weighted"));
+	                
+	                mainAnimation.getChildren().add(animations.fillVertexTransition(
+	                		v.getElement().toString(),"Directed Weighted"));
 				} 
 				
 			}
@@ -224,25 +259,29 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
-	public void playAnimationUndirectedNonWeighted() {
-		mainAnimationUndirectedNonWeighted.play();
-		mainAnimationUndirectedNonWeighted.setOnFinished(new EventHandler<ActionEvent>() {
+	public void playMainAnimation() {
+		mainAnimation.play();
+		mainAnimation.setOnFinished(new EventHandler<ActionEvent>() {
 
 	        @Override
 	        public void handle(ActionEvent event) {
 	            gpc.getPlayButton().setText("Play");
+				
+				for(Tab tab : gpc.getTabs().getTabs()) {
+					tab.setDisable(false);
+				}
 
 	        }
 	    });
 		
 	}
 	
-	public void pauseAnimationUndirectedNonWeighted() {
-		mainAnimationUndirectedNonWeighted.pause();
+	public void pauseMainAnimation() {
+		mainAnimation.pause();
 	}
 
-	public SequentialTransition getMainAnimationUndirectedNonWeighted() {
-		return mainAnimationUndirectedNonWeighted;
+	public SequentialTransition getMainAnimation() {
+		return mainAnimation;
 	}
 	
 }

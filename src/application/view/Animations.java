@@ -29,46 +29,6 @@ public class Animations {
 		
 		return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
 		
-//		if(graphType.equals("Undirected Non Weighted")) {
-//			
-//			StackPane v1 = returnStackPane(v1Data,"Undirected Non Weighted");
-//			StackPane v2 = returnStackPane(v2Data,"Undirected Non Weighted");
-//			
-//			Line edge = returnEdgeBetweenVertices(v1,v2,"Undirected Non Weighted");
-//			
-//			return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
-//			
-//		}else if(graphType.equals("Undirected Weighted")) {
-//			
-//			StackPane v1 = returnStackPane(v1Data,"Undirected Weighted");
-//			StackPane v2 = returnStackPane(v2Data,"Undirected Weighted");
-//			
-//			Line edge = returnEdgeBetweenVertices(v1,v2,"Undirected Weighted");
-//			
-//			return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
-//			
-//		}else if(graphType.equals("Directed Non Weighted")) {
-//			
-//			StackPane v1 = returnStackPane(v1Data,"Directed Non Weighted");
-//			StackPane v2 = returnStackPane(v2Data,"Directed Non Weighted");
-//			
-//			Line edge = returnEdgeBetweenVertices(v1,v2,"Directed Non Weighted");
-//			
-//			return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
-//			
-//		}else if(graphType.equals("Directed Weighted")) {
-//			
-//			StackPane v1 = returnStackPane(v1Data,"Directed Weighted");
-//			StackPane v2 = returnStackPane(v2Data,"Directed Weighted");
-//			
-//			Line edge = returnEdgeBetweenVertices(v1,v2,"Directed Weighted");
-//			
-//			return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
-//			
-//		}
-//		
-//		return null;
-		
 	}
 	
 	public FillTransition fillVertexTransition(String vertexData, String graphType) {
@@ -216,6 +176,72 @@ public class Animations {
 		}
 		
 		return null;
+		
+	}
+	
+	public void resetGraphColours(String graphType) {
+		
+		if(graphType.equals("Undirected Non Weighted")) {
+			
+			for(Node child : gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
+				if(child instanceof StackPane) {
+					StackPane vertex = (StackPane) child;
+					Circle circle = (Circle) vertex.getChildren().get(0);
+					circle.setFill(Color.WHITE);
+				}
+				
+				if(child instanceof Line) {
+					Line edge = (Line) child;
+					edge.setStroke(Color.BLACK);
+				}
+			}
+			
+		}else if(graphType.equals("Undirected Weighted")) {
+			
+			for(Node child : gpc.getCenterPaneUndirectedWeightedGraph().getChildren()) {
+				if(child instanceof StackPane) {
+					StackPane vertex = (StackPane) child;
+					Circle circle = (Circle) vertex.getChildren().get(0);
+					circle.setFill(Color.WHITE);
+				}
+				
+				if(child instanceof Line) {
+					Line edge = (Line) child;
+					edge.setStroke(Color.BLACK);
+				}
+			}
+			
+		}else if(graphType.equals("Directed Non Weighted")) {
+			
+			for(Node child : gpc.getCenterPaneDirectedNonWeightedGraph().getChildren()) {
+				if(child instanceof StackPane) {
+					StackPane vertex = (StackPane) child;
+					Circle circle = (Circle) vertex.getChildren().get(0);
+					circle.setFill(Color.WHITE);
+				}
+				
+				if(child instanceof Line) {
+					Line edge = (Line) child;
+					edge.setStroke(Color.BLACK);
+				}
+			}
+			
+		}else if(graphType.equals("Directed Weighted")) {
+			
+			for(Node child : gpc.getCenterPaneDirectedWeightedGraph().getChildren()) {
+				if(child instanceof StackPane) {
+					StackPane vertex = (StackPane) child;
+					Circle circle = (Circle) vertex.getChildren().get(0);
+					circle.setFill(Color.WHITE);
+				}
+				
+				if(child instanceof Line) {
+					Line edge = (Line) child;
+					edge.setStroke(Color.BLACK);
+				}
+			}
+			
+		}
 		
 	}
 	

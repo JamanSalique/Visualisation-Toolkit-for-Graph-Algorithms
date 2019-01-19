@@ -4,13 +4,11 @@ import java.util.Optional;
 
 import application.Main;
 import application.model.DataModel;
-import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -21,15 +19,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 
 public class GraphPanelController {
@@ -42,6 +37,8 @@ public class GraphPanelController {
 	
 	@SuppressWarnings("rawtypes")
 	private BreadthFirstSearch bfs;
+	
+	private AlgorithmAnimations algorithmAnimations;
 	
 	@FXML
 	private AnchorPane rootAnchorPane;
@@ -77,7 +74,17 @@ public class GraphPanelController {
 	private ContextMenu hoverMenu;
 	
 	@FXML
-	private ListView<String> listView;
+	private ListView<String> listViewUndirectedNonWeighted;
+	
+	@FXML
+	private ListView<String> listViewUndirectedWeighted;
+	
+	@FXML
+	private ListView<String> listViewDirectedNonWeighted;
+	
+	@FXML
+	private ListView<String> listViewDirectedWeighted;
+	
 	
 	@FXML
 	private Button playButton;
@@ -103,6 +110,8 @@ public class GraphPanelController {
 
 	@FXML
 	private void initialize() {
+		
+		algorithmAnimations = new AlgorithmAnimations(this);
 		
 		bfs = new BreadthFirstSearch(this);
 		clickedOnEdgeHandler = new ClickedOnEdgeHandler(this);
@@ -132,7 +141,10 @@ public class GraphPanelController {
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
-        listView.getItems().addAll("Breadth First Search");
+        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search");
+        listViewDirectedNonWeighted.getItems().addAll("Breadth First Search");
+        listViewDirectedWeighted.getItems().addAll("Breadth First Search");
         
 
 	}
@@ -237,60 +249,74 @@ public class GraphPanelController {
 	@FXML
 	private void handlePlayButton(ActionEvent e) {
 		
-		if(listView.getSelectionModel().getSelectedItem() == null) {
+		Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Graph Algorithm Selected.");
+        alert.setHeaderText("No graph algorithm has been selected.");
+        alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
+        		+ " of the screen and then press the play button.");
+		
+		
 			
-			Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("No Graph Algorithm Selected.");
-            alert.setHeaderText("No graph algorithm has been selected.");
-            alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
-            		+ " of the screen and then press the play button.");
-            
-            alert.showAndWait();
-            
-		}else {
+		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
-			if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else {
 				
-				if(listView.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-					
-					if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.STOPPED) {
+				if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 
-						TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
-				        dialogNonWeightedEdge.setTitle("Starting vertex");
-				        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
-				        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the breadth first search from.");
-				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
-			        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
-			        	Optional<String> result = dialogNonWeightedEdge.showAndWait();
-						
-			        	if(result.isPresent() && isInputValidBfsStartingVertex(result.get())) {
-			        		
-			        		String input = result.get();
-			        		
-			        		bfs.performBreadthFirstSearchUndirectedNonWeighted(dataModel.getUndirectedNonWeightedInt(), Integer.parseInt(input));
-							bfs.playAnimationUndirectedNonWeighted();
-							playButton.setText("Pause");
-			        		
-			        	}
-						
-					}else if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.RUNNING){
-						
-						bfs.pauseAnimationUndirectedNonWeighted();
-						playButton.setText("Play");
-						
-					}else if(bfs.getMainAnimationUndirectedNonWeighted().getStatus() == Status.PAUSED) {
-						
-						bfs.playAnimationUndirectedNonWeighted();
-						playButton.setText("Pause");
-						
-					}
-					
+					algorithmAnimations.playBreadthFirstSearch();
+
+				}
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else {
+				
+				if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+
+					algorithmAnimations.playBreadthFirstSearch();
+
+				}
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else {
+				
+				if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+
+					algorithmAnimations.playBreadthFirstSearch();
+
+				}
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else {
+				
+				if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+
+					algorithmAnimations.playBreadthFirstSearch();
+
 				}
 				
 			}
 			
 		}
+		
+			
+		
 
 	}
 
@@ -1176,6 +1202,10 @@ public class GraphPanelController {
 	
 	public Button getPlayButton() {
 		return playButton;
+	}
+	
+	public TabPane getTabs() {
+		return tabs;
 	}
 
 }
