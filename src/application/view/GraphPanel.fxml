@@ -150,7 +150,7 @@
             <FlowPane prefHeight="41.0" prefWidth="139.0">
                <children>
                   <Label text="Animation Speed" />
-                  <Slider />
+                  <Slider fx:id="animationSpeedSlider" />
                </children>
             </FlowPane>
             <AnchorPane>
@@ -160,7 +160,7 @@
             </AnchorPane>
             <ToolBar prefHeight="41.0" prefWidth="414.0">
                <items>
-                  <Button mnemonicParsing="false" text="Start Again" />
+                  <Button fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButton" text="Start Again" />
                   <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Rewind" />
                   <Button fx:id="playButton" layoutX="101.0" layoutY="11.0" mnemonicParsing="false" onAction="#handlePlayButton" text="Play" />
                   <Button layoutX="168.0" layoutY="11.0" mnemonicParsing="false" text="Fast forward" />

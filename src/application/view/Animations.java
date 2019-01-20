@@ -27,7 +27,7 @@ public class Animations {
 		
 		Line edge = returnEdgeBetweenVertices(v1,v2,graphType);
 		
-		return new StrokeTransition(Duration.millis(3000), edge, Color.BLACK, Color.LIGHTGREEN);
+		return new StrokeTransition(Duration.millis(50000), edge, Color.BLACK, Color.LIGHTGREEN);
 		
 	}
 	
@@ -35,7 +35,7 @@ public class Animations {
 
 			StackPane vertex = returnStackPane(vertexData,graphType);
 			Circle circle = (Circle) vertex.getChildren().get(0);
-			return new FillTransition(Duration.millis(3000), circle, Color.WHITE, Color.LIGHTGREEN);
+			return new FillTransition(Duration.millis(50000), circle, Color.WHITE, Color.LIGHTGREEN);
 
 	}
 	
@@ -244,5 +244,4 @@ public class Animations {
 		}
 		
 	}
-	
 }

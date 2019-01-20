@@ -27,6 +27,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 	public BreadthFirstSearch(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
+		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
 
 		
 		animations = new Animations(gpc);
@@ -278,6 +279,11 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 	
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
+	}
+	
+	public void restartMainAnimation() {
+		System.out.println("ggggg");
+		mainAnimation.playFromStart();
 	}
 
 	public SequentialTransition getMainAnimation() {

@@ -18,6 +18,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -89,6 +90,12 @@ public class GraphPanelController {
 	@FXML
 	private Button playButton;
 	
+	@FXML
+	private Button restartButton;
+	
+	@FXML
+	private Slider animationSpeedSlider;
+	
 	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
@@ -145,6 +152,9 @@ public class GraphPanelController {
         listViewUndirectedWeighted.getItems().addAll("Breadth First Search");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search");
         listViewDirectedWeighted.getItems().addAll("Breadth First Search");
+        
+        animationSpeedSlider = new Slider(1, 4, 2);
+//        animationSpeedSlider.setValue(2);
         
 
 	}
@@ -318,6 +328,45 @@ public class GraphPanelController {
 			
 		
 
+	}
+	
+	@FXML
+	private void handleRestartButton(ActionEvent e) {
+		
+		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			
+			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				bfs.restartMainAnimation();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				bfs.restartMainAnimation();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				bfs.restartMainAnimation();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				bfs.restartMainAnimation();
+				
+			}
+			
+		}
+		
 	}
 
 	
@@ -1206,6 +1255,10 @@ public class GraphPanelController {
 	
 	public TabPane getTabs() {
 		return tabs;
+	}
+	
+	public Slider getAnimationSpeedSlider() {
+		return animationSpeedSlider;
 	}
 
 }
