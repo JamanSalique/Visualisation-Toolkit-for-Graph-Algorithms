@@ -94,6 +94,9 @@ public class GraphPanelController {
 	private Button restartButton;
 	
 	@FXML
+	private Button skipToEndButton;
+	
+	@FXML
 	private Slider animationSpeedSlider;
 	
 	private StackPane currentStackPane;
@@ -368,7 +371,44 @@ public class GraphPanelController {
 		
 	}
 
-	
+	@FXML
+	private void handleSkipToEndButton(ActionEvent e) {
+		
+		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			
+			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+
+				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+				
+				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}
+			
+		}
+		
+	}
 	@FXML
 	private void handleChoiceBox(ActionEvent e) {
 		

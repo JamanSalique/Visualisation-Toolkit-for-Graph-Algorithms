@@ -4,7 +4,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
+<?import java.lang.*?> 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -158,13 +158,11 @@
                   <Label text="Fast" AnchorPane.bottomAnchor="10.0" />
                </children>
             </AnchorPane>
-            <ToolBar prefHeight="41.0" prefWidth="414.0">
+            <ToolBar prefHeight="41.0" prefWidth="241.0">
                <items>
                   <Button fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButton" text="Start Again" />
-                  <Button layoutX="10.0" layoutY="11.0" mnemonicParsing="false" text="Rewind" />
                   <Button fx:id="playButton" layoutX="101.0" layoutY="11.0" mnemonicParsing="false" onAction="#handlePlayButton" text="Play" />
-                  <Button layoutX="168.0" layoutY="11.0" mnemonicParsing="false" text="Fast forward" />
-                  <Button layoutX="219.0" layoutY="11.0" mnemonicParsing="false" text="Skip to end" />
+                  <Button fx:id="skipToEndButton" layoutX="219.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSkipToEndButton" text="Skip to end" />
                </items>
             </ToolBar>
          </children>

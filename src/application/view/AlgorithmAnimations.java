@@ -121,6 +121,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	public void skipBreadthFirstSearchToEnd() {
+		bfs.getMainAnimation().jumpTo("end");
+	}
+	
 	private void validateAndPlayBFS(String bfsStartVertex) {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
