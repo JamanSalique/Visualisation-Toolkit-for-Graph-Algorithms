@@ -154,7 +154,6 @@ public class GraphPanelController {
         listViewDirectedWeighted.getItems().addAll("Breadth First Search");
         
         animationSpeedSlider = new Slider(1, 4, 2);
-//        animationSpeedSlider.setValue(2);
         
 
 	}
@@ -336,8 +335,8 @@ public class GraphPanelController {
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
 			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				bfs.restartMainAnimation();
+
+				algorithmAnimations.restartBreadthFirstSearch();
 				
 			}
 			
@@ -345,7 +344,7 @@ public class GraphPanelController {
 			
 			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
-				bfs.restartMainAnimation();
+				algorithmAnimations.restartBreadthFirstSearch();
 				
 			}
 			
@@ -353,7 +352,7 @@ public class GraphPanelController {
 			
 			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
-				bfs.restartMainAnimation();
+				algorithmAnimations.restartBreadthFirstSearch();
 				
 			}
 			
@@ -361,7 +360,7 @@ public class GraphPanelController {
 			
 			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
-				bfs.restartMainAnimation();
+				algorithmAnimations.restartBreadthFirstSearch();
 				
 			}
 			

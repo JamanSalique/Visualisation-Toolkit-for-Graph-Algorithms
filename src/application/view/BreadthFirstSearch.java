@@ -281,9 +281,10 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		mainAnimation.pause();
 	}
 	
-	public void restartMainAnimation() {
-		System.out.println("ggggg");
-		mainAnimation.playFromStart();
+	public void stopMainAnimation(String graphType) {
+		mainAnimation.stop();
+		animations.resetGraphColours(graphType);
+
 	}
 
 	public SequentialTransition getMainAnimation() {

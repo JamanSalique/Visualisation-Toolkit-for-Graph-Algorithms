@@ -12,6 +12,8 @@ public class AlgorithmAnimations {
 
 	private GraphPanelController gpc;
 	private BreadthFirstSearch bfs;
+	private String bfsStartVertexUndirectedNonWeighted, bfsStartVertexUndirectedWeighted, 
+					bfsStartVertexDirectedNonWeighted, bfsStartVertexDirectedWeighted ;
 	
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
@@ -34,68 +36,29 @@ public class AlgorithmAnimations {
 			
         	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
         		
-        		String input = result.get();
         		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
-        			if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedInt(), Integer.parseInt(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedDouble(), Double.parseDouble(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedString(), input);
-        				
-        			}
+        			
+        			bfsStartVertexUndirectedNonWeighted = result.get();
+            		
+            		validateAndPlayBFS(bfsStartVertexUndirectedNonWeighted);
+        			
         		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
         			
-        			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt(), Integer.parseInt(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble(), Double.parseDouble(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
-        				
-        				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString(), input);
-        				
-        			}
+        			bfsStartVertexUndirectedWeighted = result.get();
+            		
+            		validateAndPlayBFS(bfsStartVertexUndirectedWeighted);
         			
         		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
         			
-        			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedInt(), Integer.parseInt(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedDouble(), Double.parseDouble(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedString(), input);
-        				
-        			}
+        			bfsStartVertexDirectedNonWeighted = result.get();
+            		
+            		validateAndPlayBFS(bfsStartVertexDirectedNonWeighted);
         			
         		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
         			
-        			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedInt(), Integer.parseInt(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedDouble(), Double.parseDouble(input));
-        				
-        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
-        				
-        				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedString(), input);
-        				
-        			}
+        			bfsStartVertexDirectedWeighted = result.get();
+            		
+            		validateAndPlayBFS(bfsStartVertexDirectedWeighted);
         			
         		}
         		
@@ -117,6 +80,110 @@ public class AlgorithmAnimations {
 			
 			bfs.playMainAnimation();
 			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartBreadthFirstSearch() {
+//		bfs.restartMainAnimation("ggg");
+//		playBreadthFirstSearch();
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+    		
+    		validateAndPlayBFS(bfsStartVertexUndirectedNonWeighted);
+    		bfs.stopMainAnimation("Undirected Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayBFS(bfsStartVertexUndirectedWeighted);
+    		bfs.stopMainAnimation("Undirected Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+    		
+    		validateAndPlayBFS(bfsStartVertexDirectedNonWeighted);
+    		bfs.stopMainAnimation("Directed Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+    		
+    		validateAndPlayBFS(bfsStartVertexDirectedWeighted);
+    		bfs.stopMainAnimation("Directed Weighted");
+			
+		}
+		
+		bfs.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	private void validateAndPlayBFS(String bfsStartVertex) {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer")) {
+				
+				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedInt(), Integer.parseInt(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double")) {
+				
+				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedDouble(), Double.parseDouble(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String")) {
+				
+				bfs.performBreadthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedString(), bfsStartVertex);
+				
+			}
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
+				
+				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt(), Integer.parseInt(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
+				
+				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble(), Double.parseDouble(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
+				
+				bfs.performBreadthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString(), bfsStartVertex);
+				
+			}
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
+				
+				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedInt(), Integer.parseInt(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
+				
+				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedDouble(), Double.parseDouble(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
+				
+				bfs.performBreadthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedString(), bfsStartVertex);
+				
+			}
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
+				
+				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedInt(), Integer.parseInt(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
+				
+				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedDouble(), Double.parseDouble(bfsStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
+				
+				bfs.performBreadthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedString(), bfsStartVertex);
+				
+			}
 			
 		}
 		
