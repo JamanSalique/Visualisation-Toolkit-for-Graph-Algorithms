@@ -86,8 +86,6 @@ public class AlgorithmAnimations {
 	}
 	
 	public void restartBreadthFirstSearch() {
-//		bfs.restartMainAnimation("ggg");
-//		playBreadthFirstSearch();
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
     		
