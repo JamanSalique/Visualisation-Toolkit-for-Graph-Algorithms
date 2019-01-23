@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedList;
 
@@ -10,6 +11,7 @@ import application.model.UndirectedNonWeightedGraph;
 import application.model.UndirectedWeightedGraph;
 import application.model.Vertex;
 import javafx.animation.SequentialTransition;
+import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
@@ -83,7 +85,8 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 			}
 			
 		}
-				
+		
+		System.out.println("bfs: " + Arrays.toString((traversalOrder).toArray()));
 		return traversalOrder;
 	}
 	
@@ -261,6 +264,25 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 	}
 	
 	public void playMainAnimation() {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
+			
+			animations.resetGraphColours("Undirected Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
+			
+			animations.resetGraphColours("Undirected Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
+			
+			animations.resetGraphColours("Directed Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
+			
+			animations.resetGraphColours("Directed Weighted");
+			
+		}
+		
 		mainAnimation.play();
 		mainAnimation.setOnFinished(new EventHandler<ActionEvent>() {
 

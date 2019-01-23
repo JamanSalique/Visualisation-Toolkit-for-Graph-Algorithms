@@ -151,10 +151,10 @@ public class GraphPanelController {
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
-        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search");
-        listViewUndirectedWeighted.getItems().addAll("Breadth First Search");
-        listViewDirectedNonWeighted.getItems().addAll("Breadth First Search");
-        listViewDirectedWeighted.getItems().addAll("Breadth First Search");
+        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search");
+        listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
+        listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search");
         
         animationSpeedSlider = new Slider(1, 4, 2);
         
@@ -279,6 +279,10 @@ public class GraphPanelController {
 
 					algorithmAnimations.playBreadthFirstSearch();
 
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.playDepthFirstSearch();
+					
 				}
 				
 			}
@@ -293,6 +297,10 @@ public class GraphPanelController {
 
 					algorithmAnimations.playBreadthFirstSearch();
 
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.playDepthFirstSearch();
+					
 				}
 				
 			}
@@ -307,6 +315,10 @@ public class GraphPanelController {
 
 					algorithmAnimations.playBreadthFirstSearch();
 
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.playDepthFirstSearch();
+					
 				}
 				
 			}
@@ -321,6 +333,10 @@ public class GraphPanelController {
 
 					algorithmAnimations.playBreadthFirstSearch();
 
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.playDepthFirstSearch();
+					
 				}
 				
 			}
@@ -341,6 +357,10 @@ public class GraphPanelController {
 
 				algorithmAnimations.restartBreadthFirstSearch();
 				
+			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.restartDepthFirstSearch();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -348,6 +368,10 @@ public class GraphPanelController {
 			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
 				algorithmAnimations.restartBreadthFirstSearch();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.restartDepthFirstSearch();
 				
 			}
 			
@@ -357,6 +381,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartBreadthFirstSearch();
 				
+			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.restartDepthFirstSearch();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
@@ -364,6 +392,10 @@ public class GraphPanelController {
 			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
 				algorithmAnimations.restartBreadthFirstSearch();
+				
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.restartDepthFirstSearch();
 				
 			}
 			
@@ -380,6 +412,10 @@ public class GraphPanelController {
 
 				algorithmAnimations.skipBreadthFirstSearchToEnd();
 				
+			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.skipDepthFirstSearchToEnd();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -387,6 +423,10 @@ public class GraphPanelController {
 			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
 				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.skipDepthFirstSearchToEnd();
 				
 			}
 			
@@ -396,6 +436,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.skipBreadthFirstSearchToEnd();
 				
+			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.skipDepthFirstSearchToEnd();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
@@ -403,6 +447,10 @@ public class GraphPanelController {
 			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 				
 				algorithmAnimations.skipBreadthFirstSearchToEnd();
+				
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+				
+				algorithmAnimations.skipDepthFirstSearchToEnd();
 				
 			}
 			

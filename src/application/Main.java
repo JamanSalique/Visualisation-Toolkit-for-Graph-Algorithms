@@ -9,7 +9,7 @@ import application.model.DirectedWeightedGraph;
 import application.model.UndirectedNonWeightedGraph;
 import application.model.UndirectedWeightedGraph;
 import application.view.AddVertexDataController;
-import application.view.BreadthFirstSearch;
+import application.view.DepthFirstSearch;
 import application.view.GraphPanelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -110,25 +110,26 @@ public class Main extends Application {
 //		
 		UndirectedWeightedGraph<Integer> uw = new UndirectedWeightedGraph<Integer>();
 		DirectedWeightedGraph<Integer> dw = new DirectedWeightedGraph<Integer>();
-		UndirectedNonWeightedGraph<String> unw = new UndirectedNonWeightedGraph<String>();
+		UndirectedNonWeightedGraph<Integer> unw = new UndirectedNonWeightedGraph<Integer>();
 		DirectedNonWeightedGraph<Integer> dnw = new DirectedNonWeightedGraph<Integer>();
 //		BreadthFirstSearch<String> bfs = new BreadthFirstSearch<String>();
-//		
-//		unw.addVertex("a");
-//		unw.addVertex("b");
-//		unw.addVertex("c");
-//		unw.addVertex("d");
-//		unw.addVertex("e");
-//		unw.addVertex("f");
-//		
-//		unw.addEdge("a","b");
-//		unw.addEdge("a","c");
-//		unw.addEdge("b","c");
+//		DepthFirstSearch<Integer> dfs = new DepthFirstSearch<Integer>(new GraphPanelController());
+////		
+//		unw.addVertex(1);
+//		unw.addVertex(2);
+//		unw.addVertex(3);
+//		unw.addVertex(4);
+//		unw.addVertex(5);
+		unw.addVertex(6);
+////		
+//		unw.addEdge(1,2);
+//		unw.addEdge(1,3);
+//		unw.addEdge(2,4);
 //		unw.addEdge("c","d");
 //		unw.addEdge("d","e");
 //		unw.addEdge("d","f");
 //		
-//		System.out.println(Arrays.toString((bfs.performBreadthFirstSearchUndirectedNonWeighted(unw, "d")).toArray()));
+//		System.out.println(Arrays.toString((dfs.performDepthFirstSearchUndirectedNonWeighted(unw, 1)).toArray()));
 //		
 //		uw.addVertex(1);
 //		uw.addVertex(2);
