@@ -381,6 +381,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartDepthFirstSearch();
 				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+				
+				algorithmAnimations.restartDijkstraAlgorithm();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
@@ -404,6 +408,10 @@ public class GraphPanelController {
 			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
 				
 				algorithmAnimations.restartDepthFirstSearch();
+				
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+				
+				algorithmAnimations.restartDijkstraAlgorithm();
 				
 			}
 			
@@ -436,6 +444,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.skipDepthFirstSearchToEnd();
 				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+				
+				algorithmAnimations.skipDijkstraAlgorithmToEnd();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
@@ -459,6 +471,10 @@ public class GraphPanelController {
 			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
 				
 				algorithmAnimations.skipDepthFirstSearchToEnd();
+				
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+				
+				algorithmAnimations.skipDijkstraAlgorithmToEnd();
 				
 			}
 			
