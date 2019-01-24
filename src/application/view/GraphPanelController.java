@@ -152,9 +152,9 @@ public class GraphPanelController {
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
         listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
-        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
-        listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search");
+        listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
         
         animationSpeedSlider = new Slider(1, 4, 2);
         
@@ -301,6 +301,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.playDepthFirstSearch();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.playDijkstraAlgorithm();
+					
 				}
 				
 			}
@@ -336,6 +340,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
 					
 					algorithmAnimations.playDepthFirstSearch();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.playDijkstraAlgorithm();
 					
 				}
 				

@@ -1,15 +1,20 @@
 package application;
 	
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import application.model.DataModel;
 import application.model.DirectedNonWeightedGraph;
 import application.model.DirectedWeightedGraph;
 import application.model.UndirectedNonWeightedGraph;
 import application.model.UndirectedWeightedGraph;
+import application.model.Vertex;
 import application.view.AddVertexDataController;
-import application.view.DepthFirstSearch;
 import application.view.GraphPanelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 
 public class Main extends Application {
@@ -236,7 +242,71 @@ public class Main extends Application {
 //		System.out.println(v1.equals(v2));
 //		System.out.println(v3.equals(v4));
 		
+		HashMap<Integer,Double> mapOfEdges = new HashMap<Integer,Double>();
 		
+		mapOfEdges.put(1, 1.5);
+		mapOfEdges.put(2, 1.4);
+		mapOfEdges.put(3, 2.5);
+		mapOfEdges.put(4, 7.5);
+		
+//		public void performDijkstrasAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,HashMap<Pair<T,T>,Double> mapOfEdges){
+//			
+//			if (!graph.containsVertex(startingVertex)) {
+//	            throw new IllegalArgumentException("Vertex doesn't exist.");
+//	        }
+//
+//			visitedVertices.add(startingVertex);
+//			
+//			mainAnimation.getChildren().add(animations.fillVertexTransition(
+//	        		startingVertex.toString(),"Undirected Weighted"));
+//			
+//			Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(startingVertex);
+//			ArrayList<Pair<Vertex<T>, Double>> listOfNeighbours = new ArrayList<Pair<Vertex<T>, Double>>();
+//			for(Pair<Vertex<T>, Double> p : neighboursIterable) {
+//				
+//				if(!visitedVertices.contains(p.getKey().getElement())) {
+//					listOfNeighbours.add(p);
+//				}
+//				
+//			}
+//			
+//			for(Pair<Vertex<T>, Double> p :listOfNeighbours) {
+//				
+//				Pair<T,T> pairOfVertices = new Pair<T,T>(startingVertex,p.getKey().getElement());
+//				Pair<T,T> pairOfVerticesReversed = new Pair<T,T>(p.getKey().getElement(),startingVertex);
+//				
+//				if(!mapOfEdges.containsKey(pairOfVerticesReversed)) {
+//					
+//					mapOfEdges.put(pairOfVertices, p.getValue());
+//					
+//				}
+//			}
+//			
+//			HashMap<Pair<T,T>, Double> sortedMapOfEdges = 
+//					mapOfEdges.entrySet().stream()
+//				    .sorted(Entry.comparingByValue())
+//				    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+//				                              (e1, e2) -> e1, LinkedHashMap::new));
+//
+//			for(Map.Entry<Pair<T,T>, Double> x: sortedMapOfEdges.entrySet()) {
+//				Pair<T,T> key = x.getKey();
+//				double value = x.getValue();
+//				
+//				if(!visitedVertices.contains(key.getValue())) {
+//					
+//					System.out.println("vertex frpm: " + key.getKey());
+//					System.out.println("vertex to: " + key.getValue());
+//					
+//					mainAnimation.getChildren().add(animations.highlightEdgeTransition(key.getKey().toString(),
+//							key.getValue().toString(), "Undirected Weighted"));
+//					
+//					performDijkstrasAlgorithmUndirectedWeighted(graph,key.getValue(),visitedVertices,mapOfEdges);
+//					
+//				}
+//				
+//			}
+//			
+//		}
 
 		
 	}
