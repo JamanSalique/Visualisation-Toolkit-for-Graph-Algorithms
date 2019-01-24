@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.*?> 
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?> 
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -33,7 +33,7 @@
             </MenuBar>
          </children>
       </HBox>
-      <TabPane fx:id="tabs" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TabPane fx:id="tabs" prefHeight="570.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <tabs>
           <Tab text="Undirected Non-Weighted Graph">
                <content>
@@ -54,7 +54,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Pane fx:id="centerPaneUndirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="493.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="centerPaneUndirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="494.0" prefWidth="591.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0" />
                            </children></AnchorPane>
                      </center>
                   </BorderPane>
@@ -66,7 +66,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Pane fx:id="centerPaneUndirectedWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="493.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="centerPaneUndirectedWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="494.0" prefWidth="591.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </center>
@@ -92,7 +92,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Pane fx:id="centerPaneDirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="493.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="centerPaneDirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="494.0" prefWidth="592.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </center>
@@ -118,7 +118,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Pane fx:id="centerPaneDirectedWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="493.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="centerPaneDirectedWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="492.0" prefWidth="592.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="199.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </center>
@@ -167,5 +167,6 @@
             </ToolBar>
          </children>
       </HBox>
+      <TextArea layoutX="800.0" layoutY="5.0" prefHeight="535.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="63.0" />
    </children>
 </AnchorPane>
