@@ -152,7 +152,7 @@ public class GraphPanelController {
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
         listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
-        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kruskal's Algorithm");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kruskal's Algorithm","Prim's Algorithm");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
         listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
         
@@ -309,6 +309,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.playKruskalAlgorithm();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
+
+					algorithmAnimations.playPrimsAlgorithm();
+					
 				}
 				
 			}
@@ -393,6 +397,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartKruskalAlgorithm();
 				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
+				
+				algorithmAnimations.restartPrimsAlgorithm();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
@@ -459,6 +467,10 @@ public class GraphPanelController {
 			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
 				
 				algorithmAnimations.skipKruskalAlgorithmToEnd();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
+				
+				algorithmAnimations.skipPrimsAlgorithmToEnd();
 				
 			}
 			

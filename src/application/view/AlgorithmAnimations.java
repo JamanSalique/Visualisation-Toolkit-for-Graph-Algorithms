@@ -29,6 +29,9 @@ public class AlgorithmAnimations {
 	
 	private KruskalAlgorithm kruskal;
 	
+	private PrimsAlgorithm prims;
+	private String primsStartingVertex;
+	
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
@@ -36,6 +39,7 @@ public class AlgorithmAnimations {
 		dfs = new DepthFirstSearch(gpc);
 		dijkstra = new DijkstraAlgorithm(gpc);
 		kruskal = new KruskalAlgorithm(gpc);
+		prims = new PrimsAlgorithm(gpc);
 	}
 	
 	public void playBreadthFirstSearch() {
@@ -681,6 +685,104 @@ public class AlgorithmAnimations {
 	
 	public void skipKruskalAlgorithmToEnd() {
 		kruskal.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
+	}
+	
+	private void validateAndPlayPrims(String primsStartingVertex) {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
+				
+				prims.performPrimsAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt(),Integer.parseInt(primsStartingVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
+				
+				prims.performPrimsAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble(),Double.parseDouble(primsStartingVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
+				
+				prims.performPrimsAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString(),primsStartingVertex);
+				
+			}
+			
+		}
+			
+		
+	}
+	
+	public void playPrimsAlgorithm() {
+		
+			if(prims.getMainAnimation().getStatus() == Status.STOPPED) {
+				
+				TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
+		        dialogNonWeightedEdge.setTitle("Starting vertex");
+		        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
+		        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the Prim's algorithm from.");
+		        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		    	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		    	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+		    	Optional<String> result = dialogNonWeightedEdge.showAndWait();
+				
+				if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+					primsStartingVertex = result.get();
+				
+					if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+		            		
+		            		validateAndPlayPrims(primsStartingVertex);
+		        			
+		        		}
+		        		
+		        		
+						prims.playMainAnimation();
+						gpc.getPlayButton().setText("Pause");
+						
+						for(Tab tab : gpc.getTabs().getTabs()) {
+							tab.setDisable(true);
+						}
+				}
+	        		
+	    	}else if(prims.getMainAnimation().getStatus() == Status.RUNNING){
+			
+	    		prims.pauseMainAnimation();
+	    		gpc.getPlayButton().setText("Play");
+				
+			}else if(prims.getMainAnimation().getStatus() == Status.PAUSED) {
+				
+				prims.playMainAnimation();
+				gpc.getPlayButton().setText("Pause");
+				
+			}
+    	}
+	
+	public void restartPrimsAlgorithm() {
+		
+		if(prims.getMainAnimation().getChildren().size()>0) {
+			prims.getMainAnimation().getChildren().clear();
+		}
+
+			
+		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayPrims(primsStartingVertex);
+    		prims.stopMainAnimation("Undirected Weighted");
+			
+		}
+
+		prims.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipPrimsAlgorithmToEnd() {
+		prims.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
 			tab.setDisable(false);
 		}
