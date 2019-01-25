@@ -50,48 +50,72 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 			
 		}
 		
-		while(setOfVertexSets.size() != 1 && mapOfEdges.size() != 0) {
+		if(mapOfEdges.size() == 0) {
 			
-			sortedMapOfEdges =  sortMapOfEdges(mapOfEdges);
-			
-			System.out.println("mapOfEdges: " + sortedMapOfEdges);
-			
-			T vertex1 = sortedMapOfEdges.keySet().iterator().next().getKey();
-			T vertex2 = sortedMapOfEdges.keySet().iterator().next().getValue();
-			
-			System.out.println("v1: " + vertex1);
-			System.out.println("v2: " + vertex2);
-			
-			HashSet<T> set1 = find(setOfVertexSets,vertex1);
-			HashSet<T> set2 = find(setOfVertexSets,vertex2);
-			
-			if(!set1.containsAll(set2)) {
-				
-				HashSet<T> unionedSet = union(set1,set2);
-				setOfVertexSets.remove(set1);
-				setOfVertexSets.remove(set2);
-				setOfVertexSets.add(unionedSet);
+			for(Vertex<T> v : graph.getAdjacencyList().keySet()) {
 				
 				mainAnimation.getChildren().add(animations.fillVertexTransition(
-		        		vertex1.toString(),"Undirected Weighted"));
+		        		v.getElement().toString(),"Undirected Weighted"));
 				
-				mainAnimation.getChildren().add(animations.fillVertexTransition(
-		        		vertex2.toString(),"Undirected Weighted"));
-				
-				mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertex1.toString(),
-						vertex2.toString(), "Undirected Weighted"));
-			
 			}
 			
-			HashMap<Pair<T,T>,Double> copyOfMapOfEdges = (HashMap<Pair<T, T>, Double>) mapOfEdges.clone();
+		}else {
 			
-			
-
-			for(Pair<T,T> p : copyOfMapOfEdges.keySet()) {
+			while(setOfVertexSets.size() != 1 && mapOfEdges.size() != 0) {
 				
-				if(p.getKey().equals(vertex1) && p.getValue().equals(vertex2)) {
+				sortedMapOfEdges =  sortMapOfEdges(mapOfEdges);
+				
+				System.out.println("mapOfEdges: " + sortedMapOfEdges);
+				
+				T vertex1 = sortedMapOfEdges.keySet().iterator().next().getKey();
+				T vertex2 = sortedMapOfEdges.keySet().iterator().next().getValue();
+				
+				System.out.println("v1: " + vertex1);
+				System.out.println("v2: " + vertex2);
+				
+				HashSet<T> set1 = find(setOfVertexSets,vertex1);
+				HashSet<T> set2 = find(setOfVertexSets,vertex2);
+				
+				if(!set1.containsAll(set2)) {
 					
-					mapOfEdges.remove(p);
+					HashSet<T> unionedSet = union(set1,set2);
+					setOfVertexSets.remove(set1);
+					setOfVertexSets.remove(set2);
+					setOfVertexSets.add(unionedSet);
+					
+					mainAnimation.getChildren().add(animations.fillVertexTransition(
+			        		vertex1.toString(),"Undirected Weighted"));
+					
+					mainAnimation.getChildren().add(animations.fillVertexTransition(
+			        		vertex2.toString(),"Undirected Weighted"));
+					
+					mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertex1.toString(),
+							vertex2.toString(), "Undirected Weighted"));
+				
+				}
+				
+				HashMap<Pair<T,T>,Double> copyOfMapOfEdges = (HashMap<Pair<T, T>, Double>) mapOfEdges.clone();
+				
+				
+
+				for(Pair<T,T> p : copyOfMapOfEdges.keySet()) {
+					
+					if(p.getKey().equals(vertex1) && p.getValue().equals(vertex2)) {
+						
+						mapOfEdges.remove(p);
+						
+					}
+					
+				}
+				
+			}
+			
+			for(Entry<Vertex<T>, Set<Pair<Vertex<T>, Double>>> v : graph.getAdjacencyList().entrySet()) {
+				
+				if(v.getValue().isEmpty()) {
+					
+					mainAnimation.getChildren().add(animations.fillVertexTransition(
+			        		v.getKey().getElement().toString(),"Undirected Weighted"));
 					
 				}
 				
