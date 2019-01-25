@@ -27,12 +27,15 @@ public class AlgorithmAnimations {
 	private DijkstraAlgorithm dijkstra;
 	private String dijkstraStartVertexUndirectedWeighted, dijkstraStartVertexDirectedWeighted ;
 	
+	private KruskalAlgorithm kruskal;
+	
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
 		bfs = new BreadthFirstSearch(gpc);
 		dfs = new DepthFirstSearch(gpc);
 		dijkstra = new DijkstraAlgorithm(gpc);
+		kruskal = new KruskalAlgorithm(gpc);
 	}
 	
 	public void playBreadthFirstSearch() {
@@ -210,93 +213,6 @@ public class AlgorithmAnimations {
 			
 		}
 		
-	}
-	
-	public void playDijkstraAlgorithm() {
-		
-		if(dijkstra.getMainAnimation().getStatus() == Status.STOPPED) {
-
-			TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
-	        dialogNonWeightedEdge.setTitle("Starting vertex");
-	        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
-	        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the dijkstra algorithm from.");
-	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
-        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
-        	Optional<String> result = dialogNonWeightedEdge.showAndWait();
-			
-        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
-        		
-        		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
-        			
-        			dijkstraStartVertexUndirectedWeighted = result.get();
-            		
-            		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexUndirectedWeighted);
-        			
-        		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
-        			
-        			dijkstraStartVertexDirectedWeighted = result.get();
-            		
-            		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexDirectedWeighted);
-        			
-        		}
-        		
-        		dijkstra.playMainAnimation();
-				gpc.getPlayButton().setText("Pause");
-				
-				for(Tab tab : gpc.getTabs().getTabs()) {
-					tab.setDisable(true);
-				}
-        		
-        	}
-			
-		}else if(dijkstra.getMainAnimation().getStatus() == Status.RUNNING){
-			
-			dijkstra.pauseMainAnimation();
-			gpc.getPlayButton().setText("Play");
-			
-		}else if(dijkstra.getMainAnimation().getStatus() == Status.PAUSED) {
-			
-			dijkstra.playMainAnimation();
-			gpc.getPlayButton().setText("Pause");
-			
-		}
-		
-	}
-	
-	public void restartDijkstraAlgorithm() {
-		
-		if(dijkstra.getMainAnimation().getChildren().size()>0) {
-			dijkstra.getMainAnimation().getChildren().clear();
-		}
-		
-		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
-			
-    		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexUndirectedWeighted);
-    		dijkstra.stopMainAnimation("Undirected Weighted");
-			
-		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
-    		
-    		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexDirectedWeighted);
-    		dijkstra.stopMainAnimation("Directed Weighted");
-			
-		}
-		
-		dijkstra.playMainAnimation();
-		
-		gpc.getPlayButton().setText("Pause");
-		
-		for(Tab tab : gpc.getTabs().getTabs()) {
-			tab.setDisable(true);
-		}
-		
-	}
-	
-	public void skipDijkstraAlgorithmToEnd() {
-		dijkstra.getMainAnimation().jumpTo("end");
-		for(Tab tab : gpc.getTabs().getTabs()) {
-			tab.setDisable(false);
-		}
 	}
 	
 	private void validateAndPlayDFS(String dfsStartVertex) {
@@ -595,6 +511,179 @@ public class AlgorithmAnimations {
 			
 		}
 		
+	}
+	
+	public void playDijkstraAlgorithm() {
+		
+		if(dijkstra.getMainAnimation().getStatus() == Status.STOPPED) {
+
+			TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
+	        dialogNonWeightedEdge.setTitle("Starting vertex");
+	        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
+	        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the dijkstra algorithm from.");
+	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	Optional<String> result = dialogNonWeightedEdge.showAndWait();
+			
+        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        		
+        		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+        			
+        			dijkstraStartVertexUndirectedWeighted = result.get();
+            		
+            		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexUndirectedWeighted);
+        			
+        		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+        			
+        			dijkstraStartVertexDirectedWeighted = result.get();
+            		
+            		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexDirectedWeighted);
+        			
+        		}
+        		
+        		dijkstra.playMainAnimation();
+				gpc.getPlayButton().setText("Pause");
+				
+				for(Tab tab : gpc.getTabs().getTabs()) {
+					tab.setDisable(true);
+				}
+        		
+        	}
+			
+		}else if(dijkstra.getMainAnimation().getStatus() == Status.RUNNING){
+			
+			dijkstra.pauseMainAnimation();
+			gpc.getPlayButton().setText("Play");
+			
+		}else if(dijkstra.getMainAnimation().getStatus() == Status.PAUSED) {
+			
+			dijkstra.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartDijkstraAlgorithm() {
+		
+		if(dijkstra.getMainAnimation().getChildren().size()>0) {
+			dijkstra.getMainAnimation().getChildren().clear();
+		}
+		
+		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexUndirectedWeighted);
+    		dijkstra.stopMainAnimation("Undirected Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+    		
+    		validateAndPlayDijkstraAlgorithm(dijkstraStartVertexDirectedWeighted);
+    		dijkstra.stopMainAnimation("Directed Weighted");
+			
+		}
+		
+		dijkstra.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipDijkstraAlgorithmToEnd() {
+		dijkstra.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
+	}
+	
+	private void validateAndPlayKruskal() {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
+				
+				kruskal.performKruskalAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
+				
+				kruskal.performKruskalAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
+				
+				kruskal.performKruskalAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString());
+				
+			}
+			
+		}
+			
+		
+	}
+	
+	public void playKruskalAlgorithm() {
+		
+		if(kruskal.getMainAnimation().getStatus() == Status.STOPPED) {
+			
+			if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+            		
+            		validateAndPlayKruskal();
+        			
+        		}
+        		
+        		
+				kruskal.playMainAnimation();
+				gpc.getPlayButton().setText("Pause");
+				
+				for(Tab tab : gpc.getTabs().getTabs()) {
+					tab.setDisable(true);
+				}
+        		
+    	}else if(kruskal.getMainAnimation().getStatus() == Status.RUNNING){
+		
+    		kruskal.pauseMainAnimation();
+    		gpc.getPlayButton().setText("Play");
+			
+		}else if(kruskal.getMainAnimation().getStatus() == Status.PAUSED) {
+			
+			kruskal.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartKruskalAlgorithm() {
+		
+		if(kruskal.getMainAnimation().getChildren().size()>0) {
+			kruskal.getMainAnimation().getChildren().clear();
+		}
+
+			
+		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayKruskal();
+    		kruskal.stopMainAnimation("Undirected Weighted");
+			
+		}
+
+		kruskal.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipKruskalAlgorithmToEnd() {
+		kruskal.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
 	}
 	
 }

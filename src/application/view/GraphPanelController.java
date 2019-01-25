@@ -152,7 +152,7 @@ public class GraphPanelController {
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
         listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
-        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kruskal's Algorithm");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
         listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
         
@@ -305,6 +305,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.playDijkstraAlgorithm();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
+					
+					algorithmAnimations.playKruskalAlgorithm();
+					
 				}
 				
 			}
@@ -385,6 +389,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartDijkstraAlgorithm();
 				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
+				
+				algorithmAnimations.restartKruskalAlgorithm();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
@@ -447,6 +455,10 @@ public class GraphPanelController {
 			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
 				
 				algorithmAnimations.skipDijkstraAlgorithmToEnd();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
+				
+				algorithmAnimations.skipKruskalAlgorithmToEnd();
 				
 			}
 			
