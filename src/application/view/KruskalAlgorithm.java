@@ -38,7 +38,6 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 	public void performKruskalAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Double> mapOfEdges = sortMapOfEdges(retrieveAllEdges(graph));
-		System.out.println(mapOfEdges);
 		HashSet<HashSet<T>> setOfVertexSets = new HashSet<HashSet<T>>();
 		HashMap<Pair<T,T>,Double> sortedMapOfEdges = new HashMap<Pair<T,T>,Double>();
 		

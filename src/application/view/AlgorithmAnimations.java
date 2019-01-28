@@ -8,9 +8,11 @@ import application.model.Vertex;
 import javafx.animation.Animation.Status;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.util.Pair;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Alert.AlertType;
 
 public class AlgorithmAnimations {
 
@@ -32,6 +34,8 @@ public class AlgorithmAnimations {
 	private PrimsAlgorithm prims;
 	private String primsStartingVertex;
 	
+	private VertexCover vertexCover;
+	
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
@@ -40,6 +44,7 @@ public class AlgorithmAnimations {
 		dijkstra = new DijkstraAlgorithm(gpc);
 		kruskal = new KruskalAlgorithm(gpc);
 		prims = new PrimsAlgorithm(gpc);
+		vertexCover = new VertexCover(gpc);
 	}
 	
 	public void playBreadthFirstSearch() {
@@ -786,6 +791,144 @@ public class AlgorithmAnimations {
 		for(Tab tab : gpc.getTabs().getTabs()) {
 			tab.setDisable(false);
 		}
+	}
+	
+	public void playVertexCover() {
+		
+		if(vertexCover.getMainAnimation().getStatus() == Status.STOPPED) {
+        		
+    		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+        		
+        		if(!validateAndPlayVertexCover()) {
+        			Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("No Vertex Cover");
+                    alert.setHeaderText("The Graph does not have a vertex cover");
+                    alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
+                    
+                    alert.showAndWait();
+            		
+        		}else{
+        			
+        			vertexCover.playMainAnimation();
+    				gpc.getPlayButton().setText("Pause");
+    				
+    				for(Tab tab : gpc.getTabs().getTabs()) {
+    					tab.setDisable(true);
+    				}
+        			
+        		}
+    			
+    		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+    			
+    			if(!validateAndPlayVertexCover()) {
+    				System.out.println("JAMAMAMAMAMMA");
+    				
+    				Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("No Vertex Cover");
+                    alert.setHeaderText("The Graph does not have a vertex cover");
+                    alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
+                    
+                    alert.showAndWait();
+    				
+    			}else {
+    				
+    				vertexCover.playMainAnimation();
+    				gpc.getPlayButton().setText("Pause");
+    				
+    				for(Tab tab : gpc.getTabs().getTabs()) {
+    					tab.setDisable(true);
+    				}
+    				
+    			}
+    			
+    		}
+
+		}else if(vertexCover.getMainAnimation().getStatus() == Status.RUNNING){
+			
+			vertexCover.pauseMainAnimation();
+			gpc.getPlayButton().setText("Play");
+			
+		}else if(vertexCover.getMainAnimation().getStatus() == Status.PAUSED) {
+			
+			vertexCover.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartVertexCover() {
+		
+		if(vertexCover.getMainAnimation().getChildren().size()>0) {
+			vertexCover.getMainAnimation().getChildren().clear();
+		}
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+    		
+    		validateAndPlayVertexCover();
+    		vertexCover.stopMainAnimation("Undirected Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayVertexCover();
+    		vertexCover.stopMainAnimation("Undirected Weighted");
+			
+		}
+		
+		vertexCover.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipVertexCoverToEnd() {
+		vertexCover.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
+	}
+	
+	private boolean validateAndPlayVertexCover() {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer")) {
+				
+				return vertexCover.performVertexCoverUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedInt());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double")) {
+				
+				return vertexCover.performVertexCoverUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedDouble());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String")) {
+				
+				return vertexCover.performVertexCoverUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedString());
+				
+			}
+		}
+		else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
+				
+				return vertexCover.performVertexCoverUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
+				
+				return vertexCover.performVertexCoverUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble());
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
+				
+				return vertexCover.performVertexCoverUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString());
+				
+			}
+			
+		}
+		
+		return false;
+		
 	}
 	
 }

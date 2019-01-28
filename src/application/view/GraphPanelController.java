@@ -151,8 +151,9 @@ public class GraphPanelController {
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
-        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
-        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kruskal's Algorithm","Prim's Algorithm");
+        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Vertex Cover");
+        listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm",
+        												"Kruskal's Algorithm","Prim's Algorithm","Vertex Cover");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search");
         listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm");
         
@@ -283,6 +284,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.playDepthFirstSearch();
 					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+					
+					algorithmAnimations.playVertexCover();
+					
 				}
 				
 			}
@@ -312,6 +317,10 @@ public class GraphPanelController {
 				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
 
 					algorithmAnimations.playPrimsAlgorithm();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+
+					algorithmAnimations.playVertexCover();
 					
 				}
 				
@@ -377,6 +386,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartDepthFirstSearch();
 				
+			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+				
+				algorithmAnimations.restartVertexCover();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -400,6 +413,10 @@ public class GraphPanelController {
 			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
 				
 				algorithmAnimations.restartPrimsAlgorithm();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+				
+				algorithmAnimations.restartVertexCover();
 				
 			}
 			
@@ -448,6 +465,10 @@ public class GraphPanelController {
 				
 				algorithmAnimations.skipDepthFirstSearchToEnd();
 				
+			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+				
+				algorithmAnimations.skipVertexCoverToEnd();
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -471,6 +492,10 @@ public class GraphPanelController {
 			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
 				
 				algorithmAnimations.skipPrimsAlgorithmToEnd();
+				
+			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+				
+				algorithmAnimations.skipVertexCoverToEnd();
 				
 			}
 			
