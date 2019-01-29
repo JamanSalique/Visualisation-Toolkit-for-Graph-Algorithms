@@ -458,7 +458,7 @@ public class GraphPanelController {
 				
 				algorithmAnimations.restartDijkstraAlgorithm();
 				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 				
 				algorithmAnimations.restartKosarajuAlgorithm();
 				
@@ -545,7 +545,7 @@ public class GraphPanelController {
 				
 				algorithmAnimations.skipDijkstraAlgorithmToEnd();
 				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 				
 				algorithmAnimations.skipKosarajuAlgorithmToEnd();
 				
