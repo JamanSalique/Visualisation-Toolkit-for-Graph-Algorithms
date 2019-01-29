@@ -39,6 +39,26 @@ public class Animations {
 
 	}
 	
+	public StrokeTransition highlightEdgeTransitionChooseColour(String v1Data, String v2Data, String graphType,Color c) {
+		
+		
+		StackPane v1 = returnStackPane(v1Data,graphType);
+		StackPane v2 = returnStackPane(v2Data,graphType);
+		
+		Line edge = returnEdgeBetweenVertices(v1,v2,graphType);
+		
+		return new StrokeTransition(Duration.millis(50000), edge, Color.BLACK, c);
+		
+	}
+	
+	public FillTransition fillVertexTransitionChooseColour(String vertexData, String graphType,Color c) {
+
+			StackPane vertex = returnStackPane(vertexData,graphType);
+			Circle circle = (Circle) vertex.getChildren().get(0);
+			return new FillTransition(Duration.millis(50000), circle, Color.WHITE, c);
+
+	}
+	
 	private Line returnEdgeBetweenVertices(StackPane v1, StackPane v2,String graphType) {
 		
 		double v1X = v1.getLayoutX() + (v1.getWidth() / 2);

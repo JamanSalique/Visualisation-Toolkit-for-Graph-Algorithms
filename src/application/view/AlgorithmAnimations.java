@@ -36,6 +36,8 @@ public class AlgorithmAnimations {
 	
 	private VertexCover vertexCover;
 	
+	private KosarajuAlgorithm kosaraju;
+	
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
@@ -45,6 +47,7 @@ public class AlgorithmAnimations {
 		kruskal = new KruskalAlgorithm(gpc);
 		prims = new PrimsAlgorithm(gpc);
 		vertexCover = new VertexCover(gpc);
+		kosaraju = new KosarajuAlgorithm(gpc);
 	}
 	
 	public void playBreadthFirstSearch() {
@@ -821,7 +824,6 @@ public class AlgorithmAnimations {
     		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
     			
     			if(!validateAndPlayVertexCover()) {
-    				System.out.println("JAMAMAMAMAMMA");
     				
     				Alert alert = new Alert(AlertType.ERROR);
                     alert.setTitle("No Vertex Cover");
@@ -930,5 +932,119 @@ public class AlgorithmAnimations {
 		return false;
 		
 	}
+	
+	public void playKosarajuAlgorithm() {
+		
+		if(kosaraju.getMainAnimation().getStatus() == Status.STOPPED) {
+			
+        	if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+    			
+        		
+        		validateAndPlayKosarajuAlgorithm();
+    			
+    		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+        		
+        		validateAndPlayKosarajuAlgorithm();
+    			
+    		}
+    		
+        	kosaraju.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+			for(Tab tab : gpc.getTabs().getTabs()) {
+				tab.setDisable(true);
+			}
+        		
+        	
+			
+		}else if(kosaraju.getMainAnimation().getStatus() == Status.RUNNING){
+			
+			kosaraju.pauseMainAnimation();
+			gpc.getPlayButton().setText("Play");
+			
+		}else if(kosaraju.getMainAnimation().getStatus() == Status.PAUSED) {
+			
+			kosaraju.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartKosarajuAlgorithm() {
+		
+		if(kosaraju.getMainAnimation().getChildren().size()>0) {
+			kosaraju.getMainAnimation().getChildren().clear();
+		}
+		
+		if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+    		
+    		validateAndPlayKosarajuAlgorithm();
+    		kosaraju.stopMainAnimation("Directed Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+    		
+			validateAndPlayKosarajuAlgorithm();
+    		kosaraju.stopMainAnimation("Directed Weighted");
+			
+		}
+		
+		kosaraju.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipKosarajuAlgorithmToEnd() {
+		kosaraju.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
+	}
+	
+	private void validateAndPlayKosarajuAlgorithm() {
+		
+		if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedInt());
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedDouble());
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedString());
+				
+			}
+			
+		}
+		else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedInt());
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedDouble());
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
+				
+				kosaraju.performKosarajuAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedString());
+				
+			}
+			
+		}
+		
+	}
+	
+	
 	
 }
