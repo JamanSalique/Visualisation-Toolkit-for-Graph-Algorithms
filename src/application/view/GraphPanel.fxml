@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.effect.*?>
-<?import javafx.geometry.*?> 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -54,7 +54,7 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Pane fx:id="centerPaneUndirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="494.0" prefWidth="591.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="0.0" />
+                              <Pane fx:id="centerPaneUndirectedNonWeightedGraph" layoutX="282.0" layoutY="112.0" onMouseClicked="#handleAddVertex" prefHeight="494.0" prefWidth="587.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="204.0" AnchorPane.topAnchor="0.0" />
                            </children></AnchorPane>
                      </center>
                   </BorderPane>
@@ -158,11 +158,12 @@
                   <Label text="Fast" AnchorPane.bottomAnchor="10.0" />
                </children>
             </AnchorPane>
-            <ToolBar prefHeight="41.0" prefWidth="241.0">
+            <ToolBar prefHeight="41.0" prefWidth="408.0">
                <items>
                   <Button fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButton" text="Start Again" />
                   <Button fx:id="playButton" layoutX="101.0" layoutY="11.0" mnemonicParsing="false" onAction="#handlePlayButton" text="Play" />
                   <Button fx:id="skipToEndButton" layoutX="219.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSkipToEndButton" text="Skip to end" />
+                  <Button fx:id="randomGraphButton" mnemonicParsing="false" onAction="#handleRandomGraphButton" text="Create Random Graph" />
                </items>
             </ToolBar>
          </children>

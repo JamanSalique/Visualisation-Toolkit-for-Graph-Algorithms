@@ -9,6 +9,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -16,17 +17,22 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 public class GraphPanelController {
 
@@ -35,6 +41,7 @@ public class GraphPanelController {
 	
 	private DataModel dataModel;
 	private ClickedOnEdgeHandler clickedOnEdgeHandler;
+	private RandomGraphGenerator randomGraphGenerator;
 	
 	@SuppressWarnings("rawtypes")
 	private BreadthFirstSearch bfs;
@@ -99,6 +106,9 @@ public class GraphPanelController {
 	@FXML
 	private Slider animationSpeedSlider;
 	
+	@FXML
+	private Button randomGraphButton;
+	
 	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
@@ -159,6 +169,8 @@ public class GraphPanelController {
         
         animationSpeedSlider = new Slider(1, 4, 2);
         
+        randomGraphGenerator = new RandomGraphGenerator(this);
+        
 
 	}
 	
@@ -168,8 +180,7 @@ public class GraphPanelController {
 		// all data from observable lists to data in this class.
 	}
 	
-	@FXML
-	private EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
+	@FXML EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
 		
 		EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = 
 		        new EventHandler<MouseEvent>() {
@@ -216,8 +227,7 @@ public class GraphPanelController {
 		    
 	}
 	
-	@FXML
-	private EventHandler<MouseEvent> mouseReleasedOnVertexEvent() {
+	@FXML EventHandler<MouseEvent> mouseReleasedOnVertexEvent() {
 		
 		
      
@@ -257,6 +267,52 @@ public class GraphPanelController {
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+	
+	@FXML
+	private void handleRandomGraphButton(ActionEvent e) {
+		
+		Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Random Graph");
+        dialog.setHeaderText("Please enter the number of vertices and number of edge you would like.");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+    	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+    	dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
+    	
+    	GridPane grid = new GridPane();
+    	grid.setHgap(10);
+    	grid.setVgap(10);
+    	grid.setPadding(new Insets(20, 150, 10, 10));
+    	
+    	TextField vertex = new TextField();
+    	vertex.setPromptText("Number of vertices");
+    	TextField weight = new TextField();
+    	weight.setPromptText("Number OF edges");
+    	
+    	grid.add(new Label("Number of vertices:"), 0, 0);
+    	grid.add(vertex, 1, 0);
+    	grid.add(new Label("Number of edges:"), 0, 1);
+    	grid.add(weight, 1, 1);
+        
+    	dialog.getDialogPane().setContent(grid);
+    	
+    	// Convert the result to a username-password-pair when the login button is clicked.
+    	dialog.setResultConverter(dialogButton -> {
+    	    if (dialogButton == okButton) {
+    	        return new Pair<>(vertex.getText(), weight.getText());
+    	    }
+    	    return null;
+    	});
+    	
+    	Optional<Pair<String, String>> result = dialog.showAndWait();
+    	
+//    	if(result.isPresent() && gpc.isInputValid(result.get().getKey(),dataAsString,result.get().getValue()) ){
+//    		
+//    	}
+		
+		
+		randomGraphGenerator.createRandomVertices(Integer.parseInt(result.get().getKey()));
+		
 	}
 	
 	@FXML
