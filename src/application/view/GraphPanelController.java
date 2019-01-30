@@ -312,6 +312,7 @@ public class GraphPanelController {
 		
 		
 		randomGraphGenerator.createRandomVertices(Integer.parseInt(result.get().getKey()));
+		randomGraphGenerator.createRandomEdges(Integer.parseInt(result.get().getValue()));
 		
 	}
 	

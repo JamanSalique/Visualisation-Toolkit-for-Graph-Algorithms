@@ -991,7 +991,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
          
      }
 	 
-	 private void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
+	 public void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
     		
 			gpc.getDataModel().getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
@@ -1001,7 +1001,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
      		gpc.getDataModel().getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
      		
      	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-     		
+
      		gpc.getDataModel().getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
      		
      	}
@@ -1022,7 +1022,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 			
 	}
 		
-	private void addEdgeHandlerWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo, double weight) {
+	public void addEdgeHandlerWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo, double weight) {
 
      	if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
 
