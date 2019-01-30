@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class DataModel {
+public class DataModel implements java.io.Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@SuppressWarnings("rawtypes")
 	private ObservableList<UndirectedNonWeightedGraph> undirectedNonWeightedGraphData = FXCollections.observableArrayList();

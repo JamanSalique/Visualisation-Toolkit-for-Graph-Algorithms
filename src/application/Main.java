@@ -30,6 +30,7 @@ public class Main extends Application {
 	private Stage primaryStage;
 	
 	private DataModel dataModel;
+	private GraphPanelController controller;
 	
 	public Main() {
 		
@@ -43,6 +44,7 @@ public class Main extends Application {
         this.primaryStage.setTitle("Graph Visualiser");
         
         showGraphPanel();
+
 	}
 	
 	public void showGraphPanel() {
@@ -53,7 +55,7 @@ public class Main extends Application {
 	            AnchorPane graphPanel = (AnchorPane) loader.load();
 
 	            // Give the controller access to the main app.
-	            GraphPanelController controller = loader.getController();
+	            controller = loader.getController();
 	            controller.setMain(this);
 	            controller.setDataModel(dataModel);
 	            
@@ -98,7 +100,7 @@ public class Main extends Application {
             return false;
         }
 	}
-	
+
 	/**
      * Returns the main stage.
      * @return
