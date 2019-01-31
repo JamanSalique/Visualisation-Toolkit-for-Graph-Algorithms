@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 import application.model.UndirectedWeightedGraph;
@@ -31,6 +32,9 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 	}
 	
 	public void performPrimsAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex){
+		
+		ArrayList<String> edgesInMST = new ArrayList<String>();
+		double weightOfMST = 0;
 		
 		 PriorityQueue<Pair<Pair<T,T>,Double>> pq = new PriorityQueue<>((Object o1, Object o2) -> {
 			 Pair<Pair<T,T>,Double> first = (Pair<Pair<T,T>,Double>)o1;
@@ -69,6 +73,9 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 				 mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertex1.toString(),
 							vertex2.toString(), "Undirected Weighted"));
 				 
+				 edgesInMST.add(vertex1.toString() + "-" + vertex2.toString());
+				 weightOfMST += edge.getValue();
+				 
 				 Iterable<Pair<Vertex<T>, Double>> neighboursIterableOfVertex2 = graph.getNeighbours(vertex2);
 					ArrayList<Pair<Vertex<T>, Double>>  listOfNeighboursOfVertex2 = new ArrayList<Pair<Vertex<T>, Double>> ();
 					neighboursIterableOfVertex2.forEach(listOfNeighboursOfVertex2::add);
@@ -88,6 +95,10 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 			 }
 			
 		}
+		
+		double roundedTotalWeightMST = Math.round(weightOfMST * 100.0) / 100.0;
+		gpc.getOutputBox().setText("Edges in the minimum spanning tree: " + Arrays.toString(edgesInMST.toArray()) + "\n" +
+				"Total Weight of minimum spanning tree is: " + roundedTotalWeightMST);
 		
 	}
 	

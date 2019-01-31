@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -37,6 +38,9 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 	
 	public void performKruskalAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
+		ArrayList<String> edgesInMST = new ArrayList<String>();
+		double weightOfMST =0;
+		
 		HashMap<Pair<T,T>,Double> mapOfEdges = sortMapOfEdges(retrieveAllEdges(graph));
 		HashSet<HashSet<T>> setOfVertexSets = new HashSet<HashSet<T>>();
 		HashMap<Pair<T,T>,Double> sortedMapOfEdges = new HashMap<Pair<T,T>,Double>();
@@ -64,14 +68,10 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 				
 				sortedMapOfEdges =  sortMapOfEdges(mapOfEdges);
 				
-				System.out.println("mapOfEdges: " + sortedMapOfEdges);
-				
 				T vertex1 = sortedMapOfEdges.keySet().iterator().next().getKey();
 				T vertex2 = sortedMapOfEdges.keySet().iterator().next().getValue();
-				
-				System.out.println("v1: " + vertex1);
-				System.out.println("v2: " + vertex2);
-				
+				double w = sortedMapOfEdges.values().iterator().next();
+
 				HashSet<T> set1 = find(setOfVertexSets,vertex1);
 				HashSet<T> set2 = find(setOfVertexSets,vertex2);
 				
@@ -90,6 +90,9 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 					
 					mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertex1.toString(),
 							vertex2.toString(), "Undirected Weighted"));
+					
+					edgesInMST.add(vertex1.toString() + "-" + vertex2.toString());
+					weightOfMST += w;
 				
 				}
 				
@@ -121,8 +124,9 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 			}
 			
 		}
-		
-		
+		double roundedTotalWeightMST = Math.round(weightOfMST * 100.0) / 100.0;
+		gpc.getOutputBox().setText("Edges in the minimum spanning tree: " + Arrays.toString(edgesInMST.toArray()) + "\n" +
+				"Total Weight of minimum spanning tree is: " + roundedTotalWeightMST);
 	}
 	
 	private HashMap<Pair<T,T>,Double> retrieveAllEdges(UndirectedWeightedGraph<T> graph){
