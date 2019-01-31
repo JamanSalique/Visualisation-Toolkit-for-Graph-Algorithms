@@ -40,6 +40,8 @@ public class VertexCover <T extends Comparable<? super T>>{
 	
 	public boolean performVertexCoverUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
 		
+		ArrayList<T> vertexCover = new ArrayList<T>();
+		
 		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
 		
 		if(adjList.size() == 1) {
@@ -49,12 +51,15 @@ public class VertexCover <T extends Comparable<? super T>>{
 			mainAnimation.getChildren().add(animations.fillVertexTransition(
 					v.toString(),"Undirected Non Weighted"));
 			
+			vertexCover.add(v);
+			gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
 			return true;
 			
 		}
 		
 		for(Entry<Vertex<T>,Set<Vertex<T>>> entry : adjList.entrySet()) {
 			if(entry.getValue().isEmpty()) {
+				gpc.getOutputBox().setText("This particular graph does not have a vertex cover since the graph is disconnected.");
 				return false;
 			}
 		}
@@ -62,15 +67,12 @@ public class VertexCover <T extends Comparable<? super T>>{
 		int numberOfVertices = graph.getAdjacencyList().size();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
 		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedNonWeighted(graph);
-		System.out.println("lisOfEdges: " + Arrays.toString(listOfEdges.toArray()));
 		int index = 0;
 		
 		while(visitedVertices.size() != numberOfVertices && index<listOfEdges.size()) {
 			
 			Pair<T,T> edge = listOfEdges.get(index);
-			System.out.println("visited: " + Arrays.toString(visitedVertices.toArray()));
-			System.out.println("edge: " + edge);
-			
+
 			if(!visitedVertices.contains(edge.getKey())) {
 				
 				Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(edge.getKey());
@@ -85,14 +87,10 @@ public class VertexCover <T extends Comparable<? super T>>{
 					visitedVertices.add(edge.getKey());
 					visitedVertices.add(v);
 					
+					
+					vertexCover.add(edge.getKey());
 					mainAnimation.getChildren().add(animations.fillVertexTransition(
 							edge.getKey().toString(),"Undirected Non Weighted"));
-					
-					mainAnimation.getChildren().add(animations.highlightEdgeTransition(edge.getKey().toString(),
-	                		v.toString(), "Undirected Non Weighted"));
-					
-					mainAnimation.getChildren().add(animations.fillVertexTransition(
-							v.toString(),"Undirected Non Weighted"));
 
 				}
 					
@@ -101,7 +99,7 @@ public class VertexCover <T extends Comparable<? super T>>{
 			index++;
 			
 		}
-		
+		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
 		return true;
 		
 	}
@@ -153,8 +151,6 @@ public class VertexCover <T extends Comparable<? super T>>{
 			    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
 			                              (e1, e2) -> e1, LinkedHashMap::new));
 		
-		System.out.println(sortedEdgesByDegreeReversed);
-		
 		ArrayList<Pair<T,T>> toReturn = new ArrayList<Pair<T,T>>(sortedEdgesByDegreeReversed.keySet());
 		
 		
@@ -165,6 +161,7 @@ public class VertexCover <T extends Comparable<? super T>>{
 	
 	public boolean performVertexCoverUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
+		ArrayList<T> vertexCover = new ArrayList<T>();
 		HashMap<Vertex<T>, Set<Pair<Vertex<T>, Double>>> adjList = graph.getAdjacencyList();
 		
 		if(adjList.size() == 1) {
@@ -172,14 +169,17 @@ public class VertexCover <T extends Comparable<? super T>>{
 			T v =  ((Vertex<T>)adjList.keySet().toArray()[0]).getElement();
 			
 			mainAnimation.getChildren().add(animations.fillVertexTransition(
-					v.toString(),"Undirected Non Weighted"));
+					v.toString(),"Undirected Weighted"));
 			
+			vertexCover.add(v);
+			gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
 			return true;
 			
 		}
 		
 		for(Entry<Vertex<T>,Set<Pair<Vertex<T>, Double>>> entry : adjList.entrySet()) {
 			if(entry.getValue().isEmpty()) {
+				gpc.getOutputBox().setText("This particular graph does not have a vertex cover since the graph is disconnected.");
 				return false;
 			}
 		}
@@ -188,7 +188,7 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 		ArrayList<T> visitedVertices = new ArrayList<T>();
 		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedWeighted(graph);
-		System.out.println(Arrays.toString(listOfEdges.toArray()));
+
 		int index = 0;
 		
 		while(visitedVertices.size() != numberOfVertices && index<listOfEdges.size()) {
@@ -204,26 +204,17 @@ public class VertexCover <T extends Comparable<? super T>>{
 					listOfNeighbours.add(p.getKey());
 				}
 				
-//				for(Vertex<T> v :listOfNeighbours) {
-				
 				T v = edge.getValue();
 					
 				if(!visitedVertices.contains(v)) {
-					System.out.println("ggggg" + edge.getKey());
 					
 					visitedVertices.add(edge.getKey());
 					visitedVertices.add(v);
 					
+					vertexCover.add(edge.getKey());
 					mainAnimation.getChildren().add(animations.fillVertexTransition(
 							edge.getKey().toString(),"Undirected Weighted"));
-					
-					mainAnimation.getChildren().add(animations.highlightEdgeTransition(edge.getKey().toString(),
-	                		v.toString(), "Undirected Weighted"));
-					
-					mainAnimation.getChildren().add(animations.fillVertexTransition(
-							v.toString(),"Undirected Weighted"));
-					
-					
+
 				}
 					
 				
@@ -231,7 +222,7 @@ public class VertexCover <T extends Comparable<? super T>>{
 			index++;
 			
 		}
-		
+		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
 		return true;
 		
 	}
