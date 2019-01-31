@@ -11,6 +11,8 @@ import javafx.animation.Animation.Status;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.util.Pair;
 
 public class PrimsAlgorithm <T extends Comparable<? super T>>{
@@ -35,6 +37,19 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 		
 		ArrayList<String> edgesInMST = new ArrayList<String>();
 		double weightOfMST = 0;
+		
+		if(gpc.getCenterPaneUndirectedWeightedGraph().getChildren().size() == 1 ||
+				graph.getAdjacencyList().get(graph.returnVertex(startingVertex)).size() == 0) {
+			
+			mainAnimation.getChildren().add(animations.fillVertexTransition(
+	        		startingVertex.toString(),"Undirected Weighted"));
+			
+			double roundedTotalWeightMST = Math.round(weightOfMST * 100.0) / 100.0;
+			gpc.getOutputBox().setText("Edges in the minimum spanning tree: " + Arrays.toString(edgesInMST.toArray()) + "\n" +
+					"Total Weight of minimum spanning tree is: " + roundedTotalWeightMST);
+			
+			return;
+		}
 		
 		 PriorityQueue<Pair<Pair<T,T>,Double>> pq = new PriorityQueue<>((Object o1, Object o2) -> {
 			 Pair<Pair<T,T>,Double> first = (Pair<Pair<T,T>,Double>)o1;
