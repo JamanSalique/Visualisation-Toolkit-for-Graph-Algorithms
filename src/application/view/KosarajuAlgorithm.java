@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,6 +40,7 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 	}
 	
 	public void performKosarajuAlgorithmDirectedNonWeighted(DirectedNonWeightedGraph<T> graph){
+		ArrayList<ArrayList<T>> stronglyConnectedComponents = new ArrayList<ArrayList<T>>();
 		
 		Stack<T> s = new Stack<T>();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
@@ -66,18 +68,21 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 			
 			if(!visitedVertices.contains(vertexPopped)) {
 				
-				dfsUtilDirectedNonWeightedGraph(graph,tranposeGraph,vertexPopped,visitedVertices,listOfColors.get(colorIndex));
+				stronglyConnectedComponents.add(dfsUtilDirectedNonWeightedGraph(graph,tranposeGraph,vertexPopped,visitedVertices,listOfColors.get(colorIndex), new ArrayList<T>()));
 				colorIndex++;
-				System.out.println(""); 
+				if(colorIndex == listOfColors.size()) {
+					colorIndex =0;
+				}
 				
 			}
 			
 		}
 		
-		
+		gpc.getOutputBox().setText("Strongly Connected Components: " + Arrays.toString(stronglyConnectedComponents.toArray()));
 	}
 	
 	public void performKosarajuAlgorithmDirectedWeighted(DirectedWeightedGraph<T> graph){
+		ArrayList<ArrayList<T>> stronglyConnectedComponents = new ArrayList<ArrayList<T>>();
 		
 		Stack<T> s = new Stack<T>();
 		ArrayList<T> visitedVertices = new ArrayList<T>();
@@ -121,22 +126,26 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 			
 			if(!visitedVertices.contains(vertexPopped)) {
 				
-				dfsUtilDirectedWeightedGraph(graph,tranposeGraph,vertexPopped,visitedVertices,listOfColors.get(colorIndex));
+				stronglyConnectedComponents.add(dfsUtilDirectedWeightedGraph(graph,tranposeGraph,vertexPopped,visitedVertices,listOfColors.get(colorIndex),new ArrayList<T>()));
+				
 				colorIndex++;
-				System.out.println(""); 
+				
+				if(colorIndex == listOfColors.size()) {
+					colorIndex = 0;
+				}
 				
 			}
 			
 		}
 		
-		
+		gpc.getOutputBox().setText("Strongly Connected Components: " + Arrays.toString(stronglyConnectedComponents.toArray()));
 	}
 	
-	private void dfsUtilDirectedNonWeightedGraph(DirectedNonWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
-													Color color) {
+	private ArrayList<T> dfsUtilDirectedNonWeightedGraph(DirectedNonWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
+													Color color,ArrayList<T> stronglyConnectedComponent) {
 		
 		visitedVertices.add(vertex);
-		System.out.print(vertex + " "); 
+		stronglyConnectedComponent.add(vertex);
 		
 		Iterable<Vertex<T>> neighboursIterable = adjList.get(graph.returnVertex(vertex));
 		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
@@ -149,13 +158,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 			
 			if(!visitedVertices.contains(v.getElement())) {
 				
-				dfsUtilDirectedNonWeightedGraph(graph,adjList,v.getElement(),visitedVertices,color);
+				dfsUtilDirectedNonWeightedGraph(graph,adjList,v.getElement(),visitedVertices,color,stronglyConnectedComponent);
 				
 			}
 			
 		}
 		
-		
+		return stronglyConnectedComponent;
 	}
 	
 	private HashMap<Vertex<T>,Set<Vertex<T>>> getTranposeGraphDirectedNonWeightedGraph(HashMap<Vertex<T>,Set<Vertex<T>>> adjList) {
@@ -232,11 +241,11 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 
-	private void dfsUtilDirectedWeightedGraph(DirectedWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
-			Color color) {
+	private ArrayList<T> dfsUtilDirectedWeightedGraph(DirectedWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
+			Color color,ArrayList<T> stronglyConnectedComponent) {
 
 		visitedVertices.add(vertex);
-		System.out.print(vertex + " "); 
+		stronglyConnectedComponent.add(vertex);
 		
 		Iterable<Vertex<T>> neighboursIterable = adjList.get(graph.returnVertex(vertex));
 		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
@@ -249,13 +258,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 
 			if(!visitedVertices.contains(v.getElement())) {
 
-				dfsUtilDirectedWeightedGraph(graph,adjList,v.getElement(),visitedVertices,color);
+				dfsUtilDirectedWeightedGraph(graph,adjList,v.getElement(),visitedVertices,color,stronglyConnectedComponent);
 
 			}
 
 		}
 
-
+		return stronglyConnectedComponent;
 	}
 	
 	
