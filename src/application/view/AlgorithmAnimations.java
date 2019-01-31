@@ -233,17 +233,17 @@ public class AlgorithmAnimations {
 			if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer")) {
 				
 				dfs.performDepthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedInt(), Integer.parseInt(dfsStartVertex),
-						new ArrayList<Vertex<Integer>>());
+						new ArrayList<Vertex<Integer>>(),new ArrayList<Vertex<Integer>>());
 				
 			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double")) {
 				
 				dfs.performDepthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedDouble(), Double.parseDouble(dfsStartVertex),
-						new ArrayList<Vertex<Double>>());
+						new ArrayList<Vertex<Double>>(),new ArrayList<Vertex<Double>>());
 				
 			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String")) {
 				
 				dfs.performDepthFirstSearchUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedString(), dfsStartVertex,
-						new ArrayList<Vertex<String>>());
+						new ArrayList<Vertex<String>>(),new ArrayList<Vertex<String>>());
 				
 			}
 		}
@@ -252,17 +252,17 @@ public class AlgorithmAnimations {
 			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
 				
 				dfs.performDepthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt(), Integer.parseInt(dfsStartVertex),
-						new ArrayList<Vertex<Integer>>());
+						new ArrayList<Vertex<Integer>>(),new ArrayList<Vertex<Integer>>());
 				
 			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
 				
 				dfs.performDepthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble(), Double.parseDouble(dfsStartVertex),
-						new ArrayList<Vertex<Double>>());
+						new ArrayList<Vertex<Double>>(),new ArrayList<Vertex<Double>>());
 				
 			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
 				
 				dfs.performDepthFirstSearchUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString(), dfsStartVertex,
-						new ArrayList<Vertex<String>>());
+						new ArrayList<Vertex<String>>(),new ArrayList<Vertex<String>>());
 				
 			}
 			
@@ -271,17 +271,17 @@ public class AlgorithmAnimations {
 			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
 				
 				dfs.performDepthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedInt(), Integer.parseInt(dfsStartVertex),
-						new ArrayList<Vertex<Integer>>());
+						new ArrayList<Vertex<Integer>>(),new ArrayList<Vertex<Integer>>());
 				
 			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
 				
 				dfs.performDepthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedDouble(), Double.parseDouble(dfsStartVertex),
-						new ArrayList<Vertex<Double>>());
+						new ArrayList<Vertex<Double>>(),new ArrayList<Vertex<Double>>());
 				
 			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
 				
 				dfs.performDepthFirstSearchDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedString(), dfsStartVertex,
-						new ArrayList<Vertex<String>>());
+						new ArrayList<Vertex<String>>(),new ArrayList<Vertex<String>>());
 				
 			}
 			
@@ -290,17 +290,17 @@ public class AlgorithmAnimations {
 			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
 				
 				dfs.performDepthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedInt(), Integer.parseInt(dfsStartVertex),
-						new ArrayList<Vertex<Integer>>());
+						new ArrayList<Vertex<Integer>>(),new ArrayList<Vertex<Integer>>());
 				
 			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
 				
 				dfs.performDepthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedDouble(), Double.parseDouble(dfsStartVertex),
-						new ArrayList<Vertex<Double>>());
+						new ArrayList<Vertex<Double>>(),new ArrayList<Vertex<Double>>());
 				
 			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
 				
 				dfs.performDepthFirstSearchDirectedWeighted(gpc.getDataModel().getDirectedWeightedString(), dfsStartVertex,
-						new ArrayList<Vertex<String>>());
+						new ArrayList<Vertex<String>>(),new ArrayList<Vertex<String>>());
 				
 			}
 			

@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 import application.model.DirectedNonWeightedGraph;
@@ -43,7 +44,7 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
-	public void performDepthFirstSearchUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices){
+	public void performDepthFirstSearchUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
@@ -58,6 +59,8 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
         
         mainAnimation.getChildren().add(animations.fillVertexTransition(
         		startingVertex.toString(),"Undirected Non Weighted"));
+        
+        traversalOrder.add(startingVertex);
 		
 		for(Vertex<T> v :sortedListOfNeighbours) {
 			
@@ -66,16 +69,17 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 				mainAnimation.getChildren().add(animations.highlightEdgeTransition(startingVertex.toString(),
 		        		v.getElement().toString(), "Undirected Non Weighted"));
 				
-				performDepthFirstSearchUndirectedNonWeighted(graph,v.getElement(),visitedVertices);
+				performDepthFirstSearchUndirectedNonWeighted(graph,v.getElement(),visitedVertices,traversalOrder);
 				
 			}
 			
 		}
 		
+		gpc.getOutputBox().setText("DFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		
 	}
 	
-	public void performDepthFirstSearchUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices){
+	public void performDepthFirstSearchUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
@@ -92,6 +96,8 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
         
         mainAnimation.getChildren().add(animations.fillVertexTransition(
         		startingVertex.toString(),"Undirected Weighted"));
+        
+        traversalOrder.add(startingVertex);
 		
 		for(Vertex<T> v :sortedListOfNeighbours) {
 			
@@ -100,16 +106,16 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 				mainAnimation.getChildren().add(animations.highlightEdgeTransition(startingVertex.toString(),
 		        		v.getElement().toString(), "Undirected Weighted"));
 				
-				performDepthFirstSearchUndirectedWeighted(graph,v.getElement(),visitedVertices);
+				performDepthFirstSearchUndirectedWeighted(graph,v.getElement(),visitedVertices,traversalOrder);
 				
 			}
 			
 		}
 		
-		
+		gpc.getOutputBox().setText("DFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 	
-	public void performDepthFirstSearchDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices){
+	public void performDepthFirstSearchDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
@@ -124,6 +130,8 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
         
         mainAnimation.getChildren().add(animations.fillVertexTransition(
         		startingVertex.toString(),"Directed Non Weighted"));
+        
+        traversalOrder.add(startingVertex);
 		
 		for(Vertex<T> v :sortedListOfNeighbours) {
 			
@@ -132,16 +140,17 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 				mainAnimation.getChildren().add(animations.highlightEdgeTransition(startingVertex.toString(),
 		        		v.getElement().toString(), "Directed Non Weighted"));
 				
-				performDepthFirstSearchDirectedNonWeighted(graph,v.getElement(),visitedVertices);
+				performDepthFirstSearchDirectedNonWeighted(graph,v.getElement(),visitedVertices,traversalOrder);
 				
 			}
 			
 		}
 		
+		gpc.getOutputBox().setText("DFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		
 	}
 	
-	public void performDepthFirstSearchDirectedWeighted(DirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices){
+	public void performDepthFirstSearchDirectedWeighted(DirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
@@ -156,6 +165,8 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		}
 		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
         
+		traversalOrder.add(startingVertex);
+		
         mainAnimation.getChildren().add(animations.fillVertexTransition(
         		startingVertex.toString(),"Directed Weighted"));
 		
@@ -166,12 +177,13 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 				mainAnimation.getChildren().add(animations.highlightEdgeTransition(startingVertex.toString(),
 		        		v.getElement().toString(), "Directed Weighted"));
 				
-				performDepthFirstSearchDirectedWeighted(graph,v.getElement(),visitedVertices);
+				performDepthFirstSearchDirectedWeighted(graph,v.getElement(),visitedVertices,traversalOrder);
 				
 			}
 			
 		}
 		
+		gpc.getOutputBox().setText("DFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		
 	}
 	
