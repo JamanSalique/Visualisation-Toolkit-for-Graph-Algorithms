@@ -1,6 +1,7 @@
 package application.view;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -45,13 +46,18 @@ private GraphPanelController gpc;
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
+		
+		HashMap<T,T> predecessors = new HashMap<T,T>();
+		
+		ArrayList<String> edgesInShortestPathTree = new ArrayList<String>();
+		
 
 		 for (int i=0; i<vertexDistances.size();i++) { 
 			 
 			 T u = minDistance(vertexDistances,visitedVertices); 
 			 
 			 visitedVertices.add(u);
-			 
+
 				Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(u);
 				HashMap<T, Double> listOfNeighboursPairs = new HashMap<T, Double>();
 				ArrayList<T> listOfNeighboursVertices = new ArrayList<T>();
@@ -67,11 +73,14 @@ private GraphPanelController gpc;
 					}
 					
 				}
-				
+
 				if(i != 0 && listOfNeighboursVerticesInVisited.size()>0) {
-					T vertexFrom = findShortestEdgeInList(listOfNeighboursVerticesInVisited).getKey();
-				mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertexFrom.toString(),
-						u.toString(), "Undirected Weighted"));
+					T vertexFrom = predecessors.get(u);
+					mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertexFrom.toString(),
+							u.toString(), "Undirected Weighted"));
+					
+					edgesInShortestPathTree.add(vertexFrom.toString() + "-" + u.toString());
+				
 				}
 				mainAnimation.getChildren().add(animations.fillVertexTransition(
 		        		u.toString(),"Undirected Weighted"));
@@ -82,12 +91,15 @@ private GraphPanelController gpc;
 						 listOfNeighboursPairs.get(v) + vertexDistances.get(u)< vertexDistances.get(v)) {
 					 
 					 vertexDistances.replace(v,listOfNeighboursPairs.get(v) + vertexDistances.get(u));
+					 predecessors.put(v, u);
 
 					 
 				 }
 				 
 			 }
 		 }
+		 
+		 gpc.getOutputBox().setText("Edges in shortest path tree: " + Arrays.toString(edgesInShortestPathTree.toArray()));
 		
 	}
 	
@@ -96,6 +108,10 @@ private GraphPanelController gpc;
 		if (!graph.containsVertex(startingVertex)) {
             throw new IllegalArgumentException("Vertex doesn't exist.");
         }
+		
+		HashMap<T,T> predecessors = new HashMap<T,T>();
+		
+		ArrayList<String> edgesInShortestPathTree = new ArrayList<String>();
 
 		 for (int i=0; i<vertexDistances.size();i++) { 
 			 
@@ -132,20 +148,23 @@ private GraphPanelController gpc;
 				}
 				
 				if(i != 0 && listOfVerticesConnectedToU.size()>0) {
-					T vertexFrom = findShortestEdgeInList(listOfVerticesConnectedToU).getKey();
 					
+					T vertexFrom = predecessors.get(u);
 					Iterable<Pair<Vertex<T>, Double>> vertexFromNeighboursIterable = graph.getNeighbours(vertexFrom);
 					ArrayList<T> listOfVertexFromNeighbours = new ArrayList<T>();
+					
 					for(Pair<Vertex<T>, Double> p : vertexFromNeighboursIterable) {
 						listOfVertexFromNeighbours.add(p.getKey().getElement());
 					}
 					
 					if(listOfVertexFromNeighbours.contains(u)) {
 						
+						edgesInShortestPathTree.add(vertexFrom.toString() + "-" + u.toString());
 						mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertexFrom.toString(),
 								u.toString(), "Directed Weighted"));
 						
 					}
+					
 				}
 				mainAnimation.getChildren().add(animations.fillVertexTransition(
 		        		u.toString(),"Directed Weighted"));
@@ -156,12 +175,14 @@ private GraphPanelController gpc;
 						 listOfNeighboursPairs.get(v) + vertexDistances.get(u)< vertexDistances.get(v)) {
 					 
 					 vertexDistances.replace(v,listOfNeighboursPairs.get(v) + vertexDistances.get(u));
-
+					 predecessors.put(v, u);
 					 
 				 }
 				 
 			 }
 		 }
+		 
+		 gpc.getOutputBox().setText("Edges in shortest path tree: " + Arrays.toString(edgesInShortestPathTree.toArray()));
 		
 	}
 	
