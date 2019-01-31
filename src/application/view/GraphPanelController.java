@@ -305,14 +305,14 @@ public class GraphPanelController {
     	});
     	
     	Optional<Pair<String, String>> result = dialog.showAndWait();
+		
+    	if(result.isPresent() && randomGraphGenerator.isInputValid(result.get().getKey(), result.get().getValue())) {
+    		randomGraphGenerator.resetGraphs();
+    		randomGraphGenerator.createRandomVertices(Integer.parseInt(result.get().getKey()));
+    		randomGraphGenerator.createRandomEdges(Integer.parseInt(result.get().getValue()),Integer.parseInt(result.get().getKey()));
+    	}
     	
-//    	if(result.isPresent() && gpc.isInputValid(result.get().getKey(),dataAsString,result.get().getValue()) ){
-//    		
-//    	}
 		
-		
-		randomGraphGenerator.createRandomVertices(Integer.parseInt(result.get().getKey()));
-		randomGraphGenerator.createRandomEdges(Integer.parseInt(result.get().getValue()),Integer.parseInt(result.get().getKey()));
 		
 	}
 	

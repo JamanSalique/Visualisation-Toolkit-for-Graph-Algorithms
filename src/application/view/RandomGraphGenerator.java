@@ -10,7 +10,9 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -1038,5 +1040,204 @@ public class RandomGraphGenerator {
 		
 		
 	}
+	
+	public void resetGraphs() {
+		
+		String dataType = "";
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			
+			 dataType = gpc.getSelectedDataChoiceUndirectedNonWeightedGraph();
+			
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			dataType = gpc.getSelectedDataChoiceUndirectedWeightedGraph();
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			dataType = gpc.getSelectedDataChoiceDirectedNonWeightedGraph();
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			dataType = gpc.getSelectedDataChoiceDirectedWeightedGraph();
+			
+		}
+		
+    	if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+ 				
+			gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren().clear();
+			
+        	 if(dataType.equals("Integer")) {
+        		 
+        		gpc.getDataModel().getListOfUndirectedNonWeightedIntVertices().clear();
+        		gpc.getDataModel().getVertexDataUndirectedNonWeightedInt().clear();
+        		gpc.getDataModel().getUndirectedNonWeightedInt().clearGraph();
+        		 
+        	 }else if(dataType.equals("Double")) {
+        		 
+        		gpc.getDataModel().getListOfUndirectedNonWeightedDoubleVertices().clear();
+        		gpc.getDataModel().getVertexDataUndirectedNonWeightedDouble().clear();
+        		gpc.getDataModel().getUndirectedNonWeightedDouble().clearGraph();
+        		 
+        	 }else if(dataType.equals("String")) {
+ 	        		 
+        		gpc.getDataModel().getListOfUndirectedNonWeightedStringVertices().clear();
+        		gpc.getDataModel().getVertexDataUndirectedNonWeightedString().clear();
+        		gpc.getDataModel().getUndirectedNonWeightedString().clearGraph();
+        		 
+        	 }
+ 
+
+ 		}
+ 		
+ 		else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+ 				
+			gpc.getCenterPaneUndirectedWeightedGraph().getChildren().clear();
+			
+        	 if(dataType.equals("Integer")) {
+        		 
+        		 gpc.getDataModel().getListOfUndirectedWeightedIntVertices().clear();
+        		 gpc.getDataModel().getVertexDataUndirectedWeightedInt().clear();
+        		 gpc.getDataModel().getUndirectedWeightedInt().clearGraph();
+        		 
+        	 }else if(dataType.equals("Double")) {
+        		 
+        		gpc.getDataModel().getListOfUndirectedWeightedDoubleVertices().clear();
+        		gpc.getDataModel().getVertexDataUndirectedWeightedDouble().clear();
+        		gpc.getDataModel().getUndirectedWeightedDouble().clearGraph();
+        		 
+        	 }else if(dataType.equals("String")) {
+        		 
+        		gpc.getDataModel().getListOfUndirectedWeightedStringVertices().clear();
+        		gpc.getDataModel().getVertexDataUndirectedWeightedString().clear();
+        		gpc.getDataModel().getUndirectedWeightedString().clearGraph();
+        		 
+        	 }
+ 	 			
+ 	 	}
+ 		
+ 		else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+ 				
+			gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().clear();
+			
+        	 if(dataType.equals("Integer")) {
+        		 
+        		 gpc.getDataModel().getListOfDirectedNonWeightedIntVertices().clear();
+        		 gpc.getDataModel().getVertexDataDirectedNonWeightedInt().clear();
+        		 gpc.getDataModel().getDirectedNonWeightedInt().clearGraph();
+        		 
+        	 }else if(dataType.equals("Double")) {
+        		 
+        		gpc.getDataModel().getListOfDirectedNonWeightedDoubleVertices().clear();
+        		gpc.getDataModel().getVertexDataDirectedNonWeightedDouble().clear();
+        		gpc.getDataModel().getDirectedNonWeightedDouble().clearGraph();
+        		 
+        	 }else if(dataType.equals("String")) {
+        		 
+        		gpc.getDataModel().getListOfDirectedNonWeightedStringVertices().clear();
+        		gpc.getDataModel().getVertexDataDirectedNonWeightedString().clear();
+        		gpc.getDataModel().getDirectedNonWeightedString().clearGraph();
+        		 
+        	 }
+ 		}
+ 			
+ 		else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+	 				
+ 				gpc.getCenterPaneDirectedWeightedGraph().getChildren().clear();
+ 				
+ 	        	 if(dataType.equals("Integer")) {
+ 	        		 
+ 	        		 gpc.getDataModel().getListOfDirectedWeightedIntVertices().clear();
+ 	        		 gpc.getDataModel().getVertexDataDirectedWeightedInt().clear();
+ 	        		 gpc.getDataModel().getDirectedWeightedInt().clearGraph();
+ 	        		 
+ 	        	 }else if(dataType.equals("Double")) {
+ 	        		 
+ 	        		gpc.getDataModel().getListOfDirectedWeightedDoubleVertices().clear();
+	        		gpc.getDataModel().getVertexDataDirectedWeightedDouble().clear();
+	        		gpc.getDataModel().getDirectedWeightedDouble().clearGraph();
+ 	        		 
+ 	        	 }else if(dataType.equals("String")) {
+ 	        		 
+ 	        		gpc.getDataModel().getListOfDirectedWeightedStringVertices().clear();
+	        		gpc.getDataModel().getVertexDataDirectedWeightedString().clear();
+	        		gpc.getDataModel().getDirectedWeightedString().clearGraph();
+ 	        		 
+ 	        	 }
+	 		}
+		
+		
+	}
+	
+	public boolean isInputValid(String numberOfVertices, String numberOfEdges) {
+		
+		String errorMessage = "";
+		
+		if (numberOfVertices == null || numberOfVertices.length() == 0 || numberOfEdges == null || numberOfEdges.length() == 0) {
+    		
+    		errorMessage += "Fields cannot be left empty please add some data to all fields.";
+    		
+    	}else if(!isInteger(numberOfVertices)) {
+    		
+    		errorMessage += "You must provide and integer value for the number of vertices field.";
+    		
+    	}else if(!isInteger(numberOfEdges)) {
+    		
+    		errorMessage += "You must provide and integer value for the number of edges field.";
+    		
+    	}else {
+		
+			int nVertices = 0;
+			int nEdges = 0;
+			if(!numberOfVertices.equals("") && !numberOfEdges.equals("")) {
+				
+				 nVertices = Integer.parseInt(numberOfVertices);
+				 nEdges = Integer.parseInt(numberOfEdges);
+				
+			}
+			
+			int maxNumberOfEdgesUndirected = (nVertices*(nVertices-1))/2;
+			int maxNumberOfEdgesDirected = nVertices*(nVertices-1);
+			
+			if((gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph"))
+					&& nEdges>maxNumberOfEdgesDirected) {
+				
+				errorMessage += "A directed graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesDirected + " edges.";
+				
+			}else if((gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") || gpc.getSelectedTabName().equals("Undirected Weighted Graph"))
+					&& nEdges>maxNumberOfEdgesUndirected) {
+				
+				errorMessage += "A undirected graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesUndirected + " edges.";
+				
+			}
+    	}
+    	
+    	
+    	if (errorMessage.length() == 0) {
+            return true;
+        } else {
+            // Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Invalid Edge Fields.");
+            alert.setHeaderText("You have provided incorrect data.");
+            alert.setContentText(errorMessage);
+            
+            alert.showAndWait();
+            
+            return false;
+        }
+		
+	}
+	
+	private static boolean isInteger(String s) {
+        try { 
+            Integer.parseInt(s); 
+        } catch(NumberFormatException e) { 
+            return false; 
+        } catch(NullPointerException e) {
+            return false;
+        }
+        return true;
+    }
 
 }
