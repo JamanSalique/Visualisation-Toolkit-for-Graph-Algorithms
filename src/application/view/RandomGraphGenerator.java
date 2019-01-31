@@ -768,7 +768,7 @@ public class RandomGraphGenerator {
 		   			stack.setOnMouseReleased(gpc.mouseReleasedOnVertexEvent());
 		   			
 		   			listOfVertices.add(stack);
-		   			gpc.getDataModel().getUndirectedWeightedString().addVertex(text.toString());
+		   			gpc.getDataModel().getUndirectedWeightedString().addVertex(text.getText());
 					
 				}
 				
@@ -840,7 +840,7 @@ public class RandomGraphGenerator {
 		   			stack.setOnMouseReleased(gpc.mouseReleasedOnVertexEvent());
 		   			
 		   			listOfVertices.add(stack);
-		   			gpc.getDataModel().getDirectedNonWeightedString().addVertex(text.toString());
+		   			gpc.getDataModel().getDirectedNonWeightedString().addVertex(text.getText());
 					
 				}
 				
@@ -912,7 +912,7 @@ public class RandomGraphGenerator {
 		   			stack.setOnMouseReleased(gpc.mouseReleasedOnVertexEvent());
 		   			
 		   			listOfVertices.add(stack);
-		   			gpc.getDataModel().getDirectedWeightedString().addVertex(text.toString());
+		   			gpc.getDataModel().getDirectedWeightedString().addVertex(text.getText());
 					
 				}
 				
