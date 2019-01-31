@@ -86,7 +86,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 			
 		}
 		
-		System.out.println("bfs: " + Arrays.toString((traversalOrder).toArray()));
+		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		return traversalOrder;
 	}
 	
@@ -138,7 +138,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 			}
 			
 		}
-		
+		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		return traversalOrder;
 	}
 
@@ -195,6 +195,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 			
 		}
 		
+		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		return traversalOrder;
 	}
 	
@@ -251,6 +252,7 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 			
 		}
 		
+		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 		return traversalOrder;
 	}
 	

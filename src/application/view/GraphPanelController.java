@@ -23,6 +23,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -108,6 +109,9 @@ public class GraphPanelController {
 	
 	@FXML
 	private Button randomGraphButton;
+	
+	@FXML
+	private TextArea outputBox;
 	
 	private StackPane currentStackPane;
 
@@ -1500,6 +1504,10 @@ public class GraphPanelController {
 	
 	public Slider getAnimationSpeedSlider() {
 		return animationSpeedSlider;
+	}
+	
+	public TextArea getOutputBox() {
+		return outputBox;
 	}
 
 }

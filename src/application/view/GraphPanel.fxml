@@ -166,7 +166,7 @@
                   <Button fx:id="randomGraphButton" mnemonicParsing="false" onAction="#handleRandomGraphButton" text="Create Random Graph" />
                </items>
             </ToolBar>
-            <TextArea prefHeight="44.0" prefWidth="366.0" />
+            <TextArea fx:id="outputBox" prefHeight="44.0" prefWidth="366.0" />
          </children>
       </HBox>
    </children>
