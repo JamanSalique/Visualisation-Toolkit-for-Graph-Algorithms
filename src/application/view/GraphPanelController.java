@@ -329,12 +329,18 @@ public class GraphPanelController {
         alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
         		+ " of the screen and then press the play button.");
 		
+        Alert alert2 = new Alert(AlertType.ERROR);
+        alert2.setTitle("Empty Graph");
+        alert2.setHeaderText("The graph is empty.");
+        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
 		
 			
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
 			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
 				alert.showAndWait();
+			}else if(centerPaneUndirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
 			}else {
 				
 				if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
@@ -357,6 +363,8 @@ public class GraphPanelController {
 			
 			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem() == null) {
 				alert.showAndWait();
+			}else if(centerPaneUndirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
 			}else {
 				
 				if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
@@ -391,6 +399,8 @@ public class GraphPanelController {
 			
 			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
 				alert.showAndWait();
+			}else if(centerPaneDirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
 			}else {
 				
 				if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
@@ -413,6 +423,8 @@ public class GraphPanelController {
 			
 			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem() == null) {
 				alert.showAndWait();
+			}else if(centerPaneDirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
 			}else {
 				
 				if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
