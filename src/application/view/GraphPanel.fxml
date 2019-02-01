@@ -33,7 +33,7 @@
             </MenuBar>
          </children>
       </HBox>
-      <TabPane fx:id="tabs" prefHeight="570.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <TabPane fx:id="tabs" onMouseClicked="#handleTabs" onMouseDragged="#handleTabs" onMousePressed="#handleTabs" prefHeight="570.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
         <tabs>
           <Tab text="Undirected Non-Weighted Graph">
                <content>

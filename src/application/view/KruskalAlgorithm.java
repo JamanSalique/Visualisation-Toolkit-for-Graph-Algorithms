@@ -215,6 +215,10 @@ public void playMainAnimation() {
 		}
 		
 		mainAnimation.play();
+		
+		gpc.getRestartButton().setDisable(false);
+		gpc.getSkipToEndButton().setDisable(false);
+		
 		mainAnimation.setOnFinished(new EventHandler<ActionEvent>() {
 
 	        @Override
@@ -228,6 +232,29 @@ public void playMainAnimation() {
 				if(mainAnimation.getChildren().size()>0) {
 					mainAnimation.getChildren().clear();
 				}
+				
+				if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+					
+					gpc.setUndirectedNonWeightedModified(false);
+					gpc.setLastAlgorithmPlayedUndirectedNonWeighted(gpc.getListViewUndirectedNonWeighted().getSelectionModel().getSelectedItem());
+					
+				}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+					
+					gpc.setUndirectedWeightedModified(false);
+					gpc.setLastAlgorithmPlayedUndirectedWeighted(gpc.getListViewUndirectedWeighted().getSelectionModel().getSelectedItem());
+					
+				}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+					
+					gpc.setDirectedNonWeightedModified(false);
+					gpc.setLastAlgorithmPlayedDirectedNonWeighted(gpc.getListViewDirectedNonWeighted().getSelectionModel().getSelectedItem());
+					
+				}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+					
+					gpc.setDirectedWeightedModified(false);
+					gpc.setLastAlgorithmPlayedDirectedWeighted(gpc.getListViewDirectedWeighted().getSelectionModel().getSelectedItem());
+					
+				}
+				
 	        }
 	    });
 		

@@ -2,8 +2,15 @@ package application.view;
 
 import java.util.Optional;
 
+import javax.swing.event.ChangeEvent;
+import javafx.beans.value.ChangeListener;
+
 import application.Main;
 import application.model.DataModel;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -123,6 +130,16 @@ public class GraphPanelController {
     
     private double directedEdgePlacement;
     
+    private boolean isUndirectedNonWeightedModified = true;
+    private boolean isUndirectedWeightedModified = true;
+    private boolean isDirectedNonWeightedModified = true;
+    private boolean isDirectedWeightedModified = true;
+    
+    private String lastAlgorithmPlayedUndirectedNonWeighted;
+    private String lastAlgorithmPlayedUndirectedWeighted;
+    private String lastAlgorithmPlayedDirectedNonWeighted;
+    private String lastAlgorithmPlayedDirectedWeighted;
+    
     private String preSelectionChoiceUndirectedNonWeightedGraph;
     private String preSelectionChoiceUndirectedWeightedGraph;
     private String preSelectionChoiceDirectedNonWeightedGraph;
@@ -165,6 +182,8 @@ public class GraphPanelController {
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
+        ObservableList<String> data = FXCollections.observableArrayList("Breadth First Search","Depth First Search","Vertex Cover");
+        
         listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Vertex Cover");
         listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm",
         												"Kruskal's Algorithm","Prim's Algorithm","Vertex Cover");
@@ -174,7 +193,10 @@ public class GraphPanelController {
         animationSpeedSlider = new Slider(1, 4, 2);
         
         randomGraphGenerator = new RandomGraphGenerator(this);
-        
+        handleCenterPanes();
+        handleListViews();
+        restartButton.setDisable(true);
+		skipToEndButton.setDisable(true);
 
 	}
 	
@@ -271,6 +293,211 @@ public class GraphPanelController {
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void handleListViews() {
+		
+		listViewUndirectedNonWeighted.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			
+			public void changed(ObservableValue<? extends String> observable,
+		              String oldValue, String newValue) {
+
+				if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals(lastAlgorithmPlayedUndirectedNonWeighted)) {
+					
+					restartButton.setDisable(false);
+					skipToEndButton.setDisable(false);
+					
+				}else {
+					
+					restartButton.setDisable(true);
+					skipToEndButton.setDisable(true);
+					
+				} 
+		    }
+
+	       
+	    });
+		
+		listViewUndirectedWeighted.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			
+			public void changed(ObservableValue<? extends String> observable,
+		              String oldValue, String newValue) {
+
+				if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals(lastAlgorithmPlayedUndirectedWeighted)) {
+					
+					restartButton.setDisable(false);
+					skipToEndButton.setDisable(false);
+					
+				}else {
+					
+					restartButton.setDisable(true);
+					skipToEndButton.setDisable(true);
+					
+				} 
+		    }
+
+	       
+	    });
+		
+		listViewDirectedNonWeighted.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			
+			public void changed(ObservableValue<? extends String> observable,
+		              String oldValue, String newValue) {
+
+				if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals(lastAlgorithmPlayedDirectedNonWeighted)) {
+					
+					restartButton.setDisable(false);
+					skipToEndButton.setDisable(false);
+					
+				}else {
+					
+					restartButton.setDisable(true);
+					skipToEndButton.setDisable(true);
+					
+				} 
+		    }
+
+	       
+	    });
+		
+		listViewDirectedWeighted.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			
+			public void changed(ObservableValue<? extends String> observable,
+		              String oldValue, String newValue) {
+
+				if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals(lastAlgorithmPlayedDirectedWeighted)) {
+					
+					restartButton.setDisable(false);
+					skipToEndButton.setDisable(false);
+					
+				}else {
+					
+					restartButton.setDisable(true);
+					skipToEndButton.setDisable(true);
+					
+				} 
+		    }
+
+	       
+	    });
+		
+	}
+	
+	@FXML
+	private void handleTabs() {
+		
+		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			
+			if(isUndirectedNonWeightedModified == false) {
+				
+				restartButton.setDisable(false);
+				skipToEndButton.setDisable(false);
+				
+			}else {
+				
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+				
+			}
+			
+		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(isUndirectedWeightedModified == false) {
+				
+				restartButton.setDisable(false);
+				skipToEndButton.setDisable(false);
+				
+			}else {
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(isDirectedNonWeightedModified == false) {
+				
+				restartButton.setDisable(false);
+				skipToEndButton.setDisable(false);
+				
+			}else {
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+			}
+			
+		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(isDirectedWeightedModified == false) {
+				
+				restartButton.setDisable(false);
+				skipToEndButton.setDisable(false);
+				
+			}else {
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+			}
+			
+		}
+		
+	}
+	
+	private void handleCenterPanes() {
+			
+		getCenterPaneUndirectedNonWeightedGraph().getChildren().addListener(new ListChangeListener<Object>() {
+
+			@Override
+			public void onChanged(Change c) {
+				
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+				isUndirectedNonWeightedModified = true;
+				
+			}
+	       
+	    });
+		
+		getCenterPaneUndirectedWeightedGraph().getChildren().addListener(new ListChangeListener<Object>() {
+
+			@Override
+			public void onChanged(Change c) {
+				
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+				isUndirectedWeightedModified = true;
+				
+			}
+	       
+	    });
+		
+		getCenterPaneDirectedNonWeightedGraph().getChildren().addListener(new ListChangeListener<Object>() {
+
+			@Override
+			public void onChanged(Change c) {
+				
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+				isDirectedNonWeightedModified = true;
+				
+			}
+	       
+	    });
+
+		
+		getCenterPaneDirectedWeightedGraph().getChildren().addListener(new ListChangeListener<Object>() {
+
+			@Override
+			public void onChanged(Change c) {
+				
+				restartButton.setDisable(true);
+				skipToEndButton.setDisable(true);
+				isDirectedWeightedModified = true;
+				
+			}
+	       
+	    });
+
+		
+		
 	}
 	
 	@FXML
@@ -457,84 +684,140 @@ public class GraphPanelController {
 	@FXML
 	private void handleRestartButton(ActionEvent e) {
 		
+		Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Graph Algorithm Selected.");
+        alert.setHeaderText("No graph algorithm has been selected.");
+        alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
+        		+ " of the screen and then press the play button.");
+		
+        Alert alert2 = new Alert(AlertType.ERROR);
+        alert2.setTitle("Empty Graph");
+        alert2.setHeaderText("The graph is empty.");
+        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
+        
+        Alert alert3 = new Alert(AlertType.ERROR);
+        alert3.setTitle("Restarting animation before starting animation for newly made/modified graph.");
+        alert3.setHeaderText("You cannot restart an animation before starting an animation for a new/modified graph");
+        alert3.setContentText("To start an animation for a newly made/modified graph you must press the play button.");
+		
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
-			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-
-				algorithmAnimations.restartBreadthFirstSearch();
+			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneUndirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
 				
-			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.restartDepthFirstSearch();
-				
-			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
-				
-				algorithmAnimations.restartVertexCover();
-				
+				try {
+					
+					if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+						
+						algorithmAnimations.restartBreadthFirstSearch();
+						
+					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+						
+						algorithmAnimations.restartDepthFirstSearch();
+						
+					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+						
+						algorithmAnimations.restartVertexCover();
+						
+					}
+					
+				}catch(NumberFormatException nfe) {
+					
+					alert3.showAndWait();
+					
+				}catch(IllegalArgumentException ile) {
+					
+					alert3.showAndWait();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
 			
-			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.restartBreadthFirstSearch();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.restartDepthFirstSearch();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
-				
-				algorithmAnimations.restartDijkstraAlgorithm();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
-				
-				algorithmAnimations.restartKruskalAlgorithm();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
-				
-				algorithmAnimations.restartPrimsAlgorithm();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
-				
-				algorithmAnimations.restartVertexCover();
-				
+			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneUndirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.restartBreadthFirstSearch();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.restartDepthFirstSearch();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.restartDijkstraAlgorithm();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
+					
+					algorithmAnimations.restartKruskalAlgorithm();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
+					
+					algorithmAnimations.restartPrimsAlgorithm();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+					
+					algorithmAnimations.restartVertexCover();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
 			
-			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.restartBreadthFirstSearch();
-				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.restartDepthFirstSearch();
-				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
-				
-				algorithmAnimations.restartKosarajuAlgorithm();
-				
+			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneDirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.restartBreadthFirstSearch();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.restartDepthFirstSearch();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+					
+					algorithmAnimations.restartKosarajuAlgorithm();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
 			
-			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.restartBreadthFirstSearch();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.restartDepthFirstSearch();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
-				
-				algorithmAnimations.restartDijkstraAlgorithm();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
-				
-				algorithmAnimations.restartKosarajuAlgorithm();
-				
+			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneDirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.restartBreadthFirstSearch();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.restartDepthFirstSearch();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.restartDijkstraAlgorithm();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+					
+					algorithmAnimations.restartKosarajuAlgorithm();
+					
+				}
 			}
 			
 		}
@@ -544,84 +827,123 @@ public class GraphPanelController {
 	@FXML
 	private void handleSkipToEndButton(ActionEvent e) {
 		
+		Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("No Graph Algorithm Selected.");
+        alert.setHeaderText("No graph algorithm has been selected.");
+        alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
+        		+ " of the screen and then press the play button.");
+		
+        Alert alert2 = new Alert(AlertType.ERROR);
+        alert2.setTitle("Empty Graph");
+        alert2.setHeaderText("The graph is empty.");
+        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
+		
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
-			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-
-				algorithmAnimations.skipBreadthFirstSearchToEnd();
-				
-			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.skipDepthFirstSearchToEnd();
-				
-			}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
-				
-				algorithmAnimations.skipVertexCoverToEnd();
-				
+			if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneUndirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+	
+					algorithmAnimations.skipBreadthFirstSearchToEnd();
+					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.skipDepthFirstSearchToEnd();
+					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+					
+					algorithmAnimations.skipVertexCoverToEnd();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
 			
-			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.skipBreadthFirstSearchToEnd();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.skipDepthFirstSearchToEnd();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
-				
-				algorithmAnimations.skipDijkstraAlgorithmToEnd();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
-				
-				algorithmAnimations.skipKruskalAlgorithmToEnd();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
-				
-				algorithmAnimations.skipPrimsAlgorithmToEnd();
-				
-			}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
-				
-				algorithmAnimations.skipVertexCoverToEnd();
-				
+			if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneUndirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.skipBreadthFirstSearchToEnd();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.skipDepthFirstSearchToEnd();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.skipDijkstraAlgorithmToEnd();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
+					
+					algorithmAnimations.skipKruskalAlgorithmToEnd();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Prim's Algorithm")) {
+					
+					algorithmAnimations.skipPrimsAlgorithmToEnd();
+					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
+					
+					algorithmAnimations.skipVertexCoverToEnd();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
 			
-			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.skipBreadthFirstSearchToEnd();
-				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.skipDepthFirstSearchToEnd();
-				
-			}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
-				
-				algorithmAnimations.skipKosarajuAlgorithmToEnd();
-				
+			if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneDirectedNonWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.skipBreadthFirstSearchToEnd();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.skipDepthFirstSearchToEnd();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+					
+					algorithmAnimations.skipKosarajuAlgorithmToEnd();
+					
+				}
 			}
 			
 		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
 			
-			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-				
-				algorithmAnimations.skipBreadthFirstSearchToEnd();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-				
-				algorithmAnimations.skipDepthFirstSearchToEnd();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
-				
-				algorithmAnimations.skipDijkstraAlgorithmToEnd();
-				
-			}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
-				
-				algorithmAnimations.skipKosarajuAlgorithmToEnd();
-				
+			if(listViewDirectedWeighted.getSelectionModel().getSelectedItem() == null) {
+				alert.showAndWait();
+			}else if(centerPaneDirectedWeightedGraph.getChildren().size() == 0) {
+				alert2.showAndWait();
+			}else {
+			
+				if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
+					
+					algorithmAnimations.skipBreadthFirstSearchToEnd();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
+					
+					algorithmAnimations.skipDepthFirstSearchToEnd();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
+					
+					algorithmAnimations.skipDijkstraAlgorithmToEnd();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
+					
+					algorithmAnimations.skipKosarajuAlgorithmToEnd();
+					
+				}
 			}
 			
 		}
@@ -644,6 +966,7 @@ public class GraphPanelController {
  			if(result.get() == okButton) {
  				
  				centerPaneUndirectedNonWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedUndirectedNonWeighted = "";
  				
  	        	 if(preSelectionChoiceUndirectedNonWeightedGraph.equals("Integer")) {
  	        		 
@@ -678,6 +1001,7 @@ public class GraphPanelController {
  			if(result.get() == okButton) {
  				
  				centerPaneUndirectedWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedUndirectedWeighted = "";
  				
  	        	 if(preSelectionChoiceUndirectedWeightedGraph.equals("Integer")) {
  	        		 
@@ -711,6 +1035,7 @@ public class GraphPanelController {
  			if(result.get() == okButton) {
  				
  				centerPaneDirectedNonWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedDirectedNonWeighted = "";
  				
  	        	 if(preSelectionChoiceDirectedNonWeightedGraph.equals("Integer")) {
  	        		 
@@ -743,6 +1068,7 @@ public class GraphPanelController {
 	 			if(result.get() == okButton) {
 	 				
 	 				centerPaneDirectedWeightedGraph.getChildren().clear();
+	 				lastAlgorithmPlayedDirectedWeighted = "";
 	 				
 	 	        	 if(preSelectionChoiceDirectedWeightedGraph.equals("Integer")) {
 	 	        		 
@@ -1520,6 +1846,202 @@ public class GraphPanelController {
 	
 	public TextArea getOutputBox() {
 		return outputBox;
+	}
+
+	/**
+	 * @return the lastAlgorithmPlayedUndirectedNonWeighted
+	 */
+	public String getLastAlgorithmPlayedUndirectedNonWeighted() {
+		return lastAlgorithmPlayedUndirectedNonWeighted;
+	}
+
+	/**
+	 * @return the lastAlgorithmPlayedUndirectedWeighted
+	 */
+	public String getLastAlgorithmPlayedUndirectedWeighted() {
+		return lastAlgorithmPlayedUndirectedWeighted;
+	}
+
+	/**
+	 * @return the lastAlgorithmPlayedDirectedNonWeighted
+	 */
+	public String getLastAlgorithmPlayedDirectedNonWeighted() {
+		return lastAlgorithmPlayedDirectedNonWeighted;
+	}
+
+	/**
+	 * @return the lastAlgorithmPlayedDirectedWeighted
+	 */
+	public String getLastAlgorithmPlayedDirectedWeighted() {
+		return lastAlgorithmPlayedDirectedWeighted;
+	}
+
+	/**
+	 * @param lastAlgorithmPlayedUndirectedNonWeighted the lastAlgorithmPlayedUndirectedNonWeighted to set
+	 */
+	public void setLastAlgorithmPlayedUndirectedNonWeighted(String lastAlgorithmPlayedUndirectedNonWeighted) {
+		this.lastAlgorithmPlayedUndirectedNonWeighted = lastAlgorithmPlayedUndirectedNonWeighted;
+	}
+
+	/**
+	 * @param lastAlgorithmPlayedUndirectedWeighted the lastAlgorithmPlayedUndirectedWeighted to set
+	 */
+	public void setLastAlgorithmPlayedUndirectedWeighted(String lastAlgorithmPlayedUndirectedWeighted) {
+		this.lastAlgorithmPlayedUndirectedWeighted = lastAlgorithmPlayedUndirectedWeighted;
+	}
+
+	/**
+	 * @param lastAlgorithmPlayedDirectedNonWeighted the lastAlgorithmPlayedDirectedNonWeighted to set
+	 */
+	public void setLastAlgorithmPlayedDirectedNonWeighted(String lastAlgorithmPlayedDirectedNonWeighted) {
+		this.lastAlgorithmPlayedDirectedNonWeighted = lastAlgorithmPlayedDirectedNonWeighted;
+	}
+
+	/**
+	 * @param lastAlgorithmPlayedDirectedWeighted the lastAlgorithmPlayedDirectedWeighted to set
+	 */
+	public void setLastAlgorithmPlayedDirectedWeighted(String lastAlgorithmPlayedDirectedWeighted) {
+		this.lastAlgorithmPlayedDirectedWeighted = lastAlgorithmPlayedDirectedWeighted;
+	}
+
+	/**
+	 * @return the listViewUndirectedNonWeighted
+	 */
+	public ListView<String> getListViewUndirectedNonWeighted() {
+		return listViewUndirectedNonWeighted;
+	}
+
+	/**
+	 * @return the listViewUndirectedWeighted
+	 */
+	public ListView<String> getListViewUndirectedWeighted() {
+		return listViewUndirectedWeighted;
+	}
+
+	/**
+	 * @return the listViewDirectedNonWeighted
+	 */
+	public ListView<String> getListViewDirectedNonWeighted() {
+		return listViewDirectedNonWeighted;
+	}
+
+	/**
+	 * @return the listViewDirectedWeighted
+	 */
+	public ListView<String> getListViewDirectedWeighted() {
+		return listViewDirectedWeighted;
+	}
+
+	/**
+	 * @param listViewUndirectedNonWeighted the listViewUndirectedNonWeighted to set
+	 */
+	public void setListViewUndirectedNonWeighted(ListView<String> listViewUndirectedNonWeighted) {
+		this.listViewUndirectedNonWeighted = listViewUndirectedNonWeighted;
+	}
+
+	/**
+	 * @param listViewUndirectedWeighted the listViewUndirectedWeighted to set
+	 */
+	public void setListViewUndirectedWeighted(ListView<String> listViewUndirectedWeighted) {
+		this.listViewUndirectedWeighted = listViewUndirectedWeighted;
+	}
+
+	/**
+	 * @param listViewDirectedNonWeighted the listViewDirectedNonWeighted to set
+	 */
+	public void setListViewDirectedNonWeighted(ListView<String> listViewDirectedNonWeighted) {
+		this.listViewDirectedNonWeighted = listViewDirectedNonWeighted;
+	}
+
+	/**
+	 * @param listViewDirectedWeighted the listViewDirectedWeighted to set
+	 */
+	public void setListViewDirectedWeighted(ListView<String> listViewDirectedWeighted) {
+		this.listViewDirectedWeighted = listViewDirectedWeighted;
+	}
+
+	/**
+	 * @return the restartButton
+	 */
+	public Button getRestartButton() {
+		return restartButton;
+	}
+
+	/**
+	 * @return the skipToEndButton
+	 */
+	public Button getSkipToEndButton() {
+		return skipToEndButton;
+	}
+
+	/**
+	 * @param restartButton the restartButton to set
+	 */
+	public void setRestartButton(Button restartButton) {
+		this.restartButton = restartButton;
+	}
+
+	/**
+	 * @param skipToEndButton the skipToEndButton to set
+	 */
+	public void setSkipToEndButton(Button skipToEndButton) {
+		this.skipToEndButton = skipToEndButton;
+	}
+
+	/**
+	 * @return the isUndirectedNonWeightedModified
+	 */
+	public boolean isUndirectedNonWeightedModified() {
+		return isUndirectedNonWeightedModified;
+	}
+
+	/**
+	 * @return the isUndirectedWeightedModified
+	 */
+	public boolean isUndirectedWeightedModified() {
+		return isUndirectedWeightedModified;
+	}
+
+	/**
+	 * @return the isDirectedNonWeightedModified
+	 */
+	public boolean isDirectedNonWeightedModified() {
+		return isDirectedNonWeightedModified;
+	}
+
+	/**
+	 * @return the isDirectedWeightedModified
+	 */
+	public boolean isDirectedWeightedModified() {
+		return isDirectedWeightedModified;
+	}
+
+	/**
+	 * @param isUndirectedNonWeightedModified the isUndirectedNonWeightedModified to set
+	 */
+	public void setUndirectedNonWeightedModified(boolean isUndirectedNonWeightedModified) {
+		this.isUndirectedNonWeightedModified = isUndirectedNonWeightedModified;
+	}
+
+	/**
+	 * @param isUndirectedWeightedModified the isUndirectedWeightedModified to set
+	 */
+	public void setUndirectedWeightedModified(boolean isUndirectedWeightedModified) {
+		this.isUndirectedWeightedModified = isUndirectedWeightedModified;
+	}
+
+	/**
+	 * @param isDirectedNonWeightedModified the isDirectedNonWeightedModified to set
+	 */
+	public void setDirectedNonWeightedModified(boolean isDirectedNonWeightedModified) {
+		this.isDirectedNonWeightedModified = isDirectedNonWeightedModified;
+	}
+
+	/**
+	 * @param isDirectedWeightedModified the isDirectedWeightedModified to set
+	 */
+	public void setDirectedWeightedModified(boolean isDirectedWeightedModified) {
+		this.isDirectedWeightedModified = isDirectedWeightedModified;
 	}
 
 }
