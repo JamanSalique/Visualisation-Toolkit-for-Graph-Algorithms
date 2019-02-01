@@ -112,6 +112,15 @@ private GraphPanelController gpc;
 		HashMap<T,T> predecessors = new HashMap<T,T>();
 		
 		ArrayList<String> edgesInShortestPathTree = new ArrayList<String>();
+		
+		if(!graph.getNeighbours(startingVertex).iterator().hasNext()) {
+			
+			mainAnimation.getChildren().add(animations.fillVertexTransition(
+					startingVertex.toString(),"Directed Weighted"));
+			 gpc.getOutputBox().setText("Edges in shortest path tree: " + Arrays.toString(edgesInShortestPathTree.toArray()));
+			return;
+			
+		}
 
 		 for (int i=0; i<vertexDistances.size();i++) { 
 			 
