@@ -39,7 +39,7 @@
                <content>
                   <BorderPane prefHeight="585.0" prefWidth="1000.0">
                      <left>
-                        <VBox prefHeight="537.0" prefWidth="209.0" BorderPane.alignment="CENTER">
+                        <VBox maxHeight="-Infinity" prefHeight="348.0" prefWidth="209.0" BorderPane.alignment="TOP_LEFT">
                            <children>
                               <Label prefHeight="53.0" prefWidth="209.0" text="What data type would you like your vertices to hold?" wrapText="true" />
                               <ChoiceBox fx:id="choiceBoxUndirectedNonWeightedGraph" prefWidth="150.0" />
@@ -158,16 +158,31 @@
                   <Label text="Fast" AnchorPane.bottomAnchor="10.0" />
                </children>
             </AnchorPane>
-            <ToolBar prefHeight="41.0" prefWidth="408.0">
+            <ToolBar prefHeight="41.0" prefWidth="246.0">
                <items>
                   <Button fx:id="restartButton" mnemonicParsing="false" onAction="#handleRestartButton" text="Start Again" />
                   <Button fx:id="playButton" layoutX="101.0" layoutY="11.0" mnemonicParsing="false" onAction="#handlePlayButton" text="Play" />
                   <Button fx:id="skipToEndButton" layoutX="219.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleSkipToEndButton" text="Skip to end" />
-                  <Button fx:id="randomGraphButton" mnemonicParsing="false" onAction="#handleRandomGraphButton" text="Create Random Graph" />
                </items>
             </ToolBar>
             <TextArea fx:id="outputBox" prefHeight="44.0" prefWidth="378.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
+      <VBox layoutX="11.0" prefHeight="138.0" prefWidth="199.0" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="11.0">
+         <children>
+            <Label text="Create a randomised graph">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+            <Button fx:id="randomGraphButton" mnemonicParsing="false" onAction="#handleRandomGraphButton" text="Create Random Graph" />
+            <Label text="Clear Graph">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Button fx:id="clearGraphButton" mnemonicParsing="false" onAction="#handleClearGraphButton" text="Clear Graph" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

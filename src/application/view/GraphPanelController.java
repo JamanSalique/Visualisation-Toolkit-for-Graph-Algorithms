@@ -118,6 +118,9 @@ public class GraphPanelController {
 	private Button randomGraphButton;
 	
 	@FXML
+	private Button clearGraphButton;
+	
+	@FXML
 	private TextArea outputBox;
 	
 	private StackPane currentStackPane;
@@ -293,6 +296,107 @@ public class GraphPanelController {
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+	
+	@FXML
+	private void handleClearGraphButton() {
+		
+		Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Changing data type warning");
+        alert.setHeaderText("Are you sure you want to change the data type?");
+        alert.setContentText("If you click OK thew current graph you created will be cleared.");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		alert.getButtonTypes().setAll(okButton,cancelButton);
+        Optional<ButtonType> result = alert.showAndWait();
+         
+ 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+ 			
+ 			if(result.get() == okButton) {
+ 				
+ 				centerPaneUndirectedNonWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedUndirectedNonWeighted = "";
+
+				dataModel.getListOfUndirectedNonWeightedIntVertices().clear();
+				dataModel.getVertexDataUndirectedNonWeightedInt().clear();
+				dataModel.getUndirectedNonWeightedInt().clearGraph();
+
+        		dataModel.getListOfUndirectedNonWeightedDoubleVertices().clear();
+        		dataModel.getVertexDataUndirectedNonWeightedDouble().clear();
+        		dataModel.getUndirectedNonWeightedDouble().clearGraph();
+
+        		dataModel.getListOfUndirectedNonWeightedStringVertices().clear();
+        		dataModel.getVertexDataUndirectedNonWeightedString().clear();
+        		dataModel.getUndirectedNonWeightedString().clearGraph();
+
+ 	         }
+ 			
+ 		}
+ 		
+ 		else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
+ 			
+ 			if(result.get() == okButton) {
+ 				
+ 				centerPaneUndirectedWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedUndirectedWeighted = "";
+
+        		dataModel.getListOfUndirectedWeightedIntVertices().clear();
+        		dataModel.getVertexDataUndirectedWeightedInt().clear();
+        		dataModel.getUndirectedWeightedInt().clearGraph();
+
+        		dataModel.getListOfUndirectedWeightedDoubleVertices().clear();
+        		dataModel.getVertexDataUndirectedWeightedDouble().clear();
+        		dataModel.getUndirectedWeightedDouble().clearGraph();
+
+        		dataModel.getListOfUndirectedWeightedStringVertices().clear();
+        		dataModel.getVertexDataUndirectedWeightedString().clear();
+        		dataModel.getUndirectedWeightedString().clearGraph();
+
+ 	         }
+ 	 			
+ 	 	}else if(getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+ 			
+ 			if(result.get() == okButton) {
+ 				
+ 				centerPaneDirectedNonWeightedGraph.getChildren().clear();
+ 				lastAlgorithmPlayedDirectedNonWeighted = "";
+
+        		dataModel.getListOfDirectedNonWeightedIntVertices().clear();
+        		dataModel.getVertexDataDirectedNonWeightedInt().clear();
+        		dataModel.getDirectedNonWeightedInt().clearGraph();
+
+        		dataModel.getListOfDirectedNonWeightedDoubleVertices().clear();
+        		dataModel.getVertexDataDirectedNonWeightedDouble().clear();
+        		dataModel.getDirectedNonWeightedDouble().clearGraph();
+
+        		dataModel.getListOfDirectedNonWeightedStringVertices().clear();
+        		dataModel.getVertexDataDirectedNonWeightedString().clear();
+        		dataModel.getDirectedNonWeightedString().clearGraph();
+
+ 	         }
+ 		}else if(getSelectedTabName().equals("Directed Weighted Graph")) {
+	 			
+	 			if(result.get() == okButton) {
+	 				
+	 				centerPaneDirectedWeightedGraph.getChildren().clear();
+	 				lastAlgorithmPlayedDirectedWeighted = "";
+
+ 	        		dataModel.getListOfDirectedWeightedIntVertices().clear();
+ 	        		dataModel.getVertexDataDirectedWeightedInt().clear();
+ 	        		dataModel.getDirectedWeightedInt().clearGraph();
+
+ 	        		dataModel.getListOfDirectedWeightedDoubleVertices().clear();
+	        		dataModel.getVertexDataDirectedWeightedDouble().clear();
+	        		dataModel.getDirectedWeightedDouble().clearGraph();
+
+ 	        		dataModel.getListOfDirectedWeightedStringVertices().clear();
+	        		dataModel.getVertexDataDirectedWeightedString().clear();
+	        		dataModel.getDirectedWeightedString().clearGraph();
+	 	        		 
+	 	        	 
+	 	         }
+	 		}
+
 	}
 	
 	@SuppressWarnings("unchecked")
