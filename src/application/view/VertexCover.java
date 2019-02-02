@@ -38,72 +38,6 @@ public class VertexCover <T extends Comparable<? super T>>{
 		animations = new Animations(gpc);
 	}
 	
-	public boolean performVertexCoverUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
-		
-		ArrayList<T> vertexCover = new ArrayList<T>();
-		
-		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
-		
-		if(adjList.size() == 1) {
-			
-			T v =  ((Vertex<T>)adjList.keySet().toArray()[0]).getElement();
-			
-			mainAnimation.getChildren().add(animations.fillVertexTransition(
-					v.toString(),"Undirected Non Weighted"));
-			
-			vertexCover.add(v);
-			gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
-			return true;
-			
-		}
-		
-		for(Entry<Vertex<T>,Set<Vertex<T>>> entry : adjList.entrySet()) {
-			if(entry.getValue().isEmpty()) {
-				gpc.getOutputBox().setText("This particular graph does not have a vertex cover since the graph is disconnected.");
-				return false;
-			}
-		}
-		
-		int numberOfVertices = graph.getAdjacencyList().size();
-		ArrayList<T> visitedVertices = new ArrayList<T>();
-		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedNonWeighted(graph);
-		int index = 0;
-		
-		while(visitedVertices.size() != numberOfVertices && index<listOfEdges.size()) {
-			
-			Pair<T,T> edge = listOfEdges.get(index);
-
-			if(!visitedVertices.contains(edge.getKey())) {
-				
-				Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(edge.getKey());
-				ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-				neighboursIterable.forEach(listOfNeighbours::add);
-				
-				
-				T v = edge.getValue();
-					
-				if(!visitedVertices.contains(v)) {
-					
-					visitedVertices.add(edge.getKey());
-					visitedVertices.add(v);
-					
-					
-					vertexCover.add(edge.getKey());
-					mainAnimation.getChildren().add(animations.fillVertexTransition(
-							edge.getKey().toString(),"Undirected Non Weighted"));
-
-				}
-					
-				
-			}
-			index++;
-			
-		}
-		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
-		return true;
-		
-	}
-	
 	private ArrayList<Pair<T,T>> retrieveAllEdgesUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Integer> edges = new HashMap<Pair<T,T>,Integer>();
@@ -158,75 +92,7 @@ public class VertexCover <T extends Comparable<? super T>>{
 		return toReturn;
 		
 	}
-	
-	public boolean performVertexCoverUndirectedWeighted(UndirectedWeightedGraph<T> graph){
-		
-		ArrayList<T> vertexCover = new ArrayList<T>();
-		HashMap<Vertex<T>, Set<Pair<Vertex<T>, Double>>> adjList = graph.getAdjacencyList();
-		
-		if(adjList.size() == 1) {
-			
-			T v =  ((Vertex<T>)adjList.keySet().toArray()[0]).getElement();
-			
-			mainAnimation.getChildren().add(animations.fillVertexTransition(
-					v.toString(),"Undirected Weighted"));
-			
-			vertexCover.add(v);
-			gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
-			return true;
-			
-		}
-		
-		for(Entry<Vertex<T>,Set<Pair<Vertex<T>, Double>>> entry : adjList.entrySet()) {
-			if(entry.getValue().isEmpty()) {
-				gpc.getOutputBox().setText("This particular graph does not have a vertex cover since the graph is disconnected.");
-				return false;
-			}
-		}
-		
-		int numberOfVertices = graph.getAdjacencyList().size();
-		
-		ArrayList<T> visitedVertices = new ArrayList<T>();
-		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedWeighted(graph);
 
-		int index = 0;
-		
-		while(visitedVertices.size() != numberOfVertices && index<listOfEdges.size()) {
-			
-			Pair<T,T> edge = listOfEdges.get(index);
-			
-			if(!visitedVertices.contains(edge.getKey())) {
-				
-				Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(edge.getKey());
-				ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-				
-				for(Pair<Vertex<T>, Double> p : neighboursIterable) {
-					listOfNeighbours.add(p.getKey());
-				}
-				
-				T v = edge.getValue();
-					
-				if(!visitedVertices.contains(v)) {
-					
-					visitedVertices.add(edge.getKey());
-					visitedVertices.add(v);
-					
-					vertexCover.add(edge.getKey());
-					mainAnimation.getChildren().add(animations.fillVertexTransition(
-							edge.getKey().toString(),"Undirected Weighted"));
-
-				}
-					
-				
-			}
-			index++;
-			
-		}
-		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
-		return true;
-		
-	}
-	
 	private ArrayList<Pair<T,T>> retrieveAllEdgesUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Integer> edges = new HashMap<Pair<T,T>,Integer>();
@@ -280,6 +146,136 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 		
 		
+		return toReturn;
+		
+	}
+	
+	public boolean performVertexCoverUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
+		
+		ArrayList<T> vertexCover = new ArrayList<T>();
+		
+		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
+
+		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedNonWeighted(graph);
+		ArrayList<T> vertices = listOfVerticesDegreeOrder(graph);
+		int index = 0;
+		
+		while(!listOfEdges.isEmpty()) {
+			
+			T vertex = vertices.get(index);
+			vertexCover.add(vertex);
+			mainAnimation.getChildren().add(animations.fillVertexTransition(
+					vertex.toString(),"Undirected Non Weighted"));
+			
+			for(Vertex<T> u: adjList.get(graph.returnVertex(vertex))) {
+				
+				Pair<T,T> edge = new Pair<T,T>(vertex,u.getElement());
+				Pair<T,T> edgeReversed = new Pair<T,T>(u.getElement(),vertex);
+				
+				if(listOfEdges.contains(edge) ) {
+					listOfEdges.remove(listOfEdges.indexOf(edge));
+				}
+				
+				if(listOfEdges.contains(edgeReversed)) {
+					listOfEdges.remove(listOfEdges.indexOf(edgeReversed));
+				}
+				
+			}
+
+			index++;
+			
+		}
+		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
+		return true;
+		
+	}
+	
+	public boolean performVertexCoverUndirectedWeighted(UndirectedWeightedGraph<T> graph){
+		
+		ArrayList<T> vertexCover = new ArrayList<T>();
+		
+		HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>> adjList = graph.getAdjacencyList();
+
+		ArrayList<Pair<T,T>> listOfEdges = retrieveAllEdgesUndirectedWeighted(graph);
+		ArrayList<T> vertices = listOfVerticesDegreeOrderWeighted(graph);
+		int index = 0;
+		
+		while(!listOfEdges.isEmpty()) {
+			
+			T vertex = vertices.get(index);
+			vertexCover.add(vertex);
+			mainAnimation.getChildren().add(animations.fillVertexTransition(
+					vertex.toString(),"Undirected Weighted"));
+			
+			for(Pair<Vertex<T>, Double> u: adjList.get(graph.returnVertex(vertex))) {
+				
+				Pair<T,T> edge = new Pair<T,T>(vertex,u.getKey().getElement());
+				Pair<T,T> edgeReversed = new Pair<T,T>(u.getKey().getElement(),vertex);
+				
+				if(listOfEdges.contains(edge) ) {
+					listOfEdges.remove(listOfEdges.indexOf(edge));
+				}
+				
+				if(listOfEdges.contains(edgeReversed)) {
+					listOfEdges.remove(listOfEdges.indexOf(edgeReversed));
+				}
+				
+			}
+
+			index++;
+			
+		}
+		gpc.getOutputBox().setText("Vertices in minimumum vertex cover: " + Arrays.toString(vertexCover.toArray()));
+		return true;
+		
+	}
+	
+	private ArrayList<T> listOfVerticesDegreeOrder(UndirectedNonWeightedGraph<T> graph){
+		
+		ArrayList<T> toReturn = new ArrayList<T>();
+		
+		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
+		HashMap<T,Integer> vertexDegrees = new HashMap<T,Integer>();
+		
+		for(Entry<Vertex<T>,Set<Vertex<T>>> e : adjList.entrySet()) {
+			
+			vertexDegrees.put(e.getKey().getElement(), e.getValue().size());
+			
+		}
+		
+		HashMap<T,Integer> vertexDegreesSorted = vertexDegrees.entrySet().stream()
+												    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+												    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+												                              (e1, e2) -> e1, LinkedHashMap::new));
+		for(T vertex:vertexDegreesSorted.keySet()) {
+			toReturn.add(vertex);
+		}
+													
+		return toReturn;
+		
+	}
+	
+	private ArrayList<T> listOfVerticesDegreeOrderWeighted(UndirectedWeightedGraph<T> graph){
+		
+		ArrayList<T> toReturn = new ArrayList<T>();
+		
+		HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>> adjList = graph.getAdjacencyList();
+		HashMap<T,Integer> vertexDegrees = new HashMap<T,Integer>();
+		
+		for(Entry<Vertex<T>,Set<Pair<Vertex<T>,Double>>> e : adjList.entrySet()) {
+			
+			vertexDegrees.put(e.getKey().getElement(), e.getValue().size());
+			
+		}
+		
+		HashMap<T,Integer> vertexDegreesSorted = vertexDegrees.entrySet().stream()
+												    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+												    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+												                              (e1, e2) -> e1, LinkedHashMap::new));
+		for(T vertex:vertexDegreesSorted.keySet()) {
+			toReturn.add(vertex);
+		}
+													
 		return toReturn;
 		
 	}
