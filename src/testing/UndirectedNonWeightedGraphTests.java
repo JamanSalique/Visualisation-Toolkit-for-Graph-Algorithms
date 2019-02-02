@@ -9,6 +9,11 @@ import application.model.Vertex;
 
 class UndirectedNonWeightedGraphTests {
 
+	/**
+	 * This function is to test whether adding vertices to an UndirectedNonWeightedGraph for all data types
+	 * works. I add vertices to the graphs and then test to see whether the size of the adjacency list is equal to
+	 * the amount of vertices I added. 
+	 */
 	@Test
 	void addingVerticesToGraphTest() {
 		
@@ -58,6 +63,11 @@ class UndirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test whether removing vertices from an UndirectedNonWeightedGraph for all data types
+	 * works. I first add some vertices to the graphs and then remove a single vertex and then test to see if the
+	 * adjacency list contains the vertex I removed (which should be false).
+	 */
 	@Test
 	void removingVerticesFromGraphTest() {
 		
@@ -109,10 +119,6 @@ class UndirectedNonWeightedGraphTests {
 		undirectedNonWeightedString.removeVertex(ve.getElement());
 		undirectedNonWeightedString.removeVertex(vc.getElement());
 		
-		assertEquals(4,undirectedNonWeightedInt.getAdjacencyList().size());
-		assertEquals(3,undirectedNonWeightedDouble.getAdjacencyList().size());
-		assertEquals(2,undirectedNonWeightedString.getAdjacencyList().size());
-		
 		assertFalse(undirectedNonWeightedInt.containsVertex(v4.getElement()));
 		
 		assertFalse(undirectedNonWeightedDouble.containsVertex(v0d.getElement()));
@@ -125,6 +131,11 @@ class UndirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test whether adding edges to an UndirectedNonWeightedGraph for all data types
+	 * works. I add vertices to the graphs and then add edges between some of the vertices. I then test
+	 * to see if specific vertices are adjacent (ie are connected by an edge).
+	 */
 	@Test
 	void addingEdgesToGraphTest() {
 		
@@ -187,6 +198,11 @@ class UndirectedNonWeightedGraphTests {
 
 	}
 	
+	/**
+	 * This function is to test whether removing edges from an UndirectedNonWeightedGraph for all data types
+	 * works. I remove vertices to the graphs and add edges between some of the vertices. I then remove an
+	 * edge and test to see if the vertices are adjacent to each other (which should return false).
+	 */
 	@Test
 	void removingEdgesToGraphTest() {
 		
