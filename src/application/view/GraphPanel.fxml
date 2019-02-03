@@ -14,19 +14,11 @@
          <children>
             <MenuBar prefHeight="30.0" prefWidth="998.0" style="-fx-effect: null;" AnchorPane.bottomAnchor="571.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
-                  <items> 
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="How to use application">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem fx:id="howToAddRemoveVertices" mnemonicParsing="false" onAction="#handleHowToAddRemoveVertices" text="How to add/delete vertices" />
+                        <MenuItem fx:id="howToAddRemoveEdges" mnemonicParsing="false" onAction="#handleHowToAddRemoveEdges" text="How to add/delete edges" />
+                        <MenuItem fx:id="howToVisualiseAlgorithm" mnemonicParsing="false" onAction="#handleHowToVisualiseAlgorithm" text="How to visualise an algorithm." />
                   </items>
                 </Menu>
               </menus>

@@ -36,6 +36,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -122,6 +123,15 @@ public class GraphPanelController {
 	
 	@FXML
 	private TextArea outputBox;
+	
+	@FXML 
+	private MenuItem howToAddRemoveVertices;
+	
+	@FXML 
+	private MenuItem howToAddRemoveEdges;
+	
+	@FXML 
+	private MenuItem howToVisualiseAlgorithm;
 	
 	private StackPane currentStackPane;
 
@@ -296,6 +306,64 @@ public class GraphPanelController {
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
+	}
+	
+	@FXML
+	private void handleHowToAddRemoveVertices() {
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Adding and removing vertices.");
+        alert.setHeaderText("How to add and remove vertices.");
+        alert.setContentText("Adding vertices to screen:\n\nTo add a vertex just click anywhere on the screen, "
+        		+ "you will be promted to insert the data you would like the vertex to hold."
+        		+ "\n \nOnce you have inputted the data click the \"OK\" button and a vertex with the data you inputted will be added to the graph."
+        		+ "\n \nYou can change the data type of the vertex data by using the choice box on the left of the screen."
+        		+ "\n \nDeleting vertices from screen:\n\nTo delete vertices all you have to do is double click the vertex you would like to delete.");
+		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		alert.getButtonTypes().setAll(okButton);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Optional<ButtonType> result = alert.showAndWait();
+		
+	}
+	
+	@FXML
+	private void handleHowToAddRemoveEdges() {
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Adding and removing edges.");
+        alert.setHeaderText("How to add and remove edges.");
+        alert.setContentText("Adding edges to screen:\n\nTo add a edge right click the vertex that you would like to be the source of the edge, "
+        		+ "you will be promted to insert the vertex you would like to connect an edge to from your chosen source vertex"
+        		+ "\n \nIf you are creating"
+        		+ " edges for a weighted graph then you will also have to input the weight you would like the edge to have."
+        		+ "\n \nOnce you have inputted the data click the \"OK\" button and an edge will be created between your chose vertices."
+        		+ "\n \nDeleting edges from screen:\n\nTo delete edges all you have to do is double click the edge you would like to delete.");
+		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		alert.getButtonTypes().setAll(okButton);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Optional<ButtonType> result = alert.showAndWait();
+		
+		
+	}
+	
+	@FXML
+	private void handleHowToVisualiseAlgorithm() {
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Visualise a graph algorithm");
+        alert.setHeaderText("How to visualise a graph algorithm");
+        alert.setContentText("To visualise a graph algorithm you first need to have a graph created.\n\n"
+        		+ "Once you have a created a graph, you can choose the algorithm you would like to visualise by clicking one of the algorithms "
+        		+ "in the list on the left of the screen. \n\n "
+        		+ "To start the visualisation of the algorithm press the \"Play\" button at the bottom of the screen. For some algorithms"
+        		+ " you may be prompted to input a starting vertex and once inputted the animation will start. \n\n "
+        		+ "You can restart the animation by pressing the \"Start Again\" button and you can skip the animation by clicking the "
+        		+ "\"Skip to end button\" both of these buttons are located at the bottom of the screen either side of the \"Play\" button.");
+		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		alert.getButtonTypes().setAll(okButton);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        Optional<ButtonType> result = alert.showAndWait();
+		
 	}
 	
 	@FXML
