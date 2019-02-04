@@ -197,11 +197,11 @@ public class GraphPanelController {
         
         ObservableList<String> data = FXCollections.observableArrayList("Breadth First Search","Depth First Search","Vertex Cover");
         
-        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Vertex Cover");
+        listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Vertex Cover","My Algorithm");
         listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm",
-        												"Kruskal's Algorithm","Prim's Algorithm","Vertex Cover");
-        listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Kosaraju's Algorithm");
-        listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kosaraju's Algorithm");
+        												"Kruskal's Algorithm","Prim's Algorithm","Vertex Cover","My Algorithm");
+        listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Kosaraju's Algorithm","My Algorithm");
+        listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kosaraju's Algorithm","My Algorithm");
         
         animationSpeedSlider = new Slider(1, 4, 2);
         
@@ -760,6 +760,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.playVertexCover();
 					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.playMyAlgorithm();
+					
 				}
 				
 			}
@@ -796,6 +800,10 @@ public class GraphPanelController {
 
 					algorithmAnimations.playVertexCover();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.playMyAlgorithm();
+					
 				}
 				
 			}
@@ -819,6 +827,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.playKosarajuAlgorithm();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.playMyAlgorithm();
 					
 				}
 				
@@ -847,6 +859,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.playKosarajuAlgorithm();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.playMyAlgorithm();
 					
 				}
 				
@@ -900,6 +916,10 @@ public class GraphPanelController {
 						
 						algorithmAnimations.restartVertexCover();
 						
+					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+						
+						algorithmAnimations.restartMyAlgorithm();
+						
 					}
 					
 				}catch(NumberFormatException nfe) {
@@ -945,6 +965,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.restartVertexCover();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.restartMyAlgorithm();
+					
 				}
 			}
 			
@@ -967,6 +991,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.restartKosarajuAlgorithm();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.restartMyAlgorithm();
 					
 				}
 			}
@@ -994,6 +1022,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.restartKosarajuAlgorithm();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.restartMyAlgorithm();
 					
 				}
 			}
@@ -1036,6 +1068,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.skipVertexCoverToEnd();
 					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.skipMyAlgorithmToEnd();
+					
 				}
 			}
 			
@@ -1071,6 +1107,10 @@ public class GraphPanelController {
 					
 					algorithmAnimations.skipVertexCoverToEnd();
 					
+				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.skipMyAlgorithmToEnd();
+					
 				}
 			}
 			
@@ -1093,6 +1133,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.skipKosarajuAlgorithmToEnd();
+					
+				}else if(listViewDirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.skipMyAlgorithmToEnd();
 					
 				}
 			}
@@ -1120,6 +1164,10 @@ public class GraphPanelController {
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
 					algorithmAnimations.skipKosarajuAlgorithmToEnd();
+					
+				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.skipMyAlgorithmToEnd();
 					
 				}
 			}

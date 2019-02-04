@@ -38,6 +38,9 @@ public class AlgorithmAnimations {
 	
 	private KosarajuAlgorithm kosaraju;
 	
+	private MyAlgorithm myAlgorithm;
+	private String myAlgorithmStartVertexUndirectedNonWeighted, myAlgorithmStartVertexUndirectedWeighted, 
+	myAlgorithmStartVertexDirectedNonWeighted, myAlgorithmStartVertexDirectedWeighted ;
 	
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
@@ -48,6 +51,7 @@ public class AlgorithmAnimations {
 		prims = new PrimsAlgorithm(gpc);
 		vertexCover = new VertexCover(gpc);
 		kosaraju = new KosarajuAlgorithm(gpc);
+		myAlgorithm = new MyAlgorithm(gpc);
 	}
 	
 	public void playBreadthFirstSearch() {
@@ -1038,6 +1042,183 @@ public class AlgorithmAnimations {
 			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
 				
 				kosaraju.performKosarajuAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedString());
+				
+			}
+			
+		}
+		
+	}
+	
+	public void playMyAlgorithm() {
+		
+		if(myAlgorithm.getMainAnimation().getStatus() == Status.STOPPED) {
+
+			TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
+	        dialogNonWeightedEdge.setTitle("Starting vertex");
+	        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
+	        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the animation from.");
+	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	Optional<String> result = dialogNonWeightedEdge.showAndWait();
+			
+        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        		
+        		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+        			
+        			myAlgorithmStartVertexUndirectedNonWeighted = result.get();
+            		
+            		validateAndPlayMyAlgorithm(myAlgorithmStartVertexUndirectedNonWeighted);
+        			
+        		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+        			
+        			myAlgorithmStartVertexUndirectedWeighted = result.get();
+            		
+            		validateAndPlayMyAlgorithm(myAlgorithmStartVertexUndirectedWeighted);
+        			
+        		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+        			
+        			myAlgorithmStartVertexDirectedNonWeighted = result.get();
+            		
+            		validateAndPlayMyAlgorithm(myAlgorithmStartVertexDirectedNonWeighted);
+        			
+        		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+        			
+        			myAlgorithmStartVertexDirectedWeighted = result.get();
+            		
+            		validateAndPlayMyAlgorithm(myAlgorithmStartVertexDirectedWeighted);
+        			
+        		}
+        		
+        		myAlgorithm.playMainAnimation();
+				gpc.getPlayButton().setText("Pause");
+				
+				for(Tab tab : gpc.getTabs().getTabs()) {
+					tab.setDisable(true);
+				}
+        		
+        	}
+			
+		}else if(myAlgorithm.getMainAnimation().getStatus() == Status.RUNNING){
+			
+			myAlgorithm.pauseMainAnimation();
+			gpc.getPlayButton().setText("Play");
+			
+		}else if(myAlgorithm.getMainAnimation().getStatus() == Status.PAUSED) {
+			
+			myAlgorithm.playMainAnimation();
+			gpc.getPlayButton().setText("Pause");
+			
+		}
+		
+	}
+	
+	public void restartMyAlgorithm() {
+		
+		if(myAlgorithm.getMainAnimation().getChildren().size()>0) {
+			myAlgorithm.getMainAnimation().getChildren().clear();
+		}
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+    		
+    		validateAndPlayMyAlgorithm(myAlgorithmStartVertexUndirectedNonWeighted);
+    		myAlgorithm.stopMainAnimation("Undirected Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+    		validateAndPlayMyAlgorithm(myAlgorithmStartVertexUndirectedWeighted);
+    		myAlgorithm.stopMainAnimation("Undirected Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+    		
+    		validateAndPlayMyAlgorithm(myAlgorithmStartVertexDirectedNonWeighted);
+    		myAlgorithm.stopMainAnimation("Directed Non Weighted");
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+    		
+    		validateAndPlayMyAlgorithm(myAlgorithmStartVertexDirectedWeighted);
+    		myAlgorithm.stopMainAnimation("Directed Weighted");
+			
+		}
+		
+		myAlgorithm.playMainAnimation();
+		
+		gpc.getPlayButton().setText("Pause");
+		
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(true);
+		}
+		
+	}
+	
+	public void skipMyAlgorithmToEnd() {
+		myAlgorithm.getMainAnimation().jumpTo("end");
+		for(Tab tab : gpc.getTabs().getTabs()) {
+			tab.setDisable(false);
+		}
+	}
+	
+	private void validateAndPlayMyAlgorithm(String myAlgorithmStartVertex) {
+		
+		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+			if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Integer")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedInt(), Integer.parseInt(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("Double")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedDouble(), Double.parseDouble(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedNonWeightedGraph().equals("String")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedNonWeighted(gpc.getDataModel().getUndirectedNonWeightedString(), myAlgorithmStartVertex);
+				
+			}
+		}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Integer")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedInt(), Integer.parseInt(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("Double")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedDouble(), Double.parseDouble(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceUndirectedWeightedGraph().equals("String")) {
+				
+				myAlgorithm.performMyAlgorithmUndirectedWeighted(gpc.getDataModel().getUndirectedWeightedString(), myAlgorithmStartVertex);
+				
+			}
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedInt(), Integer.parseInt(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedDouble(), Double.parseDouble(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedNonWeighted(gpc.getDataModel().getDirectedNonWeightedString(), myAlgorithmStartVertex);
+				
+			}
+			
+		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+			
+			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedInt(), Integer.parseInt(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedDouble(), Double.parseDouble(myAlgorithmStartVertex));
+				
+			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
+				
+				myAlgorithm.performMyAlgorithmDirectedWeighted(gpc.getDataModel().getDirectedWeightedString(), myAlgorithmStartVertex);
 				
 			}
 			
