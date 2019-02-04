@@ -1,0 +1,145 @@
+.button{
+
+    -fx-background-color:  #696969;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+	-fx-border-color: black;
+}
+
+.button:hover{
+
+    -fx-background-color:  #ff9500;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+	-fx-border-color: #ff9500;
+}
+
+.choice-box .context-menu { 
+	-fx-background-color: black;
+}
+
+.choice-box .menu-item:focused { 
+	-fx-background-color: orange;
+}
+
+.choice-box .menu-item > .label { 
+	-fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused > .label { 
+	-fx-text-fill: black;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, my-tab-header-background ;
+}
+
+.tab
+{
+    -fx-background-color: black;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #c2c2c2 #c2c2c2 #c2c2c2 #c2c2c2
+}
+
+.tab:hover{
+	-fx-background-color: #696969
+}
+.tab:selected 
+{
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 3 0;
+    -fx-border-color: #c2c2c2 #c2c2c2 #ff9500 #c2c2c2;
+    -fx-focus-color: #000000
+}
+.tab-pane *.tab-header-background 
+{
+    -fx-background-color: #fbfbfb, #fbfbfb, #fbfbfb;
+    -fx-border-width: 1 0 1 0;
+    -fx-border-color: #c2c2c2 #c2c2c2 #c2c2c2 #c2c2c2
+}
+
+.tab-label{
+	-fx-text-fill: white;
+}
+
+.menu .label
+{
+    -fx-text-fill: white;
+}
+
+.menu:hover{
+	 -fx-background-color: #ff9500;
+}
+
+.menu:focused{
+	-fx-background-color: #ff9500;
+}
+
+.menu-item{
+	 -fx-background-color: black;
+}
+
+.menu-item:hover{
+	 -fx-background-color: grey; 
+}
+
+.dialog-pane{
+	-fx-background-color: black
+}
+
+.dialog-pane .header-panel{
+	-fx-background-color: #494949
+}
+
+.dialog-pane .button {
+	-fx-background-color:  #696969;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+	-fx-border-color: black;
+}
+
+.dialog-pane .button:hover {
+	-fx-background-color:  #ff9500;
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-background-insets: 0;
+    -fx-text-fill: black;
+	-fx-border-color: #ff9500;
+}
+
+.text-field {
+   	-fx-background-color: -fx-text-box-border, black ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+    -fx-text-inner-color: white
+}
+
+.text-field:focused {
+    -fx-background-color: white, black ;
+    -fx-text-inner-color: white
+}
+
+.dialog-pane .label{
+	 -fx-text-fill: white;
+}
+
+.dialog-pane .text-field {
+   	-fx-background-color: -fx-text-box-border, black ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+    -fx-text-inner-color: white
+}
+
+.dialog-pane .text-field:focused {
+    -fx-background-color: white, black ;
+    -fx-text-inner-color: white
+}
+
