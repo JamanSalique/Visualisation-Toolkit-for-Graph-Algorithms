@@ -67,7 +67,7 @@ public class AlgorithmAnimations {
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
-        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
         		
         		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
         			
@@ -325,7 +325,7 @@ public class AlgorithmAnimations {
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
-        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
         		
         		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
         			
@@ -542,7 +542,7 @@ public class AlgorithmAnimations {
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
-        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
         		
         		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
         			
@@ -738,7 +738,7 @@ public class AlgorithmAnimations {
 		    	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
 		    	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 				
-				if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+				if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
 					primsStartingVertex = result.get();
 				
 					if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -1056,13 +1056,14 @@ public class AlgorithmAnimations {
 			TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
 	        dialogNonWeightedEdge.setTitle("Starting vertex");
 	        dialogNonWeightedEdge.setHeaderText("Choose starting vertex");
-	        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the animation from.");
+	        dialogNonWeightedEdge.setContentText("Please enter the vertex you would like to start the animation from.\n"
+	        		+ "If the algorithm you implemented does not require a starting vertex then just input any vertex that exists in your graph.");
 	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
-        	if(result.isPresent() && gpc.isInputValidBfsStartingVertex(result.get())) {
+        	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
         		
         		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
         			

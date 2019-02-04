@@ -1549,13 +1549,13 @@ public class GraphPanelController {
     	return false;
     }
     
-    public boolean isInputValidBfsStartingVertex(String input) {
+    public boolean isInputValidStartingVertex(String input) {
     	
     	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
     	String selectedDataChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
     	String selectedDataChoiceDirectedNonWeightedGraph = getSelectedDataChoiceDirectedNonWeightedGraph();
     	String selectedDataChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
-    	
+
     	String errorMessage = "";
     	if (input == null || input.length() == 0) {
     		

@@ -38,10 +38,10 @@ private GraphPanelController gpc;
 	}
 	
 	/**
-	 * This function will hold the algorithm that can be implemented by anyone. This algorithm can be visualised on the 
+	 * This function will hold the algorithm that is implemented by the user. This algorithm can be visualised on the 
 	 * gui for undirected non-weighted graphs.
-	 * @param graph The graph this algorithm can be visualised on.
-	 * @param startingVertex The starting vertex of the algorithm (does not have to be used).
+	 * @param graph, The graph this algorithm can be visualised on.
+	 * @param startingVertex, The starting vertex of the algorithm (does not have to be used).
 	 */
 	public void performMyAlgorithmUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T startingVertex){
 		
@@ -117,7 +117,7 @@ private GraphPanelController gpc;
 	}
 	
 	/**
-	 * This function will hold the algorithm that can be implemented by anyone. This algorithm can be visualised on the 
+	 * This function will hold the algorithm that is implemented by the user. This algorithm can be visualised on the 
 	 * gui for directed non-weighted graphs.
 	 * @param graph The graph this algorithm can be visualised on.
 	 * @param startingVertex The starting vertex of the algorithm (does not have to be used).
@@ -196,7 +196,7 @@ private GraphPanelController gpc;
 	}
 
 	/**
-	 * This function will hold the algorithm that can be implemented by anyone. This algorithm can be visualised on the 
+	 * This function will hold the algorithm that is implemented by the user. This algorithm can be visualised on the 
 	 * gui for undirected weighted graphs.
 	 * @param graph The graph this algorithm can be visualised on.
 	 * @param startingVertex The starting vertex of the algorithm (does not have to be used).
@@ -276,7 +276,7 @@ private GraphPanelController gpc;
 	}
 	
 	/**
-	 * This function will hold the algorithm that can be implemented by anyone. This algorithm can be visualised on the 
+	 * This function will hold the algorithm that is implemented by the user. This algorithm can be visualised on the 
 	 * gui for directed weighted graphs.
 	 * @param graph The graph this algorithm can be visualised on.
 	 * @param startingVertex The starting vertex of the algorithm (does not have to be used).
