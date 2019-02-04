@@ -694,7 +694,7 @@ public class GraphPanelController {
     	TextField vertex = new TextField();
     	vertex.setPromptText("Number of vertices");
     	TextField weight = new TextField();
-    	weight.setPromptText("Number OF edges");
+    	weight.setPromptText("Number of edges");
     	
     	grid.add(new Label("Number of vertices:"), 0, 0);
     	grid.add(vertex, 1, 0);
@@ -710,6 +710,8 @@ public class GraphPanelController {
     	    }
     	    return null;
     	});
+    	
+    	dialog.getDialogPane().getStylesheets().add("/application/global.css");
     	
     	Optional<Pair<String, String>> result = dialog.showAndWait();
 		
