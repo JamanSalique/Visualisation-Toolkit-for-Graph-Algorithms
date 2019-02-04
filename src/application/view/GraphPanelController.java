@@ -133,6 +133,9 @@ public class GraphPanelController {
 	@FXML 
 	private MenuItem howToVisualiseAlgorithm;
 	
+	@FXML 
+	private MenuItem howToCreateOwnAlgorithm;
+	
 	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
@@ -361,6 +364,33 @@ public class GraphPanelController {
         		+ " you may be prompted to input a starting vertex and once inputted the animation will start. \n\n "
         		+ "You can restart the animation by pressing the \"Start Again\" button and you can skip the animation by clicking the "
         		+ "\"Skip to end button\" both of these buttons are located at the bottom of the screen either side of the \"Play\" button.");
+		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		alert.getButtonTypes().setAll(okButton);
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
+        Optional<ButtonType> result = alert.showAndWait();
+		
+	}
+	
+	@FXML
+	private void handleHowToCreateOwnAlgorithm() {
+		
+		Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Create your own graph algorithm");
+        alert.setHeaderText("How to create your own algorithm to be visualised.");
+        alert.setContentText("1.\tFirstly, go to the MyAlgorithm.java class. This is the only file you will need to edit to implement your own graph algorithm to be visualised."
+        						+ "\r\n2.\tThere are 4 main methods:\r\n\t\u2022performMyAlgorithmUndirectedNonWeighted"
+        						+ "(\u2026) \u2013 holds the algorithm to be visualized on the Undirected Non-Weighted Graph tab."
+        						+ "\r\n\t\u2022performMyAlgorithmUndirectedWeighted(\u2026) \u2013 holds the algorithm to be visualized on the Undirected Weighted Graph tab."
+        						+ "\r\n\t\u2022performMyAlgorithmDirectedNonWeighted(\u2026) \u2013 holds the algorithm to be visualized on the Directed Non-Weighted Graph tab."
+        						+ "\r\n\t\u2022performMyAlgorithmDirectedWeighted(\u2026) \u2013 holds the algorithm to be visualized on the Directed Weighted Graph tab."
+        						+ "\r\n3.\tWrite you algorithm in these 4 methods depending on what type of graph you want the algorithm to be visualized on (There is a sample Breadth first search algorithm in each method which you can use as a guideline to help construct your algorithm)."
+        						+ "\r\n4.\tOnce you have implemented your algorithm you can play your algorithm by:"
+        						+ "\r\n\t\u2022\t First run the application.\r\n\t\u2022\t "
+        						+ "Next go to the graph tab you want to visualize your algorithm on."
+        						+ "\r\n\t\u2022\tCreate a graph if you have not already.\r\n\t\u2022\t"
+        						+ "Click the \u2018My Algorithm\u2019 item in the list view on the left of the GUI."
+        						+ "\r\n\t\u2022\tThen press the play button.\r\n");
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

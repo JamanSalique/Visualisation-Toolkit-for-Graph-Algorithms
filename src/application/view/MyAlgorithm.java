@@ -21,7 +21,7 @@ import javafx.util.Pair;
 
 public class MyAlgorithm<T extends Comparable<? super T>> {
 	
-private GraphPanelController gpc;
+	private GraphPanelController gpc;
 	
 	private SequentialTransition mainAnimation;
 
@@ -57,7 +57,8 @@ private GraphPanelController gpc;
 		String graphType = "Undirected Non Weighted";
 		
 		//Adjacency matrix of graph which can be used in your algorithm. Where the key of the hash map is a vertex and value is a set of vertices that
-		//is adjacent to this vertex
+		//is adjacent to this vertex.
+		//E.G The key-value pair: <1:[2,3]> means vertex 1 has 2 neighbour vertices 2 and 3.
 		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
 		
 		//YOUR ALGORITHM STARTS HERE...
@@ -136,7 +137,8 @@ private GraphPanelController gpc;
 		String graphType = "Directed Non Weighted";
 		
 		//Adjacency matrix of graph which can be used in your algorithm. Where the key of the hash map is a vertex and value is a set of vertices that
-		//is adjacent to this vertex
+		//is adjacent to this vertex.
+		//E.G The key-value pair: <1:[2,3]> means vertex 1 has 2 neighbour vertices 2 and 3.
 		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
 		
 		//YOUR ALGORITHM STARTS HERE...
@@ -217,6 +219,8 @@ private GraphPanelController gpc;
 		//Adjacency matrix of graph which can be used in your algorithm. Where the key of the hash map is a vertex and value is a set of pairs
 		//where the key in the pair is the vertex adjacent to the vertex in the key of the hash map and the value of the pair is the weight of the edge
 		//between the vertex in the key of the hash map and the vertex in the key of the pair.
+		//E.G The key-value pair: <1:[<2,4.1>,<3,2.2>]> means vertex 1 has 2 neighbour vertices 2 and 3 where the edge between vertices 1 and 2 has weight
+		//4.1 and the edge between vertices 1 and 3 has weight 2.2
 		HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>> adjList = graph.getAdjacencyList();
 		
 		//YOUR ALGORITHM STARTS HERE...
@@ -297,6 +301,8 @@ private GraphPanelController gpc;
 		//Adjacency matrix of graph which can be used in your algorithm. Where the key of the hash map is a vertex and value is a set of pairs
 		//where the key in the pair is the vertex adjacent to the vertex in the key of the hash map and the value of the pair is the weight of the edge
 		//between the vertex in the key of the hash map and the vertex in the key of the pair.
+		//E.G The key-value pair: <1:[<2,4.1>,<3,2.2>]> means vertex 1 has 2 neighbour vertices 2 and 3 where the edge between vertices 1 and 2 has weight
+		//4.1 and the edge between vertices 1 and 3 has weight 2.2
 		HashMap<Vertex<T>,Set<Pair<Vertex<T>,Double>>> adjList = graph.getAdjacencyList();
 		
 		//SAMPLE BREADTH FIRST SEARCH ALGORITHM. You can use this as a guideline to help build your own algorithm to be visualised.
@@ -354,6 +360,102 @@ private GraphPanelController gpc;
 	}
 	
 	/**
+	 * This method will return a list of vertices that are adjacent/neighbours to a given vertex from the undirected non-weighted graph.
+	 * @param graph
+	 * @param vertex
+	 * @return
+	 */
+	private ArrayList<T> getNeighboursOfVertexOrderedUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T vertex){
+		
+		ArrayList<T> neighbours = new ArrayList<T>();
+		Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(vertex);
+		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
+		neighboursIterable.forEach(listOfNeighbours::add);
+		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
+		
+		for(Vertex<T> v:sortedListOfNeighbours) {
+			neighbours.add(v.getElement());
+		}
+		
+		return neighbours;
+		
+	}
+	
+	/**
+	 * This method will return a list of vertices that are adjacent/neighbours to a given vertex from the undirected weighted graph.
+	 * @param graph
+	 * @param vertex
+	 * @return
+	 */
+	private ArrayList<T> getNeighboursOfVertexOrderedUndirectedWeighted(UndirectedWeightedGraph<T> graph, T vertex){
+		
+		ArrayList<T> neighbours = new ArrayList<T>();
+		Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(vertex);
+		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
+		
+		for(Pair<Vertex<T>, Double> p : neighboursIterable) {
+			listOfNeighbours.add(p.getKey());
+		}
+		
+		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
+		
+		for(Vertex<T> v:sortedListOfNeighbours) {
+			neighbours.add(v.getElement());
+		}
+		
+		return neighbours;
+		
+	}
+	
+	/**
+	 * This method will return a list of vertices that are adjacent/neighbours to a given vertex from the directed non weighted graph.
+	 * @param graph
+	 * @param vertex
+	 * @return
+	 */
+	private ArrayList<T> getNeighboursOfVertexOrderedDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T vertex){
+		
+		ArrayList<T> neighbours = new ArrayList<T>();
+		Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(vertex);
+		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
+		neighboursIterable.forEach(listOfNeighbours::add);
+		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
+		
+		for(Vertex<T> v:sortedListOfNeighbours) {
+			neighbours.add(v.getElement());
+		}
+		
+		return neighbours;
+		
+	}
+	
+	/**
+	 * This method will return a list of vertices that are adjacent/neighbours to a given vertex from the directed weighted graph.
+	 * @param graph
+	 * @param vertex
+	 * @return
+	 */
+	private ArrayList<T> getNeighboursOfVertexOrderedDirectedWeighted(DirectedWeightedGraph<T> graph, T vertex){
+		
+		ArrayList<T> neighbours = new ArrayList<T>();
+		Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(vertex);
+		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
+		
+		for(Pair<Vertex<T>, Double> p : neighboursIterable) {
+			listOfNeighbours.add(p.getKey());
+		}
+		
+		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
+		
+		for(Vertex<T> v:sortedListOfNeighbours) {
+			neighbours.add(v.getElement());
+		}
+		
+		return neighbours;
+		
+	}
+	
+	/**
 	 * This method will sort a generic list of vertices by its element and return the sorted list of vertices.
 	 * @param listOfNeigbours
 	 * @return
@@ -367,6 +469,10 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method will play the sequential transition animation, but will reset all the colours of the graph back to the default colours so
+	 * this new animation can be visualised.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -429,20 +535,35 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 *This method when called will stop the animation being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);
 
 	}
-
+	/**
+	 * Getter method for the main animation.
+	 * @return
+	 */
 	public SequentialTransition getMainAnimation() {
 		return mainAnimation;
 	}
 	
+	/**
+	 * This method will do a fill/highlight transition for a given vertex.
+	 * @param graphType
+	 * @param vertex
+	 */
 	private void fillVertexAnimation(String graphType, T vertex) {
 		mainAnimation.getChildren().add(animations.fillVertexTransition(
         		vertex.toString(),graphType));
@@ -450,83 +571,17 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method will do a highlight transition for the edge between two given vertices.
+	 * @param graphType
+	 * @param vertexFrom
+	 * @param vertexTo
+	 */
 	private void highlightEdgeAnimation(String graphType, T vertexFrom,T vertexTo) {
 
 		mainAnimation.getChildren().add(animations.highlightEdgeTransition(vertexFrom.toString(),
         		vertexTo.toString(), graphType));
 	
-		
-	}
-	
-	private ArrayList<T> getNeighboursOfVertexOrderedUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T vertex){
-		
-		ArrayList<T> neighbours = new ArrayList<T>();
-		Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(vertex);
-		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-		neighboursIterable.forEach(listOfNeighbours::add);
-		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
-		
-		for(Vertex<T> v:sortedListOfNeighbours) {
-			neighbours.add(v.getElement());
-		}
-		
-		return neighbours;
-		
-	}
-	
-	private ArrayList<T> getNeighboursOfVertexOrderedUndirectedWeighted(UndirectedWeightedGraph<T> graph, T vertex){
-		
-		ArrayList<T> neighbours = new ArrayList<T>();
-		Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(vertex);
-		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-		
-		for(Pair<Vertex<T>, Double> p : neighboursIterable) {
-			listOfNeighbours.add(p.getKey());
-		}
-		
-		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
-		
-		for(Vertex<T> v:sortedListOfNeighbours) {
-			neighbours.add(v.getElement());
-		}
-		
-		return neighbours;
-		
-	}
-	
-	private ArrayList<T> getNeighboursOfVertexOrderedDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T vertex){
-		
-		ArrayList<T> neighbours = new ArrayList<T>();
-		Iterable<Vertex<T>> neighboursIterable = graph.getNeighbours(vertex);
-		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-		neighboursIterable.forEach(listOfNeighbours::add);
-		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
-		
-		for(Vertex<T> v:sortedListOfNeighbours) {
-			neighbours.add(v.getElement());
-		}
-		
-		return neighbours;
-		
-	}
-	
-	private ArrayList<T> getNeighboursOfVertexOrderedDirectedWeighted(DirectedWeightedGraph<T> graph, T vertex){
-		
-		ArrayList<T> neighbours = new ArrayList<T>();
-		Iterable<Pair<Vertex<T>, Double>> neighboursIterable = graph.getNeighbours(vertex);
-		ArrayList<Vertex<T>> listOfNeighbours = new ArrayList<Vertex<T>>();
-		
-		for(Pair<Vertex<T>, Double> p : neighboursIterable) {
-			listOfNeighbours.add(p.getKey());
-		}
-		
-		ArrayList<Vertex<T>> sortedListOfNeighbours = sortList(listOfNeighbours);
-		
-		for(Vertex<T> v:sortedListOfNeighbours) {
-			neighbours.add(v.getElement());
-		}
-		
-		return neighbours;
 		
 	}
 
