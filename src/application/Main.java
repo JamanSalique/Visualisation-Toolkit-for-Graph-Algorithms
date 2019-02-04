@@ -61,6 +61,10 @@ public class Main extends Application {
 	            
 	            //Show the scene containing the root layout.
 	            Scene scene = new Scene(graphPanel);
+	            
+	            String css= Main.class.getResource("global.css").toExternalForm();
+	            scene.getStylesheets().add(css);
+	            
 	            primaryStage.setScene(scene);
 	            primaryStage.show();
 
@@ -83,6 +87,9 @@ public class Main extends Application {
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
+            
+            String css= Main.class.getResource("global.css").toExternalForm();
+            scene.getStylesheets().add(css);
 
             // Set the person into the controller.
             AddVertexDataController controller = loader.getController();

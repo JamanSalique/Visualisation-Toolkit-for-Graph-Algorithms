@@ -322,6 +322,7 @@ public class GraphPanelController {
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
 		
 	}
@@ -341,6 +342,7 @@ public class GraphPanelController {
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
 		
 		
@@ -362,6 +364,7 @@ public class GraphPanelController {
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
 		
 	}
@@ -376,6 +379,7 @@ public class GraphPanelController {
         ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
          
  		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -1131,6 +1135,7 @@ public class GraphPanelController {
         ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
+		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
          
  		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -1880,7 +1885,7 @@ public class GraphPanelController {
              alert.setTitle("Invalid Edge Fields.");
              alert.setHeaderText("You have provided incorrect data.");
              alert.setContentText(errorMessage);
-             
+             alert.getDialogPane().getStylesheets().add("/application/global.css");
              alert.showAndWait();
              
              return false;

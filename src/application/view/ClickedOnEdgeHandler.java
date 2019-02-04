@@ -42,6 +42,7 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
               alert.setHeaderText("Are you sure you want to delete this edge?");
               alert.setContentText("Once deleting the edge you cannot retrieve it back.");
               alert.getButtonTypes().setAll(okButton,cancelButton);
+              alert.getDialogPane().getStylesheets().add("/application/global.css");
               
               Optional<ButtonType> result = alert.showAndWait();
               
@@ -628,27 +629,7 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
              		 }
              		 
              	 }
-             	 
-//             	 for(Node child:gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
-//             		 if(child instanceof StackPane) {
-//             			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getStartX() && 
-//             					 child.getLayoutY() + ((Region) child).getHeight() / 2  == lineToRemove.getStartY()) {
-//             				 
-//             				 vertexStart = (StackPane) child;
-//             			 }
-//             		 }
-//             	 }
-//             	 
-//             	 for(Node child:gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
-//
-//             		 if(child instanceof StackPane) {
-//             			 if(child.getLayoutX() + ((Region) child).getWidth() / 2 == lineToRemove.getEndX() && 
-//             					 child.getLayoutY() + ((Region) child).getWidth() / 2 == lineToRemove.getEndY()) {
-//             				 vertexEnd = (StackPane) child;
-//             			 }
-//             		 }
-//             	 }
-             	 
+
              	 ObservableList<Node> childsOfVertexStart = vertexStart.getChildren();
              	 Text dataOfVertexStart = (Text) childsOfVertexStart.get(childsOfVertexStart.size()-1);
              	 String dataOfVertexStartAsString = dataOfVertexStart.getText();

@@ -3,6 +3,7 @@ package application.view;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import application.Main;
 import application.model.Vertex;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -12,13 +13,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -68,6 +70,9 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 			        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+
+			        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
+			        			
 				        // Traditional way to get the response value.
 				        Optional<String> result = dialogNonWeightedEdge.showAndWait();
 				        	
@@ -313,6 +318,8 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 			        	    }
 			        	    return null;
 			        	});
+			        	
+			        	dialog.getDialogPane().getStylesheets().add("/application/global.css");
 			        	
 			        	Optional<Pair<String, String>> result = dialog.showAndWait();
 			        	
@@ -601,6 +608,8 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
               alert.setHeaderText("Are you sure you want to delete this vertex?");
               alert.setContentText("Once deleting the vertex you cannot retrieve it back.");
               alert.getButtonTypes().setAll(okButton,cancelButton);
+              
+              alert.getDialogPane().getStylesheets().add("/application/global.css");
               
               Optional<ButtonType> result = alert.showAndWait();
               
