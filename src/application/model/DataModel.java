@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+/**
+ * This class holds all the data for all 4 types of graphs: Undirected Non-Weighted, Undirected Weighted, Directed Non-Weighted, Directed Weighted graphs.
+ * For each graph the vertices can hold either Integer, Double or String data, this data is held separate from each other.
+ * @author jamansalique
+ *
+ */
 public class DataModel implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	// Store all data as observable lists so data will update automatically when changes are made in the graphical user interface e.g deleting vertex.
 	@SuppressWarnings("rawtypes")
 	private ObservableList<UndirectedNonWeightedGraph> undirectedNonWeightedGraphData = FXCollections.observableArrayList();
 	
@@ -69,6 +76,9 @@ public class DataModel implements java.io.Serializable {
 	private ArrayList<Vertex<Double>> listOfDirectedWeightedDoubleVertices; 
 	private ArrayList<Vertex<String>> listOfDirectedWeightedStringVertices; 
 	
+	/**
+	 * Constructor that initialises all fields.
+	 */
 	public DataModel() {
 		
 		this.undirectedNonWeightedInt = new UndirectedNonWeightedGraph<Integer>();
@@ -111,6 +121,8 @@ public class DataModel implements java.io.Serializable {
 		listOfDirectedWeightedDoubleVertices = new ArrayList<Vertex<Double>>();
 		listOfDirectedWeightedStringVertices = new ArrayList<Vertex<String>>();
 	}
+	
+	//ONLY GETTERS AND SETTERS BELOW...
 	
 	@SuppressWarnings("rawtypes")
 	public ObservableList<UndirectedNonWeightedGraph> getUndirectedNonWeightedGraphData(){
