@@ -4,12 +4,18 @@ import java.util.HashSet;
 
 import javafx.util.Pair;
 
+/**
+ * This class represents a undirected graph that has weighted edges. It is a sub class of AbstractWeightedGraph.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 
 	/**
      * Add new vertex to the graph.
      * 
-     * @param v The vertex object. 
+     * @param v The data the vertex will hold. 
      */
 	@Override
 	public void addVertex(T v) {
@@ -22,9 +28,9 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 	}
 
 	/**
-     * Remove the vertex v from the graph.
+     * Remove a vertex from the graph.
      * 
-     * @param v The vertex that will be removed.
+     * @param v The data the vertex you want to remove holds.
      */
 	@Override
 	public void removeVertex(T v) {
@@ -39,13 +45,12 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
         super.getAdjacencyList().remove(returnVertex(v)); 
 		
 	}
-	 /**
-     * Add new edge between vertex. Adding new edge from u to v will
+	/**
+     * Add new edge between 2 vertices u and v with weight w. Adding new edge from u to v will
      * automatically add new edge from v to u since the graph is undirected.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
-     * @param w Weight of edge
      */
 	@Override
 	public void addEdge(T v, T u, double w) {
@@ -63,7 +68,7 @@ public class UndirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 	}
 
 	/**
-     * Remove the edge between vertex. Removing the edge from u to v will 
+     * Remove the edge between 2 vertices u and v. Removing the edge from u to v will 
      * automatically remove the edge from v to u since the graph is undirected.
      * 
      * @param v Start vertex.

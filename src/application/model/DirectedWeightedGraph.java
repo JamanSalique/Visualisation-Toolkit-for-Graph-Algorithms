@@ -4,8 +4,17 @@ import java.util.HashSet;
 
 import javafx.util.Pair;
 
+/**
+ * This class represents a directed graph that has weighted edges. It is a sub class of AbstractWeightedGraph.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class DirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 
+	/**
+	 * Contructor that calls constructor of super class.
+	 */
 	public DirectedWeightedGraph() {
 		super();
 	}
@@ -44,12 +53,10 @@ public class DirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 	}
 
 	/**
-     * Add new edge between vertex. Adding new edge from u to v will
-     * automatically add new edge from v to u since the graph is undirected.
+     * Add new edge between 2 vertices u and v with weight w.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
-     * @param w Weight of edge
      */
 	@Override
 	public void addEdge(T v, T u, double w) {
@@ -62,8 +69,7 @@ public class DirectedWeightedGraph<T> extends AbstractWeightedGraph<T>{
 	}
 
 	/**
-     * Remove the edge between vertex. Removing the edge from u to v will 
-     * automatically remove the edge from v to u since the graph is undirected.
+     * Remove the edge between 2 vertices u and v.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.

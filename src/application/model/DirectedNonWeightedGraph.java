@@ -2,16 +2,25 @@ package application.model;
 
 import java.util.HashSet;
 
+/**
+ * This class represents a directed graph that has non weighted edges. It is a sub class of AbstractNonWeightedGraph.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 
+	/**
+	 * Contructor that calls constructor of super class.
+	 */
 	public DirectedNonWeightedGraph(){
 		super();
 	}
 	
-	 /**
+	/**
      * Add new vertex to the graph.
      * 
-     * @param v The vertex object. 
+     * @param v The data the vertex will hold. 
      */
 	@Override
 	public void addVertex(T v) {
@@ -23,9 +32,9 @@ public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 	}
 
 	/**
-     * Remove the vertex v from the graph.
+     * Remove a vertex from the graph.
      * 
-     * @param v The vertex that will be removed.
+     * @param v The data the vertex you want to remove holds.
      */
 	@Override
 	public void removeVertex(T v) {
@@ -42,8 +51,7 @@ public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 	}
 
 	/**
-     * Add new edge between vertex. Adding new edge from u to v will
-     * automatically add new edge from v to u since the graph is undirected.
+     * Add new edge between 2 vertices u and v.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
@@ -59,8 +67,7 @@ public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 	}
 
 	/**
-     * Remove the edge between vertex. Removing the edge from u to v will 
-     * automatically remove the edge from v to u since the graph is undirected.
+     * Remove the edge between 2 vertices u and v.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.

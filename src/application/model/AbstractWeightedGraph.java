@@ -97,7 +97,7 @@ public abstract class AbstractWeightedGraph<T> {
 	
     
 	/**
-     * Add new edge between 2 vertices.
+     * Add new edge between 2 vertices with weight w.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
