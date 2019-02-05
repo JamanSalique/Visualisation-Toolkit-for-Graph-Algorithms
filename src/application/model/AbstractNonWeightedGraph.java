@@ -8,14 +8,31 @@ import java.util.stream.Collectors;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-
+/**
+ * This abstract class represents a graph that contains edges that are not weighted. This class contains non abstract functions where
+ *  all non-weighted graph subclasses will have these methods and the implementation for these functions are the same for all non-weighted
+ *  graphs. This class also contains abstract functions where the body of these functions must be implemented on creation of the subclasses.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public abstract class AbstractNonWeightedGraph<T> {
+	
+	//This field represents an adjacency list of the graph.
 	private final ObjectProperty<HashMap<Vertex<T>,Set<Vertex<T>>>> adjacencyList;
 	
+	/**
+	 * Constructor where the adjacency list is initialised.
+	 */
 	public AbstractNonWeightedGraph() {
         this.adjacencyList = new SimpleObjectProperty<HashMap<Vertex<T>,Set<Vertex<T>>>>(new HashMap<Vertex<T>,Set<Vertex<T>>>());
     }
 	
+	/**
+	 * This method checks whether the graph contains a vertex with a specific element.
+	 * @param element
+	 * @return true if graph does contain vertex with element else returns false.
+	 */
 	public boolean containsVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement().equals(element)) {
@@ -25,6 +42,11 @@ public abstract class AbstractNonWeightedGraph<T> {
 		return false;
 	}
 	
+	/**
+	 * This method given a element will return the Vertex object that contains this element.
+	 * @param element
+	 * @return
+	 */
 	public Vertex<T> returnVertex(T element) {
 		for (Map.Entry<Vertex<T>,Set<Vertex<T>>> entry : adjacencyList.get().entrySet()) {
 			if(entry.getKey().getElement().equals(element)) {
@@ -35,6 +57,9 @@ public abstract class AbstractNonWeightedGraph<T> {
 		return null;
 	}
 	
+	/**
+	 * This method removes all vertices and edges from the graph by clearing the adjacency list.
+	 */
 	public void clearGraph() {
 		adjacencyList.get().clear();
 	}
@@ -42,21 +67,21 @@ public abstract class AbstractNonWeightedGraph<T> {
 	 /**
      * Add new vertex to the graph.
      * 
-     * @param v The vertex object. 
+     * @param v The data the vertex will hold. 
      */
 	public abstract void addVertex(T v);
 	
     
     /**
-     * Remove the vertex v from the graph.
+     * Remove a vertex from the graph.
      * 
-     * @param v The vertex that will be removed.
+     * @param v The data the vertex you want to remove holds.
      */
 	public abstract void removeVertex(T v);
 	
     
     /**
-     * Add new edge between vertex. Adding new edge from u to v will
+     * Add new edge between 2 vertices. Adding new edge from u to v will
      * automatically add new edge from v to u since the graph is undirected.
      * 
      * @param v Start vertex.
@@ -65,7 +90,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	public abstract void addEdge(T v, T u);
     
     /**
-     * Remove the edge between vertex. Removing the edge from u to v will 
+     * Remove the edge between 2 vertices. Removing the edge from u to v will 
      * automatically remove the edge from v to u since the graph is undirected.
      * 
      * @param v Start vertex.
@@ -75,7 +100,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 
     
     /**
-     * Check adjacency between 2 vertices in the graph.
+     * Check adjacency between 2 vertices in the graph in other words check if vertex u is a neighbour of vertex v.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
@@ -86,7 +111,7 @@ public abstract class AbstractNonWeightedGraph<T> {
     }
     
     /**
-     * Get connected vertices of a vertex.
+     * Retrieve all vertices adjacent to vertex v.
      * 
      * @param v The vertex.
      * @return An iterable for connected vertices.
@@ -104,10 +129,17 @@ public abstract class AbstractNonWeightedGraph<T> {
         return this.adjacencyList.get().keySet();
     }
     
+    /**
+     *Getter method for the adjacency list.
+     * @return
+     */
     public HashMap<Vertex<T>,Set<Vertex<T>>> getAdjacencyList(){
     		return adjacencyList.get();
     }
     
+    /**
+     * Overridden toString method so if we print an instance of a non weighted graph we see the adjacency list representation of the graph.
+     */
     @Override
     public String toString() {
     		String toReturn = "";
