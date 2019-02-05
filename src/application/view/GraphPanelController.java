@@ -386,11 +386,11 @@ public class GraphPanelController {
         						+ "\r\n\t\u2022performMyAlgorithmDirectedWeighted(\u2026) \u2013 holds the algorithm to be visualized on the Directed Weighted Graph tab."
         						+ "\r\n3.\tWrite you algorithm in these 4 methods depending on what type of graph you want the algorithm to be visualized on (There is a sample Breadth first search algorithm in each method which you can use as a guideline to help construct your algorithm)."
         						+ "\r\n4.\tOnce you have implemented your algorithm you can play your algorithm by:"
-        						+ "\r\n\t\u2022\t First run the application.\r\n\t\u2022\t "
+        						+ "\r\n\t\u2022First run the application.\r\n\t\u2022"
         						+ "Next go to the graph tab you want to visualize your algorithm on."
-        						+ "\r\n\t\u2022\tCreate a graph if you have not already.\r\n\t\u2022\t"
+        						+ "\r\n\t\u2022Create a graph if you have not already.\r\n\t\u2022"
         						+ "Click the \u2018My Algorithm\u2019 item in the list view on the left of the GUI."
-        						+ "\r\n\t\u2022\tThen press the play button.\r\n");
+        						+ "\r\n\t\u2022Then press the play button.\r\n");
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton);
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

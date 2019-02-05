@@ -65,6 +65,7 @@ public class AlgorithmAnimations {
 	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
         	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
@@ -323,6 +324,7 @@ public class AlgorithmAnimations {
 	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
         	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
@@ -540,6 +542,7 @@ public class AlgorithmAnimations {
 	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
         	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
@@ -736,6 +739,7 @@ public class AlgorithmAnimations {
 		        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		    	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		    	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+	        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
 		    	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 				
 				if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
@@ -811,7 +815,7 @@ public class AlgorithmAnimations {
                     alert.setTitle("No Vertex Cover");
                     alert.setHeaderText("The Graph does not have a vertex cover");
                     alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
-                    
+                	alert.getDialogPane().getStylesheets().add("/application/global.css");
                     alert.showAndWait();
             		
         		}else{
@@ -833,7 +837,7 @@ public class AlgorithmAnimations {
                     alert.setTitle("No Vertex Cover");
                     alert.setHeaderText("The Graph does not have a vertex cover");
                     alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
-                    
+                	alert.getDialogPane().getStylesheets().add("/application/global.css");
                     alert.showAndWait();
     				
     			}else {
@@ -1061,6 +1065,7 @@ public class AlgorithmAnimations {
 	        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
         	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
         	Optional<String> result = dialogNonWeightedEdge.showAndWait();
 			
         	if(result.isPresent() && gpc.isInputValidStartingVertex(result.get())) {
