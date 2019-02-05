@@ -81,8 +81,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	
     
     /**
-     * Add new edge between 2 vertices. Adding new edge from u to v will
-     * automatically add new edge from v to u since the graph is undirected.
+     * Add new edge between 2 vertices.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
@@ -90,8 +89,7 @@ public abstract class AbstractNonWeightedGraph<T> {
 	public abstract void addEdge(T v, T u);
     
     /**
-     * Remove the edge between 2 vertices. Removing the edge from u to v will 
-     * automatically remove the edge from v to u since the graph is undirected.
+     * Remove the edge between 2 vertices.
      * 
      * @param v Start vertex.
      * @param u Destination vertex.
