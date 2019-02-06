@@ -8,6 +8,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * This class is controller class for when a user adds a vertex to any graph through the Graphical User Interface.
+ * @author jamansalique
+ *
+ */
 public class AddVertexDataController {
 
 	@FXML
@@ -46,12 +51,17 @@ public class AddVertexDataController {
     }
     
     /**
-     * Called when the user clicks ok.
+     * Called when the user clicks ok. We update the model accordingly for whatever vertex the user added.
      */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            // create new vertex set data of vertex and return it.
+
+        	/*
+        	 * In these if statements we check the type of graph the user is adding a vertex to and the data type of the user input
+        	 * for the vertex, depending on these 2 factors we update the right type of graph accordingly. For example if the user inputs '2'
+        	 * and is on the Undirected Non-Weighted Graph tab then we will update the Undirected Non-Weighted Graph that consists of integer vertices.
+        	 */
         	if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(inputDataField.getText())) {
         		
         		addVertexToUndirectedNonWeightedGraph("Integer");
@@ -107,27 +117,17 @@ public class AddVertexDataController {
         		addVertexToDirectedWeightedGraph("String");
         		
         	}
-        	System.out.println("-------------------------------------------------------------------------");
-        	System.out.println("Undirected NW Double: " + dataModel.getUndirectedNonWeightedDouble());
-        	System.out.println("Undirected NW Integer: " + dataModel.getUndirectedNonWeightedInt());
-        	System.out.println("Undirected NW String: " + dataModel.getUndirectedNonWeightedString());
-        	
-        	System.out.println("Undirected W Double: " + dataModel.getUndirectedWeightedDouble());
-        	System.out.println("Undirected W Integer: " + dataModel.getUndirectedWeightedInt());
-        	System.out.println("Undirected W String: " + dataModel.getUndirectedWeightedString());
-        	
-        	System.out.println("Directed NW Double: " + dataModel.getDirectedNonWeightedDouble());
-        	System.out.println("Directed NW Integer: " + dataModel.getDirectedNonWeightedInt());
-        	System.out.println("Directed NW String: " + dataModel.getDirectedNonWeightedString());
-        	
-        	System.out.println("Directed W Double: " + dataModel.getDirectedWeightedDouble());
-        	System.out.println("Directed W Integer: " + dataModel.getDirectedWeightedInt());
-        	System.out.println("Directed W String: " + dataModel.getDirectedWeightedString());
             okClicked = true;
             dialogStage.close();
         }
     }
     
+    /**
+     * This method is a error prevention method. We check if the users request is possible. For example a user cannot add a vertex with a Double
+     * data type for a graph that consists of integer vertices. If a error is found then we notify the user with an alert box with a error message
+     * explaining what they have done wrong.
+     * @return
+     */
     private boolean isInputValid() {
     	
     	String input = inputDataField.getText();
@@ -243,6 +243,11 @@ public class AddVertexDataController {
         dialogStage.close();
     }
     
+    /**
+     * This method checks whether a String is a integer value.
+     * @param s
+     * @return
+     */
     private static boolean isInteger(String s) {
         try { 
             Integer.parseInt(s); 
@@ -254,6 +259,11 @@ public class AddVertexDataController {
         return true;
     }
     
+    /**
+     * This method checks whether a String is a double value.
+     * @param s
+     * @return
+     */
     private static boolean isDouble(String s) {
 
     	try {
@@ -270,6 +280,11 @@ public class AddVertexDataController {
 
     }
     
+    /**
+     * This method checks if the String value is a String by validating that the String value is not a Integer or a Double.
+     * @param s
+     * @return
+     */
     private boolean isString(String s) {
     	if(!isInteger(s) && !isDouble(s)) {
     		return true;
@@ -285,6 +300,10 @@ public class AddVertexDataController {
     	this.main = main;
     }
     
+    /**
+     * This method updates the Undirected Non-Weighted graph in the model when a user adds a vertex to a Undirected Non-Weighted graph.
+     * @param type: the data type the user inputs.
+     */
     private void addVertexToUndirectedNonWeightedGraph(String type) {
     	
     	if(type.equals("Integer") && dataModel.getUndirectedNonWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
@@ -336,6 +355,10 @@ public class AddVertexDataController {
     	}
     }
     
+    /**
+     * This method updates the Undirected Weighted graph in the model when a user adds a vertex to a Undirected Weighted graph.
+     * @param type: the data type the user inputs.
+     */
 	private void addVertexToUndirectedWeightedGraph(String type) {
     	
     	if(type.equals("Integer") && dataModel.getUndirectedWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
@@ -389,6 +412,10 @@ public class AddVertexDataController {
     	}
     }
 	
+	/**
+     * This method updates the Directed Non-Weighted graph in the model when a user adds a vertex to a Directed Non-Weighted graph.
+     * @param type: the data type the user inputs.
+     */
 	 private void addVertexToDirectedNonWeightedGraph(String type) {
 	    	
 	    	if(type.equals("Integer") && dataModel.getDirectedNonWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
@@ -440,6 +467,10 @@ public class AddVertexDataController {
 	    	}
 	    }
 	 
+	 /**
+     * This method updates the Directed Weighted graph in the model when a user adds a vertex to a Directed Weighted graph.
+     * @param type: the data type the user inputs.
+     */
 	 private void addVertexToDirectedWeightedGraph(String type) {
 	    	
 	    	if(type.equals("Integer") && dataModel.getDirectedWeightedInt().containsVertex(Integer.parseInt(inputDataField.getText()))) {
@@ -495,7 +526,7 @@ public class AddVertexDataController {
 	 
 	 public void setDataModel(DataModel dataModel) {
 			this.dataModel = dataModel;
-		}
+	}
     
 	
 }
