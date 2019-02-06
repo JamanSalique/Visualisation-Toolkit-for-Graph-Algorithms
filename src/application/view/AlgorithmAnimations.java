@@ -14,6 +14,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * This class holds all the algorithms that can be played by the user (The actual functionality of algorithms are in separate classes).
+ * The main purpose of this class is to respond to whatever algorithm the user clicks and wants to play in the graphical user interface.
+ * @author jamansalique
+ *
+ */
 public class AlgorithmAnimations {
 
 	private GraphPanelController gpc;
@@ -42,6 +48,10 @@ public class AlgorithmAnimations {
 	private String myAlgorithmStartVertexUndirectedNonWeighted, myAlgorithmStartVertexUndirectedWeighted, 
 	myAlgorithmStartVertexDirectedNonWeighted, myAlgorithmStartVertexDirectedWeighted ;
 	
+	/**
+	 * Constructor which initialises all algorithm objects.
+	 * @param gpc
+	 */
 	public AlgorithmAnimations(GraphPanelController gpc) {
 		this.gpc = gpc;
 		bfs = new BreadthFirstSearch(gpc);
@@ -54,6 +64,10 @@ public class AlgorithmAnimations {
 		myAlgorithm = new MyAlgorithm(gpc);
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the breadth first search animation and presses the play button. If the breadth first
+	 * search animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playBreadthFirstSearch() {
 		
 		if(bfs.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -119,6 +133,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while the breadth first search animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartBreadthFirstSearch() {
 		
 		if(bfs.getMainAnimation().getChildren().size()>0) {
@@ -157,6 +175,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while the breadth first search animation is playing. 
+	 * This method will skip the entire breadth first search animation to the end showing the final state of the graph animation.
+	 */
 	public void skipBreadthFirstSearchToEnd() {
 		bfs.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -164,6 +186,12 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playBreadthFirstSearch(). This method calls the method from the breadth first search object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param bfsStartVertex
+	 */
 	private void validateAndPlayBFS(String bfsStartVertex) {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -232,6 +260,12 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playDepthFirstSearch(). This method calls the method from the depth first search object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param dfsStartVertex
+	 */
 	private void validateAndPlayDFS(String dfsStartVertex) {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -313,6 +347,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the depth first search animation and presses the play button. If the depth first
+	 * search animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playDepthFirstSearch() {
 		
 		if(dfs.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -378,6 +416,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while the depth first search animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartDepthFirstSearch() {
 		
 		if(dfs.getMainAnimation().getChildren().size()>0) {
@@ -416,6 +458,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while the depth first search animation is playing. 
+	 * This method will skip the entire depth first search animation to the end showing the final state of the graph animation.
+	 */
 	public void skipDepthFirstSearchToEnd() {
 		dfs.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -423,6 +469,12 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playDijkstraAlgorithm(). This method calls the method from the DijkstraAlgorithm object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param dijkstraStartVertex
+	 */
 	private void validateAndPlayDijkstraAlgorithm(String dijkstraStartVertex) {
 		
 		
@@ -531,6 +583,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the dijkstra's algorithm animation and presses the play button. If the dijkstra's algorithm 
+	 * animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playDijkstraAlgorithm() {
 		
 		if(dijkstra.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -584,6 +640,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while dijkstra's algorithm animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartDijkstraAlgorithm() {
 		
 		if(dijkstra.getMainAnimation().getChildren().size()>0) {
@@ -612,6 +672,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while dijkstra's algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipDijkstraAlgorithmToEnd() {
 		dijkstra.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -619,6 +683,11 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playKruskalAlgorithm(). This method calls the method from the KruskalAlgorithm object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 */
 	private void validateAndPlayKruskal() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -642,6 +711,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play kruskal's algorithm animation and presses the play button. If the kruskal's algorithm 
+	 * animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playKruskalAlgorithm() {
 		
 		if(kruskal.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -674,6 +747,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while kruskal's algorithm animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartKruskalAlgorithm() {
 		
 		if(kruskal.getMainAnimation().getChildren().size()>0) {
@@ -698,6 +775,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while kruskal's algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipKruskalAlgorithmToEnd() {
 		kruskal.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -705,6 +786,12 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playPrimsAlgorithm(). This method calls the method from the PrimsAlgorithm object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param primsStartingVertex
+	 */
 	private void validateAndPlayPrims(String primsStartingVertex) {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -728,6 +815,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play prim's algorithm animation and presses the play button. If the prim's algorithm 
+	 * animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playPrimsAlgorithm() {
 		
 			if(prims.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -773,6 +864,10 @@ public class AlgorithmAnimations {
 			}
     	}
 	
+	/**
+	 * This method is called when the user presses the start again button while prim's algorithm animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartPrimsAlgorithm() {
 		
 		if(prims.getMainAnimation().getChildren().size()>0) {
@@ -797,6 +892,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while prim's algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipPrimsAlgorithmToEnd() {
 		prims.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -804,6 +903,10 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the vertex cover algorithm animation and presses the play button. If the vertex cover 
+	 * algorithm animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playVertexCover() {
 		
 		if(vertexCover.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -867,6 +970,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while the vertex cover algorithm animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartVertexCover() {
 		
 		if(vertexCover.getMainAnimation().getChildren().size()>0) {
@@ -895,6 +1002,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while the vertex cover algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipVertexCoverToEnd() {
 		vertexCover.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -902,6 +1013,11 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playVertexCover(). This method calls the method from the VertexCover object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 */
 	private boolean validateAndPlayVertexCover() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -941,6 +1057,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the kosaraju algorithm animation and presses the play button. If the kosaraju algorithm
+	 * algorithm animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playKosarajuAlgorithm() {
 		
 		if(kosaraju.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -979,6 +1099,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while kosarju's algorithm animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartKosarajuAlgorithm() {
 		
 		if(kosaraju.getMainAnimation().getChildren().size()>0) {
@@ -1007,6 +1131,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while the vertex cover algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipKosarajuAlgorithmToEnd() {
 		kosaraju.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -1014,6 +1142,12 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playKosarujuAlgorithm(). This method calls the method from the KosarujuAlgorithm object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param primsStartingVertex
+	 */
 	private void validateAndPlayKosarajuAlgorithm() {
 		
 		if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
@@ -1053,6 +1187,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user has chosen to play the algorithm they have implemented in the MyAlgorithm class and presses 
+	 * the play button. If the algorithm animations is playing and the user presses the play button then the animation pauses.
+	 */
 	public void playMyAlgorithm() {
 		
 		if(myAlgorithm.getMainAnimation().getStatus() == Status.STOPPED) {
@@ -1119,6 +1257,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the start again button while the algorithm they implemented animation is playing. This method will
+	 * start the animation from the beginning.
+	 */
 	public void restartMyAlgorithm() {
 		
 		if(myAlgorithm.getMainAnimation().getChildren().size()>0) {
@@ -1157,6 +1299,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	/**
+	 * This method is called when the user presses the Skip to end button while the my algorithm animation is playing. 
+	 * This method will skip the entire animation to the end showing the final state of the graph animation.
+	 */
 	public void skipMyAlgorithmToEnd() {
 		myAlgorithm.getMainAnimation().jumpTo("end");
 		for(Tab tab : gpc.getTabs().getTabs()) {
@@ -1164,6 +1310,12 @@ public class AlgorithmAnimations {
 		}
 	}
 	
+	/**
+	 * This is a helper method and is called in the method playMyAlgorithm(). This method calls the method from the MyAlgorithm object
+	 * and supplies the correct parameters depending what type of graph the user wants the animation to be played on and the type of data the vertices
+	 * hold in the graph.
+	 * @param myAlgorithmStartVertex
+	 */
 	private void validateAndPlayMyAlgorithm(String myAlgorithmStartVertex) {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
