@@ -10,15 +10,31 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+/**
+ * This class holds the methods of different transition animations that can be played on graphs.
+ * @author jamansalique
+ *
+ */
 public class Animations {
 	
 	private GraphPanelController gpc;
 	private int directedEdgePlacement = 13;
 	
+	/**
+	 * Constructor initialising GraphPanelController class.
+	 * @param gpc
+	 */
 	public Animations(GraphPanelController gpc) {
 		this.gpc = gpc;
 	}
 	
+	/**
+	 * This method given the data of 2 vertices and the graph type will highlight the edge between these 2 vertices.
+	 * @param v1Data
+	 * @param v2Data
+	 * @param graphType
+	 * @return
+	 */
 	public StrokeTransition highlightEdgeTransition(String v1Data, String v2Data, String graphType) {
 		
 		
@@ -31,6 +47,12 @@ public class Animations {
 		
 	}
 	
+	/**
+	 * This method given data of a vertex and the graph type, will highlight the specific vertex holding the data given.
+	 * @param vertexData
+	 * @param graphType
+	 * @return
+	 */
 	public FillTransition fillVertexTransition(String vertexData, String graphType) {
 
 			StackPane vertex = returnStackPane(vertexData,graphType);
@@ -39,6 +61,14 @@ public class Animations {
 
 	}
 	
+	/**
+	 * Highlight and edge between 2 vertices a specific colour that is given as a parameter.
+	 * @param v1Data
+	 * @param v2Data
+	 * @param graphType
+	 * @param c
+	 * @return
+	 */
 	public StrokeTransition highlightEdgeTransitionChooseColour(String v1Data, String v2Data, String graphType,Color c) {
 		
 		
@@ -51,6 +81,13 @@ public class Animations {
 		
 	}
 	
+	/**
+	 * Highlight a specific vertex a specific colour given as a parameter.
+	 * @param vertexData
+	 * @param graphType
+	 * @param c
+	 * @return
+	 */
 	public FillTransition fillVertexTransitionChooseColour(String vertexData, String graphType,Color c) {
 
 			StackPane vertex = returnStackPane(vertexData,graphType);
@@ -58,7 +95,13 @@ public class Animations {
 			return new FillTransition(Duration.millis(50000), circle, Color.WHITE, c);
 
 	}
-	
+	/**
+	 * Helper method to find the Line shape between 2 vertices in the GUI.
+	 * @param v1
+	 * @param v2
+	 * @param graphType
+	 * @return
+	 */
 	private Line returnEdgeBetweenVertices(StackPane v1, StackPane v2,String graphType) {
 		
 		double v1X = v1.getLayoutX() + (v1.getWidth() / 2);
@@ -143,6 +186,12 @@ public class Animations {
 		
 	}
 	
+	/**
+	 * Helper method to return the Vertex shape in the GUI given the data this vertex holds.
+	 * @param v
+	 * @param graphType
+	 * @return
+	 */
 	private StackPane returnStackPane(String v,String graphType) {
 		
 		if(graphType.equals("Undirected Non Weighted")) {
@@ -199,6 +248,10 @@ public class Animations {
 		
 	}
 	
+	/**
+	 * Sets colors of vertices and edges back to its default colours in the GUI.
+	 * @param graphType
+	 */
 	public void resetGraphColours(String graphType) {
 		
 		if(graphType.equals("Undirected Non Weighted")) {
