@@ -53,7 +53,6 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 	 * This method contains kruskal's algorithm using union-find for undirected weighted graphs with animation transitions. Throughout the 
 	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
 	 * @param graph
-	 * @param startingVertex
 	 * @return
 	 */
 	public void performKruskalAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph){
