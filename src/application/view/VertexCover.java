@@ -20,15 +20,28 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for the Vertex Cover algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class VertexCover <T extends Comparable<? super T>>{
 
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout the vertex cover algorithm. This will be played 
+	 * on the GUI when the user wants to visualise the depth first search animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public VertexCover(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -38,6 +51,11 @@ public class VertexCover <T extends Comparable<? super T>>{
 		animations = new Animations(gpc);
 	}
 	
+	/**
+	 * This method given a undirected non weighted graph will return a array list of all edges sorted by degree of the source vertex in ascending order.
+	 * @param graph
+	 * @return
+	 */
 	private ArrayList<Pair<T,T>> retrieveAllEdgesUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Integer> edges = new HashMap<Pair<T,T>,Integer>();
@@ -93,6 +111,11 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 
+	/**
+	 * This method given a undirected weighted graph will return a array list of all edges sorted by degree of the source vertex in ascending order.
+	 * @param graph
+	 * @return
+	 */
 	private ArrayList<Pair<T,T>> retrieveAllEdgesUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Integer> edges = new HashMap<Pair<T,T>,Integer>();
@@ -150,6 +173,12 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method contains the vertex cover algorithm for undirected non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @return
+	 */
 	public boolean performVertexCoverUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph){
 		
 		ArrayList<T> vertexCover = new ArrayList<T>();
@@ -190,6 +219,12 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method contains the vertex cover algorithm for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @return
+	 */
 	public boolean performVertexCoverUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
 		ArrayList<T> vertexCover = new ArrayList<T>();
@@ -230,6 +265,11 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method returns a list of vertices in the undirected non weighted graph by degree order ascending.
+	 * @param graph
+	 * @return
+	 */
 	private ArrayList<T> listOfVerticesDegreeOrder(UndirectedNonWeightedGraph<T> graph){
 		
 		ArrayList<T> toReturn = new ArrayList<T>();
@@ -255,6 +295,11 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method returns a list of vertices in the undirected non weighted graph by degree order ascending.
+	 * @param graph
+	 * @return
+	 */
 	private ArrayList<T> listOfVerticesDegreeOrderWeighted(UndirectedWeightedGraph<T> graph){
 		
 		ArrayList<T> toReturn = new ArrayList<T>();
@@ -280,6 +325,10 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method is called after one of the performVertexCover methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -346,10 +395,17 @@ public class VertexCover <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);
