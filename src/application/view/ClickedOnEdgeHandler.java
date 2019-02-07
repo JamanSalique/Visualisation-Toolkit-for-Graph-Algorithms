@@ -19,16 +19,43 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+/**
+ * This class holds all the functionality for when the user clicks on an edge on the gui.
+ * @author jamansalique
+ *
+ */
 public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
 
 	private GraphPanelController gpc;
+	
+	// This field is the distance a directed edge should be placed from the the source vertex of the edge.
 	private double directedEdgePlacement = 13;
+	
+	// This field is the distance along the edge that the arrowhead (triangle) is placed.
 	private final int selfEdgeArrowheadPlacement = 20;
 	
+	/**
+	 * Constructor that initialises the GraphPanelController.
+	 * @param gpc
+	 */
 	public ClickedOnEdgeHandler(GraphPanelController gpc) {
 		this.gpc = gpc;
 	}
 	
+	/**
+	 * This is called when a user clicks on an edge. In this method I check if the user double clicks an edge. If they do this means they want to
+	 * delete an edge so they will be shown a warning alert box asking if they are sure they want to delete the edge if they confirm then the edge is
+	 * deleted. An edge is made up of multiple shapes depending on what type of graph it is.
+	 * Undirected Non-Weighted graph edges are made up of just a Line shape.
+	 * Undirected weighted graph edges are made up of a Line shape and a Rectangle with a label (weight box showing the weight of the edge.
+	 * Directed non-weighted edges are made up of of a Line and a triangle (arrow head of edge), self pointing edges (loop edges) consist of a rectangle
+	 * and a triangle (arrowhead).
+	 * Directed weighted edges have the same shapes as the directed non weighted edges but with the extra rectangle with label to denote weight of the
+	 * directed edges.
+	 * The user can double click on any component of an edge and will still get alerted with the warning confirmation box.
+	 * This method retrieves the edge (and all of its components part of this edge) that contains the source component of what the user double clicked
+	 * and will remove this from the gui as well as updating the model.
+	 */
 	 @Override
      public void handle(MouseEvent t) {
      	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && (t.getSource() instanceof Line || t.getSource() instanceof Label
@@ -782,7 +809,12 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
               }
      	 }
      }
-	 
+
+	 /**
+     * This method checks whether a String is a integer value.
+     * @param s
+     * @return
+     */
 	 private static boolean isInteger(String s) {
 	        try { 
 	            Integer.parseInt(s); 
@@ -792,28 +824,38 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
 	            return false;
 	        }
 	        return true;
-	    }
-	    
-	    private static boolean isDouble(String s) {
+	 }
+	 
+	 /**
+     * This method checks whether a String is a double value.
+     * @param s
+     * @return
+     */ 
+    private static boolean isDouble(String s) {
 
-	    	try {
-	    		Integer.parseInt(s);
-	    	}catch(NumberFormatException e) {
-	    		try {
-	    			Double.parseDouble(s);
-	            }catch(NumberFormatException e1) {
-	    			return false;
-	    		}
-	    		return true;
-	    	}
-	    	return false;
+    	try {
+    		Integer.parseInt(s);
+    	}catch(NumberFormatException e) {
+    		try {
+    			Double.parseDouble(s);
+            }catch(NumberFormatException e1) {
+    			return false;
+    		}
+    		return true;
+    	}
+    	return false;
 
-	    }
-	    
-	    private boolean isString(String s) {
-	    	if(!isInteger(s) && !isDouble(s)) {
-	    		return true;
-	    	}
-	    	return false;
-	    }
+    }
+    
+    /**
+     * This method checks if the String value is a String by validating that the String value is not a Integer or a Double.
+     * @param s
+     * @return
+     */
+    private boolean isString(String s) {
+    	if(!isInteger(s) && !isDouble(s)) {
+    		return true;
+    	}
+    	return false;
+    }
 }
