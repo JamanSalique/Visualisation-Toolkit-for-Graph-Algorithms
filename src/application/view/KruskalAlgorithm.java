@@ -18,15 +18,28 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for Kruskal's algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class KruskalAlgorithm <T extends Comparable<? super T>>{
 
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout kruskal's algorithm. This will be played 
+	 * on the GUI when the user wants to visualise kruskal's algorithm animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public KruskalAlgorithm(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -36,6 +49,13 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		animations = new Animations(gpc);
 	}
 	
+	/**
+	 * This method contains kruskal's algorithm using union-find for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performKruskalAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph){
 		
 		ArrayList<String> edgesInMST = new ArrayList<String>();
@@ -129,6 +149,11 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 				"Total Weight of minimum spanning tree is: " + roundedTotalWeightMST);
 	}
 	
+	/**
+	 * This method given a undirected non weighted graph will return a hash map of all edges.
+	 * @param graph
+	 * @return
+	 */
 	private HashMap<Pair<T,T>,Double> retrieveAllEdges(UndirectedWeightedGraph<T> graph){
 		
 		HashMap<Pair<T,T>,Double> toReturn = new  HashMap<Pair<T,T>,Double>();
@@ -156,6 +181,11 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 
+	/**
+	 * Given a hash map of edges and weights this method will sort the edges by weight in ascending order.
+	 * @param mapOfEdges
+	 * @return
+	 */
 	private HashMap<Pair<T,T>,Double> sortMapOfEdges(HashMap<Pair<T,T>,Double> mapOfEdges){
 		
 		HashMap<Pair<T,T>, Double> sortedMapOfEdges = 
@@ -168,6 +198,12 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method given a sets of vertices and a element a will return the set of vertices that contain a vertex with element a.
+	 * @param setOfAllVertexSets
+	 * @param a
+	 * @return
+	 */
 	private HashSet<T> find(HashSet<HashSet<T>> setOfAllVertexSets,T a) {
 		
 		for(HashSet<T> set: setOfAllVertexSets) {
@@ -182,6 +218,12 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * Given two sets of vertices this method will return the result of the union between the 2 sets given.
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	private HashSet<T> union(HashSet<T> a, HashSet<T> b){
 		
 		HashSet<T> resultOfUnion = new HashSet<T>();
@@ -194,7 +236,11 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 	
-public void playMainAnimation() {
+	/**
+	 * This method is called after the performKruskalAlgorithm methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
+	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
 			
@@ -260,10 +306,17 @@ public void playMainAnimation() {
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);

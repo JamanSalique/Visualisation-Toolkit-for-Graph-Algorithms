@@ -21,15 +21,27 @@ import javafx.scene.control.Tab;
 import javafx.scene.paint.Color;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for the Kosaraju's algorithm animation that finds the strongly connected components of directed graphs.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 	
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout Kosaraju's algorithm. This will be played 
+	 * on the GUI when the user wants to visualise Kosaraju's algorithm animation.
+	 */
 	private SequentialTransition mainAnimation;
 
-	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public KosarajuAlgorithm(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -39,6 +51,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		animations = new Animations(gpc);
 	}
 	
+	/**
+	 * This method contains  Kosaraju's algorithm for directed non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performKosarajuAlgorithmDirectedNonWeighted(DirectedNonWeightedGraph<T> graph){
 		ArrayList<ArrayList<T>> stronglyConnectedComponents = new ArrayList<ArrayList<T>>();
 		
@@ -81,6 +100,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		gpc.getOutputBox().setText("Strongly Connected Components: " + Arrays.toString(stronglyConnectedComponents.toArray()));
 	}
 	
+	/**
+	 * This method contains  Kosaraju's algorithm for directed weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performKosarajuAlgorithmDirectedWeighted(DirectedWeightedGraph<T> graph){
 		ArrayList<ArrayList<T>> stronglyConnectedComponents = new ArrayList<ArrayList<T>>();
 		
@@ -141,6 +167,16 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		gpc.getOutputBox().setText("Strongly Connected Components: " + Arrays.toString(stronglyConnectedComponents.toArray()));
 	}
 	
+	/**
+	 * This method is called when we do a depth first search on the transpose graph of a directed non weighted graph.
+	 * @param graph
+	 * @param adjList
+	 * @param vertex
+	 * @param visitedVertices
+	 * @param color
+	 * @param stronglyConnectedComponent
+	 * @return
+	 */
 	private ArrayList<T> dfsUtilDirectedNonWeightedGraph(DirectedNonWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
 													Color color,ArrayList<T> stronglyConnectedComponent) {
 		
@@ -167,6 +203,11 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		return stronglyConnectedComponent;
 	}
 	
+	/**
+	 * This method given a directed non weighted graph will return the tranpose of this graph.
+	 * @param adjList
+	 * @return
+	 */
 	private HashMap<Vertex<T>,Set<Vertex<T>>> getTranposeGraphDirectedNonWeightedGraph(HashMap<Vertex<T>,Set<Vertex<T>>> adjList) {
 		
 		HashMap<Vertex<T>,Set<Vertex<T>>> toReturn = new HashMap<Vertex<T>,Set<Vertex<T>>>();
@@ -191,6 +232,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method given a directed non weighted graph will do a depth first search on the graph and adds vertices to a stack when a vertex is visited.
+	 * @param graph
+	 * @param vertex
+	 * @param visitedVertices
+	 * @param s
+	 */
 	private void fillOrderDirectedNonWeightedGraph(DirectedNonWeightedGraph<T> graph,T vertex,ArrayList<T> visitedVertices, Stack s) {
 		
 		visitedVertices.add(vertex);
@@ -215,6 +263,13 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method given a directed weighted graph will do a depth first search on the graph and adds vertices to a stack when a vertex is visited.
+	 * @param graph
+	 * @param vertex
+	 * @param visitedVertices
+	 * @param s
+	 */
 	private void fillOrderDirectedWeightedGraph(DirectedWeightedGraph<T> graph,T vertex,ArrayList<T> visitedVertices, Stack s) {
 		
 		visitedVertices.add(vertex);
@@ -241,6 +296,16 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 
+	/**
+	 * This method is called when we do a depth first search on the transpose graph of a directed weighted graph.
+	 * @param graph
+	 * @param adjList
+	 * @param vertex
+	 * @param visitedVertices
+	 * @param color
+	 * @param stronglyConnectedComponent
+	 * @return
+	 */
 	private ArrayList<T> dfsUtilDirectedWeightedGraph(DirectedWeightedGraph<T> graph,HashMap<Vertex<T>,Set<Vertex<T>>> adjList,T vertex,ArrayList<T> visitedVertices,
 			Color color,ArrayList<T> stronglyConnectedComponent) {
 
@@ -267,7 +332,11 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		return stronglyConnectedComponent;
 	}
 	
-	
+	/**
+	 * Helper method that sorts a array list of generic vertex objects by the element the vertex holds.
+	 * @param listOfNeigbours
+	 * @return
+	 */
 	@SuppressWarnings("hiding")
 	private <T extends Comparable<? super T>> ArrayList<Vertex<T>> sortList(ArrayList<Vertex<T>> listOfNeigbours) { 
 
@@ -277,6 +346,10 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method is called after one of the performKosarajuAlgorithm methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -343,10 +416,17 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);

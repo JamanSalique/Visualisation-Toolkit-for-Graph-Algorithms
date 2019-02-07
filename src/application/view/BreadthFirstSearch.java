@@ -17,15 +17,28 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for the breadth first search algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class BreadthFirstSearch<T extends Comparable<? super T>> {
 	
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout the breadth first search algorithm. This will be played 
+	 * on the GUI when the user wants to visualise the breadth first search animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public BreadthFirstSearch(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -35,6 +48,13 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		animations = new Animations(gpc);
 	}
 
+	/**
+	 * This method contains the breadth first search algorithm for undirected non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public ArrayList<T> performBreadthFirstSearchUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T startingVertex){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -90,6 +110,13 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		return traversalOrder;
 	}
 	
+	/**
+	 * This method contains the breadth first search algorithm for directed non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public ArrayList<T> performBreadthFirstSearchDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T startingVertex){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -142,6 +169,13 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		return traversalOrder;
 	}
 
+	/**
+	 * This method contains the breadth first search algorithm for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public ArrayList<T> performBreadthFirstSearchUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -199,6 +233,13 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		return traversalOrder;
 	}
 	
+	/**
+	 * This method contains the breadth first search algorithm for directed weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public ArrayList<T> performBreadthFirstSearchDirectedWeighted(DirectedWeightedGraph<T> graph, T startingVertex){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -256,6 +297,11 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		return traversalOrder;
 	}
 	
+	/**
+	 * Helper method that sorts a array list of generic vertex objects by the element the vertex holds.
+	 * @param listOfNeigbours
+	 * @return
+	 */
 	@SuppressWarnings("hiding")
 	private <T extends Comparable<? super T>> ArrayList<Vertex<T>> sortList(ArrayList<Vertex<T>> listOfNeigbours) { 
 
@@ -265,6 +311,10 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method is called after one of the performBreadthFirstSearch methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -327,10 +377,17 @@ public class BreadthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);

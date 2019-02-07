@@ -16,16 +16,29 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for the depth first search algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class DepthFirstSearch<T extends Comparable<? super T>> {
 	
 
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout the depth first search algorithm. This will be played 
+	 * on the GUI when the user wants to visualise the depth first search animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public DepthFirstSearch(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -35,6 +48,11 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		animations = new Animations(gpc);
 	}
 
+	/**
+	 * Helper method that sorts a array list of generic vertex objects by the element the vertex holds.
+	 * @param listOfNeigbours
+	 * @return
+	 */
 	@SuppressWarnings("hiding")
 	private <T extends Comparable<? super T>> ArrayList<Vertex<T>> sortList(ArrayList<Vertex<T>> listOfNeigbours) { 
 
@@ -44,6 +62,13 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method contains the depth first search algorithm for undirected non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDepthFirstSearchUndirectedNonWeighted(UndirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -79,6 +104,13 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method contains the depth first search algorithm for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDepthFirstSearchUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -115,6 +147,13 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		gpc.getOutputBox().setText("DFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 	
+	/**
+	 * This method contains the depth first search algorithm for directed non weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDepthFirstSearchDirectedNonWeighted(DirectedNonWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -150,6 +189,13 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method contains the depth first search algorithm for directed weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDepthFirstSearchDirectedWeighted(DirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,ArrayList<T> traversalOrder){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -187,6 +233,10 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method is called after one of the performDepthFirstSearch methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -252,10 +302,17 @@ public class DepthFirstSearch<T extends Comparable<? super T>> {
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);

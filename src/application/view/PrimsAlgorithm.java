@@ -15,15 +15,28 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for Prim's algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class PrimsAlgorithm <T extends Comparable<? super T>>{
 	
 	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout prim's algorithm. This will be played 
+	 * on the GUI when the user wants to visualise the prim's algorithm animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public PrimsAlgorithm(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -32,7 +45,14 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 		
 		animations = new Animations(gpc);
 	}
-	
+
+	/**
+	 * This method contains Prim's algorithm for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performPrimsAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex){
 		
 		ArrayList<String> edgesInMST = new ArrayList<String>();
@@ -117,6 +137,10 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method is called after the performPrimsAlgorithm methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -183,10 +207,17 @@ public class PrimsAlgorithm <T extends Comparable<? super T>>{
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);

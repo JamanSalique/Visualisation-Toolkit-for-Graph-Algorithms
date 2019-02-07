@@ -22,15 +22,28 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the functionality for the dijkstra's algorithm animation.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class DijkstraAlgorithm <T extends Comparable<? super T>>{
 
-private GraphPanelController gpc;
+	private GraphPanelController gpc;
 	
+	/* This Sequential transition will contain the sub animations that will be added throughout the dijkstra algorithm. This will be played 
+	 * on the GUI when the user wants to visualise the dijkstra algorithm animation.
+	 */
 	private SequentialTransition mainAnimation;
 
 	
 	private Animations animations;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public DijkstraAlgorithm(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
@@ -40,7 +53,13 @@ private GraphPanelController gpc;
 		animations = new Animations(gpc);
 	}
 	
-	
+	/**
+	 * This method contains the dijkstra algorithm for undirected weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDijkstrasAlgorithmUndirectedWeighted(UndirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,HashMap<T,Double> vertexDistances){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -103,6 +122,13 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method contains the dijkstra algorithm for directed weighted graphs with animation transitions. Throughout the 
+	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
+	 * @param graph
+	 * @param startingVertex
+	 * @return
+	 */
 	public void performDijkstrasAlgorithmDirectedWeighted(DirectedWeightedGraph<T> graph, T startingVertex,ArrayList<T> visitedVertices,HashMap<T,Double> vertexDistances){
 		
 		if (!graph.containsVertex(startingVertex)) {
@@ -195,6 +221,11 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method given a list of edges and their weights will find the edge with the smallest weight.
+	 * @param list
+	 * @return edge with smallest weight.
+	 */
 	private Pair<T, Double> findShortestEdgeInList(ArrayList<Pair<Vertex<T>, Double>> list){
 		
 		double smallestWeight = list.get(0).getValue();
@@ -225,6 +256,12 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method returns the vertex that has not been visited that has the shortest distance from the source vertex.
+	 * @param vertexDistances
+	 * @param visitedVertices
+	 * @return
+	 */
 	public T minDistance(HashMap<T,Double> vertexDistances, ArrayList<T> visitedVertices){ 
         // Initialize min value 
         double min = Double.MAX_VALUE;
@@ -240,6 +277,10 @@ private GraphPanelController gpc;
         return vertex; 
     }
 	
+	/**
+	 * This method is called after one of the performDijkstraAlgorithm methods has been executed. This method plays the main animation 
+	 * but some checks are done before to check which graph the animation should be played on.
+	 */
 	public void playMainAnimation() {
 		
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && mainAnimation.getStatus() == Status.STOPPED) {
@@ -305,10 +346,17 @@ private GraphPanelController gpc;
 		
 	}
 	
+	/**
+	 * This method when called will pause the animation being played on the gui.
+	 */
 	public void pauseMainAnimation() {
 		mainAnimation.pause();
 	}
 	
+	/**
+	 * This method when called will completely stop the animation that is being played.
+	 * @param graphType
+	 */
 	public void stopMainAnimation(String graphType) {
 		mainAnimation.stop();
 		animations.resetGraphColours(graphType);
