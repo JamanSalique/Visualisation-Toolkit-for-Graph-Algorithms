@@ -33,6 +33,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+/**
+ * This class holds all the functionality for when the user clicks on a vertex on the gui.
+ * @author jamansalique
+ *
+ */
 public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 
 	private GraphPanelController gpc;
@@ -40,15 +45,40 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 	private double directedEdgePlacement;
 	private final int selfEdgeArrowheadPlacement = 20;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 * @param stack the vertex that has been clicked on.
+	 */
 	public ClickedOnVertexHandler(GraphPanelController gpc,StackPane stack) {
 		this.gpc = gpc;
 		this.stack = stack;
 		this.directedEdgePlacement = 13;
 	}
 	
+	/**
+	 * This is called when the user clicks on an vertex.
+	 * The user can do two things by clicking a vertex.
+	 * They can either double click the vertex to delete the vertex or they can right click the vertex to add a edge from the vertex clicked to another 
+	 * vertex.
+	 * 
+	 * If the user right clicks then the user is prompted with a little hover menu where they have the option of adding an edge. If they click the item
+	 * in the hover menu then user is prompted with a small form.
+	 * For non weighted graphs the user is only asked to input the data that the destination vertex holds.
+	 * For weighted graphs the user is asked to input the weight they would like the edge to have as well as the data of the vertex destination.
+	 * Once the user inputs some data and is validated by the isInputValid() method in the GraphPanelController class an edge is made between the source
+	 * vertex (the vertex the user right clicked on) and the destination vertex the user inputed. Some calculations are made to find the exact position
+	 * of the destination vertex and a edge is then positioned between the 2 vertices. The model is also then updated accordingly.
+	 * 
+	 * If the user double clicks the vertex this means they want to delete the vertex. The user is shown a warning alert box asking if they are 
+	 * sure they want to delete the vertex. If the user presses OK then then the method carries on to delete the vertex.
+	 * If the vertex has edges connected to it then on deletion of the vertex the user wants to delete, this method finds all the edges connected 
+	 * to the vertex and also deletes them too. The model is also then updated accordingly.
+	 */
 	 @Override
-     public void handle(MouseEvent t) {
+    public void handle(MouseEvent t) {
      	
+		 //if user right clicks vertex...
      	if(t.getButton() == MouseButton.SECONDARY) {
      		
      		StackPane vertexClickedOn = (StackPane)(t.getSource());
@@ -999,131 +1029,156 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
      	gpc.setLayoutY(gpc.getCurrentStackPane().getLayoutY());
          
      }
-	 
-	 public void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
+	
+	
+	 /**
+	  * This method given the data from 2 vertices will add an edge between these 2 vertices accordingly for the correct non weighted graph in the model.
+	  * @param vertexDataAsStringFrom
+	  * @param vertexDataAsStringTo
+	  */
+	public void addEdgeHandlerNonWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo) {
 		if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-    		
-			gpc.getDataModel().getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
-     		
-     	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		gpc.getDataModel().getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
-     		
-     	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
-     		
-     	}
-     	
-     	else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getDirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
-     		
-     	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		gpc.getDataModel().getDirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
-     		
-     	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getDirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
-     		
-     	}
+		
+		gpc.getDataModel().getUndirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
+		
+	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+		
+		gpc.getDataModel().getUndirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
+		
+	}else if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getUndirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
+		
+	}
+	
+	else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getDirectedNonWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo));
+		
+	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+		
+		gpc.getDataModel().getDirectedNonWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo));
+		
+	}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+	
+	 		gpc.getDataModel().getDirectedNonWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo);
+	 		
+	 	}
 			
 	}
-		
+	
+	/**
+	 * This method given the data from 2 vertices and a weight value will add an edge between these 2 vertices accordingly for the correct weighted 
+	 * graph in the model.
+	 * @param vertexDataAsStringFrom
+	 * @param vertexDataAsStringTo
+	 * @param weight
+	 */
 	public void addEdgeHandlerWeighted(String vertexDataAsStringFrom, String vertexDataAsStringTo, double weight) {
-
-     	if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getUndirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
-     		
-     	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")  && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-     		
-     		gpc.getDataModel().getUndirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
-     		
-     	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getUndirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
-     		
-     	}
-     	else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getDirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
-     		
-     	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
-
-     		gpc.getDataModel().getDirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
-     		
-     	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
-     		
-     		gpc.getDataModel().getDirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
-     		
-     	}
-
-     		
-	}
-	 
-	 private void removeVertexFromUndirectedNonWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataUndirectedNonWeightedInt().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfUndirectedNonWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getUndirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataUndirectedNonWeightedDouble().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfUndirectedNonWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getUndirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
-			
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedString().returnVertex(dataAsString);
-	    		
-	    		gpc.getDataModel().getVertexDataUndirectedNonWeightedString().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfUndirectedNonWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getUndirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
-			
-	    		
-	    	}
-	    }
-		 
-		private void removeVertexFromUndirectedWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = gpc.getDataModel().getUndirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataUndirectedWeightedInt().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfUndirectedWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getUndirectedWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = gpc.getDataModel().getUndirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataUndirectedWeightedDouble().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfUndirectedWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getUndirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+	 	if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getUndirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
 		
-	    	}else if(type.equals("String")) {
+	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")  && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+		
+		gpc.getDataModel().getUndirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
+		
+	}else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getUndirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
+		
+	}
+	else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isInteger(vertexDataAsStringFrom) && isInteger(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getDirectedWeightedInt().addEdge(Integer.parseInt(vertexDataAsStringFrom),Integer.parseInt(vertexDataAsStringTo),weight);
+		
+	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isDouble(vertexDataAsStringFrom) && isDouble(vertexDataAsStringTo)) {
+	
+		gpc.getDataModel().getDirectedWeightedDouble().addEdge(Double.parseDouble(vertexDataAsStringFrom),Double.parseDouble(vertexDataAsStringTo),weight);
+		
+	}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph") && isString(vertexDataAsStringFrom) && isString(vertexDataAsStringTo)) {
+	 		
+	 		gpc.getDataModel().getDirectedWeightedString().addEdge(vertexDataAsStringFrom,vertexDataAsStringTo,weight);
+	 		
+	 	}
+	
+	 		
+	}
+	
+	/**
+	 * This method given the type of the vertex that is being deleted and the data of the vertex will update the model by removing
+	 * the vertex from the correct undirected non weighted graph.
+	 * @param type
+	 * @param dataAsString
+	 */
+	private void removeVertexFromUndirectedNonWeightedGraph(String type, String dataAsString) {
+	    	
+	    	if(type.equals("Integer")) {
+			
+			Vertex<Integer> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+			
+			gpc.getDataModel().getVertexDataUndirectedNonWeightedInt().remove(vertexToRemove);
+			
+			gpc.getDataModel().getListOfUndirectedNonWeightedIntVertices().remove(vertexToRemove);
+			
+			gpc.getDataModel().getUndirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
+			
+			
+		}else if(type.equals("Double")) {
+			
+			Vertex<Double> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+			
+			gpc.getDataModel().getVertexDataUndirectedNonWeightedDouble().remove(vertexToRemove);
+			
+			gpc.getDataModel().getListOfUndirectedNonWeightedDoubleVertices().remove(vertexToRemove);
+			
+			gpc.getDataModel().getUndirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+		
+		}else if(type.equals("String")) {
+			
+			Vertex<String> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedString().returnVertex(dataAsString);
+			
+			gpc.getDataModel().getVertexDataUndirectedNonWeightedString().remove(vertexToRemove);
+			
+			gpc.getDataModel().getListOfUndirectedNonWeightedStringVertices().remove(vertexToRemove);
+			
+			gpc.getDataModel().getUndirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+		
+			
+		}
+	}
+	
+	/**
+	 * This method given the type of the vertex that is being deleted and the data of the vertex will update the model by removing
+	 * the vertex from the correct undirected weighted graph.
+	 * @param type
+	 * @param dataAsString
+	 */
+	private void removeVertexFromUndirectedWeightedGraph(String type, String dataAsString) {
+		
+		if(type.equals("Integer")) {
+		
+		Vertex<Integer> vertexToRemove = gpc.getDataModel().getUndirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+		
+		gpc.getDataModel().getVertexDataUndirectedWeightedInt().remove(vertexToRemove);
+		
+		gpc.getDataModel().getListOfUndirectedWeightedIntVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getUndirectedWeightedInt().removeVertex(vertexToRemove.getElement());
+		
+		
+	}else if(type.equals("Double")) {
+		
+		Vertex<Double> vertexToRemove = gpc.getDataModel().getUndirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+		
+		gpc.getDataModel().getVertexDataUndirectedWeightedDouble().remove(vertexToRemove);
+		
+		gpc.getDataModel().getListOfUndirectedWeightedDoubleVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getUndirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+	}else if(type.equals("String")) {
 	    		
 	    		Vertex<String> vertexToRemove = gpc.getDataModel().getUndirectedNonWeightedString().returnVertex(dataAsString);
 	    		
@@ -1137,111 +1192,138 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 	    	}
 	    }
 	 
-	 	private void removeVertexFromDirectedNonWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedNonWeightedInt().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedNonWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedNonWeightedDouble().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedNonWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+		/**
+	 * This method given the type of the vertex that is being deleted and the data of the vertex will update the model by removing
+	 * the vertex from the correct directed non weighted graph.
+	 * @param type
+	 * @param dataAsString
+	 */
+	private void removeVertexFromDirectedNonWeightedGraph(String type, String dataAsString) {
 		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedString().returnVertex(dataAsString);
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedNonWeightedString().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedNonWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+		if(type.equals("Integer")) {
 		
-	    		
-	    	}
-	    }
-	 	
-	 	private void removeVertexFromDirectedWeightedGraph(String type, String dataAsString) {
-	    	
-	    	if(type.equals("Integer")) {
-	    		
-	    		Vertex<Integer> vertexToRemove = gpc.getDataModel().getDirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedWeightedInt().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedWeightedIntVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedWeightedInt().removeVertex(vertexToRemove.getElement());
-	    		
-	    		
-	    	}else if(type.equals("Double")) {
-	    		
-	    		Vertex<Double> vertexToRemove = gpc.getDataModel().getDirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedWeightedDouble().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedWeightedDoubleVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
+		Vertex<Integer> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedInt().returnVertex(Integer.parseInt(dataAsString));
 		
-	    	}else if(type.equals("String")) {
-	    		
-	    		Vertex<String> vertexToRemove = gpc.getDataModel().getDirectedWeightedString().returnVertex(dataAsString);
-	    		
-	    		gpc.getDataModel().getVertexDataDirectedWeightedString().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getListOfDirectedWeightedStringVertices().remove(vertexToRemove);
-	    		
-	    		gpc.getDataModel().getDirectedWeightedString().removeVertex(vertexToRemove.getElement());
+		gpc.getDataModel().getVertexDataDirectedNonWeightedInt().remove(vertexToRemove);
 		
-	    		
-	    	}
+		gpc.getDataModel().getListOfDirectedNonWeightedIntVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getDirectedNonWeightedInt().removeVertex(vertexToRemove.getElement());
+		
+		
+	}else if(type.equals("Double")) {
+		
+		Vertex<Double> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+		
+		gpc.getDataModel().getVertexDataDirectedNonWeightedDouble().remove(vertexToRemove);
+		
+		gpc.getDataModel().getListOfDirectedNonWeightedDoubleVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getDirectedNonWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+	}else if(type.equals("String")) {
+			
+			Vertex<String> vertexToRemove = gpc.getDataModel().getDirectedNonWeightedString().returnVertex(dataAsString);
+			
+			gpc.getDataModel().getVertexDataDirectedNonWeightedString().remove(vertexToRemove);
+			
+			gpc.getDataModel().getListOfDirectedNonWeightedStringVertices().remove(vertexToRemove);
+			
+			gpc.getDataModel().getDirectedNonWeightedString().removeVertex(vertexToRemove.getElement());
+	
+			
+		}
+	}
+	
+	/**
+	 * This method given the type of the vertex that is being deleted and the data of the vertex will update the model by removing
+	 * the vertex from the correct directed weighted graph.
+	 * @param type
+	 * @param dataAsString
+	 */
+	private void removeVertexFromDirectedWeightedGraph(String type, String dataAsString) {
+		
+		if(type.equals("Integer")) {
+		
+		Vertex<Integer> vertexToRemove = gpc.getDataModel().getDirectedWeightedInt().returnVertex(Integer.parseInt(dataAsString));
+		
+		gpc.getDataModel().getVertexDataDirectedWeightedInt().remove(vertexToRemove);
+		
+		gpc.getDataModel().getListOfDirectedWeightedIntVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getDirectedWeightedInt().removeVertex(vertexToRemove.getElement());
+		
+		
+	}else if(type.equals("Double")) {
+		
+		Vertex<Double> vertexToRemove = gpc.getDataModel().getDirectedWeightedDouble().returnVertex(Double.parseDouble(dataAsString));
+		
+		gpc.getDataModel().getVertexDataDirectedWeightedDouble().remove(vertexToRemove);
+		
+		gpc.getDataModel().getListOfDirectedWeightedDoubleVertices().remove(vertexToRemove);
+		
+		gpc.getDataModel().getDirectedWeightedDouble().removeVertex(vertexToRemove.getElement());
+	
+	}else if(type.equals("String")) {
+			
+			Vertex<String> vertexToRemove = gpc.getDataModel().getDirectedWeightedString().returnVertex(dataAsString);
+			
+			gpc.getDataModel().getVertexDataDirectedWeightedString().remove(vertexToRemove);
+			
+			gpc.getDataModel().getListOfDirectedWeightedStringVertices().remove(vertexToRemove);
+			
+			gpc.getDataModel().getDirectedWeightedString().removeVertex(vertexToRemove.getElement());
+	
+			
+		}
+	}
+	
+	/**
+	 * This method checks whether a String is a integer value.
+	 * @param s
+	 * @return
+	 */
+	private static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
 	    }
-	 	
-	 	private static boolean isInteger(String s) {
-	        try { 
-	            Integer.parseInt(s); 
-	        } catch(NumberFormatException e) { 
-	            return false; 
-	        } catch(NullPointerException e) {
-	            return false;
-	        }
-	        return true;
-	    }
-	    
-	    private static boolean isDouble(String s) {
-
-	    	try {
-	    		Integer.parseInt(s);
-	    	}catch(NumberFormatException e) {
-	    		try {
-	    			Double.parseDouble(s);
-	            }catch(NumberFormatException e1) {
-	    			return false;
-	    		}
-	    		return true;
-	    	}
-	    	return false;
-
-	    }
-	    
-	    private boolean isString(String s) {
-	    	if(!isInteger(s) && !isDouble(s)) {
-	    		return true;
-	    	}
-	    	return false;
-	    }
+	    return true;
+	}
+	
+	/**
+	 * This method checks whether a String is a double value.
+	 * @param s
+	 * @return
+	 */ 
+	private static boolean isDouble(String s) {
+	
+		try {
+			Integer.parseInt(s);
+		}catch(NumberFormatException e) {
+			try {
+				Double.parseDouble(s);
+	        }catch(NumberFormatException e1) {
+				return false;
+			}
+			return true;
+		}
+		return false;
+	
+	}
+	
+	/**
+	 * This method checks if the String value is a String by validating that the String value is not a Integer or a Double.
+	 * @param s
+	 * @return
+	 */
+	private boolean isString(String s) {
+		if(!isInteger(s) && !isDouble(s)) {
+			return true;
+		}
+		return false;
+	}
 }
