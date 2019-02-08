@@ -43,6 +43,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+/**
+ * This class is the controller class for the main GUI screen where you create the graphs and visualise algorithms (GraphPanel.fxml view).
+ * @author jamansalique
+ *
+ */
 public class GraphPanelController {
 
 	
@@ -51,9 +56,6 @@ public class GraphPanelController {
 	private DataModel dataModel;
 	private ClickedOnEdgeHandler clickedOnEdgeHandler;
 	private RandomGraphGenerator randomGraphGenerator;
-	
-	@SuppressWarnings("rawtypes")
-	private BreadthFirstSearch bfs;
 	
 	private AlgorithmAnimations algorithmAnimations;
 	
@@ -139,9 +141,6 @@ public class GraphPanelController {
 	private StackPane currentStackPane;
 
 	private double orgSceneX, orgSceneY;
-    private double orgTranslateX, orgTranslateY;
-    private double newTranslateX, newTranslateY;
-    private double offsetX, offsetY;
     private double layoutX,layoutY;
     
     private double directedEdgePlacement;
@@ -165,12 +164,15 @@ public class GraphPanelController {
     
     private final int selfEdgeArrowheadPlacement = 20;
 
+    /**
+     * This method is called when the GraphPanel.fxml file is first loaded. This method acts like a constructor in normal java classes.
+     * In this method I initialise gui components and fields, as well as adding handlers to specific components.
+     */
 	@FXML
 	private void initialize() {
 		
 		algorithmAnimations = new AlgorithmAnimations(this);
 		
-		bfs = new BreadthFirstSearch(this);
 		clickedOnEdgeHandler = new ClickedOnEdgeHandler(this);
 		
 		choiceBoxUndirectedNonWeightedGraph.getItems().addAll("Integer","Double","String");
@@ -218,10 +220,12 @@ public class GraphPanelController {
 	
 	public void setMain(Main main) {
 		this.main = main;
-		
-		// all data from observable lists to data in this class.
 	}
 	
+	/**
+	 * This method creates and returns an event handler for when a user drags a vertex.
+	 * @return
+	 */
 	@FXML EventHandler<MouseEvent> mouseDraggedOnVertexEvent() {
 		
 		EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = 
@@ -269,6 +273,11 @@ public class GraphPanelController {
 		    
 	}
 	
+	/**
+	 * This method creates and returns an event handler when a user releases the mouse on a vertex. When the user releases the mouse on the vertex the 
+	 * translate x and y is reset back to 0, and the x and y coordinate of the vertex is set. 
+	 * @return
+	 */
 	@FXML EventHandler<MouseEvent> mouseReleasedOnVertexEvent() {
 		
 		
@@ -289,28 +298,43 @@ public class GraphPanelController {
 		    
 	}
 	
-	 
-	
+	 /**
+	  * This method is called when the choice box on the Undirected Non-Weighted Graph tab is clicked.
+	  * @param e
+	  */
 	@FXML
 	private void selectionChoiceUndirectedNonWeightedGraph(MouseEvent e) {
 		preSelectionChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
 	}
 	
+	 /** This method is called when the choice box on the Undirected Weighted Graph tab is clicked.
+	  * @param e
+	  */
 	@FXML
 	private void selectionChoiceUndirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
 	}
 	
+	/** This method is called when the choice box on the Directed Non-Weighted Graph tab is clicked.
+	  * @param e
+	  */
 	@FXML
 	private void selectionChoiceDirectedNonWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedNonWeightedGraph = getSelectedDataChoiceDirectedNonWeightedGraph();
 	}
 	
+	/** This method is called when the choice box on the Directed Weighted Graph tab is clicked.
+	  * @param e
+	  */
 	@FXML
 	private void selectionChoiceDirectedWeightedGraph(MouseEvent e) {
 		preSelectionChoiceDirectedWeightedGraph = getSelectedDataChoiceDirectedWeightedGraph();
 	}
 	
+	/**
+	 * This method is called when the 'How to add/delete vertices' menu item is clicked. This method creates an alert box informing the user
+	 * how to add/delete vertices on the gui.
+	 */
 	@FXML
 	private void handleHowToAddRemoveVertices() {
 		
@@ -330,6 +354,10 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the 'How to add/delete edges' menu item is clicked. This method creates an alert box informing the user
+	 * how to add/delete edges on the gui.
+	 */
 	@FXML
 	private void handleHowToAddRemoveEdges() {
 		
@@ -351,6 +379,10 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the 'How to visualise an algorithm' menu item is clicked. This method creates an alert box informing the user
+	 * how to visualise an algorithm on the gui.
+	 */
 	@FXML
 	private void handleHowToVisualiseAlgorithm() {
 		
@@ -372,6 +404,10 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the 'How to create your own algorithm to be visualised' menu item is clicked. This method creates an alert box 
+	 * informing the user how to create their own algorithm and then visualise that algorithm on the gui.
+	 */
 	@FXML
 	private void handleHowToCreateOwnAlgorithm() {
 		
@@ -399,6 +435,10 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the user clicks the clear graph button. When called this method will clear the graph on the gui and update the model
+	 * accordingly.
+	 */
 	@FXML
 	private void handleClearGraphButton() {
 		
@@ -501,6 +541,10 @@ public class GraphPanelController {
 
 	}
 	
+	/**
+	 * This method adds a change listener to the list views (list of algorithms that can be played on graph) for all 4 graph tabs on the gui.
+	 * This method basically prevents the user from restarting/skipping an algorithm that has not even been played.
+	 */
 	@SuppressWarnings("unchecked")
 	public void handleListViews() {
 		
@@ -590,6 +634,11 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when a user clicks on a tab. When called this method will check if the graph on the tab they are on has been modified.
+	 * If the graph has been modified then I disable the restart and skip to end buttons to prevent an error replaying an animation on a modified graph.
+	 * The user must click play on a newly modified graph before they can click restart and skip to end.
+	 */
 	@FXML
 	private void handleTabs() {
 		
@@ -647,6 +696,13 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is adds a change listener to the Pane components (The pane is where the user creates the graphs)
+	 * in each tab. This is so I can monitor when a graph is modified or not. If the number of components decrease or increase in the Pane this
+	 * means the graph has been modified and so I disable the restart and skip to end buttons to prevent an error replaying an animation on a 
+	 * modified graph. I also set the isUndirectedNonWeightedModified to true if the undirected non weighted graph was modified, I do the same
+	 * for the other graph panes.
+	 */
 	private void handleCenterPanes() {
 			
 		getCenterPaneUndirectedNonWeightedGraph().getChildren().addListener(new ListChangeListener<Object>() {
@@ -706,6 +762,12 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the create random graph button is clicked. This method first prompts the user to input the number of vertices and 
+	 * number of edges they would like in their graph. When the user presses OK the data they inputed is validated using the isInputValid() method in
+	 * the RandomGraphGenerator class. If the data is correct then the random graph is created.
+	 */
+	
 	@FXML
 	private void handleRandomGraphButton(ActionEvent e) {
 		
@@ -755,6 +817,13 @@ public class GraphPanelController {
 		
 	}
 	
+	/**
+	 * This method is called when the play button is clicked. This method checks what algorithm has been selected (in the list view component). If the 
+	 * algorithm requires a starting vertex then the user is prompted to input a starting vertex. If the algorithm doesn't require a starting vertex then
+	 * the algorithm animation starts straight away. For algorithms that do require a starting vertex the algorithm animation starts as soon as the user
+	 * inputs a starting vertex. If the graph is empty or an algorithm has not been selected then an error message is shown explaining there error.
+	 * @param e
+	 */
 	@FXML
 	private void handlePlayButton(ActionEvent e) {
 		
@@ -905,6 +974,11 @@ public class GraphPanelController {
 
 	}
 	
+	/**
+	 * This method is called when the user clicks the restart button. When called we restart the algorithm that was just played by the user. Once again
+	 * if the graph is empty or an algorithm has not been selected then an error message is shown explaining there error.
+	 * @param e
+	 */
 	@FXML
 	private void handleRestartButton(ActionEvent e) {
 		
