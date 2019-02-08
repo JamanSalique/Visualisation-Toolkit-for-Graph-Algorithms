@@ -22,12 +22,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+/**
+ * This class contains all the functionality of creating a randomly generated graph for all types of graphs.
+ * @author jamansalique
+ *
+ */
 public class RandomGraphGenerator {
 	
 	private GraphPanelController gpc;
 	private ClickedOnVertexHandler covh;
 	private int directedEdgePlacement = 13;
 	
+	/**
+	 * Constructor...
+	 * @param gpc
+	 */
 	public RandomGraphGenerator(GraphPanelController gpc) {
 		
 		this.gpc = gpc;
@@ -35,6 +44,12 @@ public class RandomGraphGenerator {
 		
 	}
 	
+	/**
+	 * This method is called after creating the random number of vertices. This method when called will create edges between random vertices on the GUI.
+	 * The model is also updated accordingly.
+	 * @param numberOfEdges
+	 * @param numberOfVertices
+	 */
 	@SuppressWarnings("unchecked")
 	public void createRandomEdges(int numberOfEdges,int numberOfVertices){
 		
@@ -624,7 +639,12 @@ public class RandomGraphGenerator {
 		}
 	}
 
-	
+	/**
+	 * This method will create a specific number of vertices for the graph the user is currently on. The model is also updated accordingly.
+	 * @param numberOfVertices
+	 * @param dataType
+	 * @return
+	 */
 	private ArrayList<StackPane> createNVertices(int numberOfVertices,String dataType) {
 		
 		ArrayList<StackPane> listOfVertices = new ArrayList<StackPane>();
@@ -926,6 +946,10 @@ public class RandomGraphGenerator {
 		
 	}
 	
+	/**
+	 * This method will call the createNVertices(...) method and then place the N vertices in random places on the GUI.
+	 * @param numberOfVertices
+	 */
 	public void createRandomVertices(int numberOfVertices) {
 		
 		Random random = new Random();
@@ -1041,6 +1065,9 @@ public class RandomGraphGenerator {
 		
 	}
 	
+	/**
+	 * This method when called will clear the graph the user is currently on.
+	 */
 	public void resetGraphs() {
 		
 		String dataType = "";
@@ -1229,6 +1256,11 @@ public class RandomGraphGenerator {
 		
 	}
 	
+	/**
+	 * This method checks whether a String is a integer value.
+	 * @param s
+	 * @return
+	 */
 	private static boolean isInteger(String s) {
         try { 
             Integer.parseInt(s); 
