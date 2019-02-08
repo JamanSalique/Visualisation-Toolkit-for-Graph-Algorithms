@@ -106,7 +106,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 				        // Traditional way to get the response value.
 				        Optional<String> result = dialogNonWeightedEdge.showAndWait();
 				        	
-				        	if(result.isPresent() && gpc.isInputValid(result.get(),dataAsString,"") 
+				        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get(),dataAsString,"") 
 				        			){
 				        		if(result.isPresent()) {
 				        			
@@ -353,7 +353,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 			        	
 			        	Optional<Pair<String, String>> result = dialog.showAndWait();
 			        	
-			        	if(result.isPresent() && gpc.isInputValid(result.get().getKey(),dataAsString,result.get().getValue()) ){
+			        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get().getKey(),dataAsString,result.get().getValue()) ){
 							 if(result.isPresent()) {
 								 
 								 if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {

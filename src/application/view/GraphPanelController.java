@@ -975,8 +975,9 @@ public class GraphPanelController {
 	}
 	
 	/**
-	 * This method is called when the user clicks the restart button. When called we restart the algorithm that was just played by the user. Once again
-	 * if the graph is empty or an algorithm has not been selected then an error message is shown explaining there error.
+	 * This method is called when the user clicks the restart button. When called we restart the algorithm that was just played by the user for 
+	 * the specific graph they are viewing. Once again if the graph is empty or an algorithm has not been selected then an error message is shown 
+	 * explaining there error.
 	 * @param e
 	 */
 	@FXML
@@ -1005,36 +1006,25 @@ public class GraphPanelController {
 			}else if(centerPaneUndirectedNonWeightedGraph.getChildren().size() == 0) {
 				alert2.showAndWait();
 			}else {
-				
-				try {
+
+				if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
 					
-					if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Breadth First Search")) {
-						
-						algorithmAnimations.restartBreadthFirstSearch();
-						
-					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
-						
-						algorithmAnimations.restartDepthFirstSearch();
-						
-					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
-						
-						algorithmAnimations.restartVertexCover();
-						
-					}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
-						
-						algorithmAnimations.restartMyAlgorithm();
-						
-					}
+					algorithmAnimations.restartBreadthFirstSearch();
 					
-				}catch(NumberFormatException nfe) {
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Depth First Search")) {
 					
-					alert3.showAndWait();
+					algorithmAnimations.restartDepthFirstSearch();
 					
-				}catch(IllegalArgumentException ile) {
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("Vertex Cover")) {
 					
-					alert3.showAndWait();
+					algorithmAnimations.restartVertexCover();
+					
+				}else if(listViewUndirectedNonWeighted.getSelectionModel().getSelectedItem().equals("My Algorithm")) {
+					
+					algorithmAnimations.restartMyAlgorithm();
 					
 				}
+				
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -1138,6 +1128,12 @@ public class GraphPanelController {
 		
 	}
 
+	/**
+	 * This method is called when the user clicks the skip to end button. When called we skip the animation of the algorithm and just show the end 
+	 * output of the animation Once again if the graph is empty or an algorithm has not been selected then an error message is shown 
+	 * explaining there error.
+	 * @param e
+	 */
 	@FXML
 	private void handleSkipToEndButton(ActionEvent e) {
 		
@@ -1279,6 +1275,13 @@ public class GraphPanelController {
 		}
 		
 	}
+	
+	/**
+	 * This is called when the user tries to change the vertex data type for the graph using the choice box on the gui. If the user tries to change 
+	 * the vertex data they receive a warning message informing the user that the current graph on the screen will be cleared. If they confirm then
+	 * the graph is cleared and model is updated accordingly.
+	 * @param e
+	 */
 	@FXML
 	private void handleChoiceBox(ActionEvent e) {
 		
@@ -1428,6 +1431,13 @@ public class GraphPanelController {
 	 		}
 	}
 	
+	/**
+	 * This method is called when the user clicks anywhere on the Pane component on the GUI. The user is prompted to input a the data they want the
+	 * the vertex they want to add to hold. Once the user inputs the data and presses OK the data is then checked to see if it is valid in the
+	 * AddVertexDataController class. If the data is valid then a vertex is created and some event handlers are added to this vertex. The vertex is then
+	 * added to the GUI where the user clicked.
+	 * @param event
+	 */
 	@FXML
 	private void handleAddVertex(MouseEvent event) {
 		boolean okClicked = main.showAddVertexPopUp(this);
@@ -1529,30 +1539,50 @@ public class GraphPanelController {
    			
 	}
 		
+	/**
+	 * Method to retrieve the data choice on the Undirected Non-Weighted graph tab.
+	 * @return
+	 */
 	public String getSelectedDataChoiceUndirectedNonWeightedGraph() {
 
 		return choiceBoxUndirectedNonWeightedGraph.getSelectionModel().getSelectedItem();
 
 	}
 	
+	/**
+	 * Method to retrieve the data choice on the Undirected Weighted graph tab.
+	 * @return
+	 */
 	public String getSelectedDataChoiceUndirectedWeightedGraph() {
 
 		return choiceBoxUndirectedWeightedGraph.getSelectionModel().getSelectedItem();
 
 	}
 	
+	/**
+	 * Method to retrieve the data choice on the Directed Non-Weighted graph tab.
+	 * @return
+	 */
 	public String getSelectedDataChoiceDirectedNonWeightedGraph() {
 
 		return choiceBoxDirectedNonWeightedGraph.getSelectionModel().getSelectedItem();
 
 	}
 	
+	/**
+	 * Method to retrieve the data choice on the Directed Weighted graph tab.
+	 * @return
+	 */
 	public String getSelectedDataChoiceDirectedWeightedGraph() {
 
 		return choiceBoxDirectedWeightedGraph.getSelectionModel().getSelectedItem();
 
 	}
 	
+	/**
+	 * Method to retrieve the name of the tab the user is currently on.
+	 * @return
+	 */
 	public String getSelectedTabName() {
 
 		return tabs.getSelectionModel().getSelectedItem().getText();
@@ -1619,6 +1649,11 @@ public class GraphPanelController {
 		this.dataModel = dataModel;
 	}
 	
+	/**
+	 * This method checks whether a String is a integer value.
+	 * @param s
+	 * @return
+	 */
 	 private static boolean isInteger(String s) {
         try { 
             Integer.parseInt(s); 
@@ -1630,6 +1665,11 @@ public class GraphPanelController {
         return true;
     }
     
+	 /**
+	 * This method checks whether a String is a double value.
+	 * @param s
+	 * @return
+	 */
     private static boolean isDouble(String s) {
 
     	try {
@@ -1646,6 +1686,11 @@ public class GraphPanelController {
 
     }
     
+    /**
+	 * This method checks if the String value is a String by validating that the String value is not a Integer or a Double.
+	 * @param s
+	 * @return
+	 */
     private boolean isString(String s) {
     	if(!isInteger(s) && !isDouble(s)) {
     		return true;
@@ -1653,6 +1698,12 @@ public class GraphPanelController {
     	return false;
     }
     
+    /**
+     * This method checks that the data the user inputs for the starting vertex of an algorithm to be visualised is valid and correct. If the data is
+     * invalid an error message is shown to inform the user why the data they inputed is incorrect.
+     * @param input
+     * @return true if data valid else false
+     */
     public boolean isInputValidStartingVertex(String input) {
     	
     	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
@@ -1831,7 +1882,13 @@ public class GraphPanelController {
  
     }
     
-    public boolean isInputValid(String input,String startVertex,String weightInput) {
+    /**
+     * This method checks that the data the user inputs for adding an edge to a graph is . If the data is
+     * invalid an error message is shown to inform the user why the data they inputed is incorrect.
+     * @param input
+     * @return true if data valid else false
+     */
+    public boolean isInputValidAddingEdge(String input,String startVertex,String weightInput) {
     	
     	String selectedDataChoiceUndirectedNonWeightedGraph = getSelectedDataChoiceUndirectedNonWeightedGraph();
     	String selectedDataChoiceUndirectedWeightedGraph = getSelectedDataChoiceUndirectedWeightedGraph();
