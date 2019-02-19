@@ -95,8 +95,8 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 						 
 						TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
 				        dialogNonWeightedEdge.setTitle("Add Edge");
-				        dialogNonWeightedEdge.setHeaderText("Add Edge.");
-				        dialogNonWeightedEdge.setContentText("Please enter the edge you would like to connect to:");
+				        dialogNonWeightedEdge.setHeaderText("Please enter the vertex you would like to create a edge to.");
+				        dialogNonWeightedEdge.setContentText("Destination Vertex:");
 				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 			        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
@@ -330,13 +330,13 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 			        	grid.setPadding(new Insets(20, 150, 10, 10));
 			        	
 			        	TextField vertex = new TextField();
-			        	vertex.setPromptText("Vertex");
+			        	vertex.setPromptText("Destination Vertex");
 			        	TextField weight = new TextField();
-			        	weight.setPromptText("Weight of edge.");
+			        	weight.setPromptText("Weight Of Edge.");
 			        	
-			        	grid.add(new Label("Vertex:"), 0, 0);
+			        	grid.add(new Label("Destination Vertex:"), 0, 0);
 			        	grid.add(vertex, 1, 0);
-			        	grid.add(new Label("Weight:"), 0, 1);
+			        	grid.add(new Label("Weight Of Edge:"), 0, 1);
 			        	grid.add(weight, 1, 1);
 				        
 			        	dialog.getDialogPane().setContent(grid);
