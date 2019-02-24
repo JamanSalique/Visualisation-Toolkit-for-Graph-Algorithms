@@ -1212,6 +1212,10 @@ public class RandomGraphGenerator {
     		
     		errorMessage += "You must provide and integer value for the number of edges field.";
     		
+    	}else if(Integer.parseInt(numberOfVertices)<=0 || Integer.parseInt(numberOfEdges)<=0) {
+    		
+    		errorMessage += "You must provide and integer value greater than 0.";
+    		
     	}else {
 		
 			int nVertices = 0;
