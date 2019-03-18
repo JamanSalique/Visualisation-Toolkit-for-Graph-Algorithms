@@ -255,7 +255,7 @@ public class GraphPanelController {
 		                // which makes the final layout position to 0 in mouse released event.
 		                currentStackPane.setTranslateX(-currPaneLayoutX);
 		            } else {
-		                // If your dragNode bounds are outside parent bounds,ALWAYS setting the translate value that fits your node at end.
+		                // If dragNode bounds are outside parent bounds,ALWAYS setting the translate value that fits your node at end.
 		                currentStackPane.setTranslateX(parentBounds.getWidth() - currPaneLayoutX - currPaneWidth);
 		            }
 
@@ -443,9 +443,9 @@ public class GraphPanelController {
 	private void handleClearGraphButton() {
 		
 		Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Changing data type warning");
-        alert.setHeaderText("Are you sure you want to change the data type?");
-        alert.setContentText("If you click OK thew current graph you created will be cleared.");
+        alert.setTitle("Clearing graph warning.");
+        alert.setHeaderText("Are you sure you want to clear the graph?");
+        alert.setContentText("If you click OK the current graph you created will be cleared and you cannot retrieve it back.");
         ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
@@ -1288,7 +1288,7 @@ public class GraphPanelController {
 		Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Changing data type warning");
         alert.setHeaderText("Are you sure you want to change the data type?");
-        alert.setContentText("If you click OK thew current graph you created will be cleared.");
+        alert.setContentText("If you click OK the current graph you created will be cleared.");
         ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
@@ -1871,7 +1871,7 @@ public class GraphPanelController {
         } else {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Invalid Edge Fields.");
+            alert.setTitle("Invalid Data Inputted.");
             alert.setHeaderText("You have provided incorrect data.");
             alert.setContentText(errorMessage);
             

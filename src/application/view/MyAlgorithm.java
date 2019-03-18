@@ -114,7 +114,7 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
 		}
 		
 		//This will output a string to the text area in the bottom right of the gui. We will output the BFS traversal order.
-		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
+		outputToOutputBox("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 	
 	/**
@@ -194,7 +194,7 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
 		}
 		
 		//This will output a string to the text area in the bottom right of the gui. We will output the BFS traversal order.
-		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
+		outputToOutputBox("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 
 	/**
@@ -276,7 +276,7 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
 		}
 		
 		//This will output a string to the text area in the bottom right of the gui. We will output the BFS traversal order.
-		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
+		outputToOutputBox("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
 		}
 		
 		//This will output a string to the text area in the bottom right of the gui. We will output the BFS traversal order.
-		gpc.getOutputBox().setText("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
+		outputToOutputBox("BFS Traversal Order: " + Arrays.toString(traversalOrder.toArray()));
 	}
 	
 	/**
@@ -583,6 +583,10 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
         		vertexTo.toString(), graphType));
 	
 		
+	}
+	
+	private void outputToOutputBox(String s) {
+		gpc.getOutputBox().setText(s);
 	}
 
 }
