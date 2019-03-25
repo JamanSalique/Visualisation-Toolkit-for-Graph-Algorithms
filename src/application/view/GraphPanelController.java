@@ -836,7 +836,7 @@ public class GraphPanelController {
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
-        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
+        alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
 		
 			
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -992,10 +992,10 @@ public class GraphPanelController {
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
-        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
+        alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
         
         Alert alert3 = new Alert(AlertType.ERROR);
-        alert3.setTitle("Restarting animation before starting animation for newly made/modified graph.");
+        alert3.setTitle("Restart Visualisation Error.");
         alert3.setHeaderText("You cannot restart an animation before starting an animation for a new/modified graph");
         alert3.setContentText("To start an animation for a newly made/modified graph you must press the play button.");
 		
@@ -1146,7 +1146,7 @@ public class GraphPanelController {
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
-        alert2.setContentText("The graph has no vertices and no edges to visualise an algorithm add some vertices and edges first.");
+        alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
 		
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
@@ -1286,8 +1286,8 @@ public class GraphPanelController {
 	private void handleChoiceBox(ActionEvent e) {
 		
 		Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Changing data type warning");
-        alert.setHeaderText("Are you sure you want to change the data type?");
+        alert.setTitle("Changing Data Type Warning");
+        alert.setHeaderText("Are you sure you want to change the data type for vertices?");
         alert.setContentText("If you click OK the current graph you created will be cleared.");
         ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
@@ -1871,7 +1871,7 @@ public class GraphPanelController {
         } else {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Invalid Data Inputted.");
+            alert.setTitle("Starting Vertex Error");
             alert.setHeaderText("You have provided incorrect data.");
             alert.setContentText(errorMessage);
             
