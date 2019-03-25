@@ -1364,7 +1364,13 @@ public class RandomGraphGenerator {
     		
     	}else if(Integer.parseInt(numberOfVertices)<=0 || Integer.parseInt(numberOfEdges)<=0) {
     		
-    		errorMessage += "You must provide and integer value greater than 0.";
+    		errorMessage += "A graph must have at least one vertex. You must provide and integer value greater than 0 for the number "
+    				+ "of vertices field.";
+    		
+    	}else if(Integer.parseInt(numberOfEdges)<0) {
+    		
+    		errorMessage += "You have inputted a negative value for the number of edges field.  "
+    				+ "You must provide and integer value greater than or equal to 0 for this field.";
     		
     	}else {
 		
@@ -1378,7 +1384,6 @@ public class RandomGraphGenerator {
 			}
 			
 			int maxNumberOfEdgesUndirected = (nVertices*(nVertices-1))/2;
-//			int maxNumberOfEdgesDirected = nVertices*(nVertices-1);
 			int maxNumberOfEdgesDirected = nVertices*nVertices;
 			
 			if((gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph"))
@@ -1400,8 +1405,8 @@ public class RandomGraphGenerator {
         } else {
             // Show the error message.
             Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Invalid Edge Fields.");
-            alert.setHeaderText("You have provided incorrect data.");
+            alert.setTitle("Random Graph Generator Error.");
+            alert.setHeaderText("You have provided incorrect data in one of the fields.");
             alert.setContentText(errorMessage);
             
             alert.showAndWait();
