@@ -200,15 +200,14 @@ public class GraphPanelController {
         
         hoverMenu.getItems().addAll(hoverMenuItemAddEdge);
         
-        ObservableList<String> data = FXCollections.observableArrayList("Breadth First Search","Depth First Search","Vertex Cover");
-        
         listViewUndirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Vertex Cover","My Algorithm");
         listViewUndirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm",
         												"Kruskal's Algorithm","Prim's Algorithm","Vertex Cover","My Algorithm");
         listViewDirectedNonWeighted.getItems().addAll("Breadth First Search","Depth First Search","Kosaraju's Algorithm","My Algorithm");
         listViewDirectedWeighted.getItems().addAll("Breadth First Search","Depth First Search","Dijkstra's Algorithm","Kosaraju's Algorithm","My Algorithm");
         
-        animationSpeedSlider = new Slider(1, 4, 2);
+        animationSpeedSlider = new Slider();
+
         
         randomGraphGenerator = new RandomGraphGenerator(this);
         handleCenterPanes();
