@@ -18,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
@@ -91,7 +92,13 @@ public class RandomGraphGenerator {
 			Pair<Integer,Integer> pairToAdd = new Pair<Integer,Integer>(vertex1,vertex2);
 			Pair<Integer,Integer> pairToAddReversed = new Pair<Integer,Integer>(vertex2,vertex1);
 			
-			for(int i=0;i<numberOfEdges;i++) {
+			int numEdges =numberOfEdges;
+			
+			if(numberOfEdges > numberOfVertices*(numberOfVertices-1)) {
+				numEdges = numberOfVertices*(numberOfVertices-1);
+			}
+			
+			for(int i=0;i<numEdges;i++) {
 				
 				if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") ||gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
 					
@@ -501,8 +508,71 @@ public class RandomGraphGenerator {
         	    covh.addEdgeHandlerNonWeighted(vertexData1.toString(), vertexData2.toString());
         	    gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(arrowHead);
         		gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,line);
-	    		
+
+
 			}
+			
+			if(numberOfEdges> (numberOfVertices*(numberOfVertices-1))) {
+    			int selfEdgeArrowheadPlacement = 20;
+    			ArrayList<StackPane> allVertices = new ArrayList<StackPane>();
+    			
+    			for(Node child : gpc.getCenterPaneDirectedNonWeightedGraph().getChildren()) {
+    				
+    				if(child instanceof StackPane) {
+    					allVertices.add((StackPane) child);
+    				}
+					
+    			}
+    			
+    			int numberOfLoopVertices = numberOfEdges - (numberOfVertices*(numberOfVertices-1));
+    			
+    			for(int i=0; i<numberOfLoopVertices;i++) {
+    				
+    				StackPane loopVertex = allVertices.get(i);
+    				
+    				Rectangle rect = new Rectangle();
+        			rect.xProperty().bind(loopVertex.layoutXProperty().add(loopVertex.translateXProperty()).add(loopVertex.widthProperty().divide(2)));
+        			rect.yProperty().bind(loopVertex.layoutYProperty().add(loopVertex.translateYProperty()).add(loopVertex.heightProperty().divide(2)));
+        			rect.setHeight(40);
+        			rect.setWidth(40);
+        			rect.setStroke(Color.BLACK);
+        			rect.setStrokeWidth(2);
+        			rect.setFill(null);
+        			
+        			rect.setOnMouseClicked(Event::consume);
+        			rect.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+        		    
+        			gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,rect);
+        			
+        			Polygon loopArrowHead = new Polygon();
+        			loopArrowHead.getPoints().addAll(new Double[]{
+        	            0.0, 7.0,
+        	            -7.0, -7.0,
+        	            7.0, -7.0 });
+        	        loopArrowHead.setFill(Color.BLACK);
+        	       
+        	        loopArrowHead.setOnMouseClicked(Event::consume);
+        	        loopArrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+        	        
+        	        loopArrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
+        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
+        	        
+        	        loopArrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+	            	          () -> rect.getX() +selfEdgeArrowheadPlacement,
+	            	          rect.xProperty()));
+		            	
+        	        loopArrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+            	          () -> rect.getY() ,
+            	          rect.yProperty()));
+        	        
+        	        
+        	        gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(loopArrowHead);
+    				
+    			}
+    			
+    			
+    		}
 				
 			
 		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
@@ -631,11 +701,91 @@ public class RandomGraphGenerator {
         	    gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,label);
         	    gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(arrowHead);
         		gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,line);
-	    		
+
 			}
-				
 			
-			
+			if(numberOfEdges> (numberOfVertices*(numberOfVertices-1))) {
+    			int selfEdgeArrowheadPlacement = 20;
+    			ArrayList<StackPane> allVertices = new ArrayList<StackPane>();
+    			
+    			for(Node child : gpc.getCenterPaneDirectedWeightedGraph().getChildren()) {
+    				
+    				if(child instanceof StackPane) {
+    					allVertices.add((StackPane) child);
+    				}
+					
+    			}
+    			
+    			int numberOfLoopVertices = numberOfEdges - (numberOfVertices*(numberOfVertices-1));
+    			
+    			for(int i=0; i<numberOfLoopVertices;i++) {
+    				
+    				StackPane loopVertex = allVertices.get(i);
+    				
+    				Rectangle rect = new Rectangle();
+        			rect.xProperty().bind(loopVertex.layoutXProperty().add(loopVertex.translateXProperty()).add(loopVertex.widthProperty().divide(2)));
+        			rect.yProperty().bind(loopVertex.layoutYProperty().add(loopVertex.translateYProperty()).add(loopVertex.heightProperty().divide(2)));
+        			rect.setHeight(40);
+        			rect.setWidth(40);
+        			rect.setStroke(Color.BLACK);
+        			rect.setStrokeWidth(2);
+        			rect.setFill(null);
+        			
+        			rect.setOnMouseClicked(Event::consume);
+        			rect.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+        		    
+        			gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,rect);
+        			
+        			Random r2 = new Random();
+    				double randomValue2 = 0.1 + (10.0 - 0.1) * r2.nextDouble();
+    				double roundedValue2 = Math.round(randomValue2 * 100.0) / 100.0;
+        			
+        	        Label label2 = new Label(Double.toString(roundedValue2));
+        	        label2.setStyle("-fx-background-color: white; -fx-border-color: black;");
+        	        label2.setPadding(new Insets(2, 4, 2, 4));
+
+        	        label2.setAlignment(Pos.CENTER);
+        	        label2.setFont(new Font(10));
+	            	
+        	        label2.setOnMouseClicked(Event::consume);
+        	        label2.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+	            	
+        	        label2.layoutXProperty().bind(Bindings.createDoubleBinding(
+            	          () -> (rect.getX()  + rect.getWidth()) - (label2.getWidth()/2),
+            	          rect.xProperty(),label2.widthProperty(),rect.widthProperty()));
+	            	
+        	        label2.layoutYProperty().bind(Bindings.createDoubleBinding(
+            	          () -> (rect.getY() + rect.getHeight()) - (label2.getHeight()/2),
+            	          rect.yProperty(),label2.heightProperty(),rect.heightProperty()));
+        			
+        			Polygon loopArrowHead = new Polygon();
+        			loopArrowHead.getPoints().addAll(new Double[]{
+        	            0.0, 7.0,
+        	            -7.0, -7.0,
+        	            7.0, -7.0 });
+        			loopArrowHead.setFill(Color.BLACK);
+
+        			loopArrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
+        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
+        	        
+        			loopArrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+	            	          () -> rect.getX() +20,
+	            	          rect.xProperty()));
+		            	
+        			loopArrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+            	          () -> rect.getY() ,
+            	          rect.yProperty()));
+        	        
+        			loopArrowHead.setOnMouseClicked(Event::consume);
+        			loopArrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+        	        
+        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(loopArrowHead);
+        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(label2);
+    				
+    			}
+    		}
+
 		}
 	}
 
@@ -1228,7 +1378,8 @@ public class RandomGraphGenerator {
 			}
 			
 			int maxNumberOfEdgesUndirected = (nVertices*(nVertices-1))/2;
-			int maxNumberOfEdgesDirected = nVertices*(nVertices-1);
+//			int maxNumberOfEdgesDirected = nVertices*(nVertices-1);
+			int maxNumberOfEdgesDirected = nVertices*nVertices;
 			
 			if((gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph"))
 					&& nEdges>maxNumberOfEdgesDirected) {
