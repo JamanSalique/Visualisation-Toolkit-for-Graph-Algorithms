@@ -86,7 +86,11 @@
 }
 
 .menu-item:hover{
-	 -fx-background-color: grey; 
+	 -fx-background-color: #ff9500; 
+}
+
+.menu-item:hover > .label{
+	  -fx-text-fill: black;
 }
 
 .dialog-pane{

@@ -1389,12 +1389,14 @@ public class RandomGraphGenerator {
 			if((gpc.getSelectedTabName().equals("Directed Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph"))
 					&& nEdges>maxNumberOfEdgesDirected) {
 				
-				errorMessage += "A directed graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesDirected + " edges.";
+				errorMessage += "You have inputted invalid data for the number of edges field. "
+						+ "A directed graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesDirected + " edges.";
 				
 			}else if((gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") || gpc.getSelectedTabName().equals("Undirected Weighted Graph"))
 					&& nEdges>maxNumberOfEdgesUndirected) {
 				
-				errorMessage += "A undirected graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesUndirected + " edges.";
+				errorMessage += "You have inputted invalid data for the number of edges field. "
+						+ "A undirected graph with " + numberOfVertices + " vertices can have no more than " + maxNumberOfEdgesUndirected + " edges.";
 				
 			}
     	}
