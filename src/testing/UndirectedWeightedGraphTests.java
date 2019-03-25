@@ -1,9 +1,15 @@
 package testing;
 
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.util.Pair;
 import application.model.UndirectedWeightedGraph;
 import application.model.Vertex;
 
@@ -265,6 +271,225 @@ class UndirectedWeightedGraphTests {
 		
 		assertTrue(undirectedWeightedString.isAdjacent(va.getElement(), vb.getElement()));
 		assertFalse(undirectedWeightedString.isAdjacent(vb.getElement(), vc.getElement()));
+
+	}
+	
+	@Test
+	void containVertexTest(){
+		
+		UndirectedWeightedGraph<Integer> undirectedWeightedInt = new UndirectedWeightedGraph<Integer>();
+		Vertex<Integer> v0 = new Vertex<Integer>(0);
+		Vertex<Integer> v1 = new Vertex<Integer>(1);
+		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<Integer> v3 = new Vertex<Integer>(3);
+		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		
+		undirectedWeightedInt.addVertex(v0.getElement());
+		undirectedWeightedInt.addVertex(v1.getElement());
+		undirectedWeightedInt.addVertex(v2.getElement());
+		undirectedWeightedInt.addVertex(v3.getElement());
+		undirectedWeightedInt.addVertex(v4.getElement());
+		
+		undirectedWeightedInt.addEdge(v0.getElement(), v1.getElement(),1.0);
+		undirectedWeightedInt.addEdge(v1.getElement(), v2.getElement(),1.0);
+		undirectedWeightedInt.removeEdge(v1.getElement(), v2.getElement());
+		
+		UndirectedWeightedGraph<Double> undirectedWeightedDouble = new UndirectedWeightedGraph<Double>();
+		Vertex<Double> v0d = new Vertex<Double>(0.0);
+		Vertex<Double> v1d = new Vertex<Double>(1.0);
+		Vertex<Double> v2d = new Vertex<Double>(2.0);
+		Vertex<Double> v3d = new Vertex<Double>(3.0);
+		Vertex<Double> v4d = new Vertex<Double>(4.0);
+		
+		undirectedWeightedDouble.addVertex(v0d.getElement());
+		undirectedWeightedDouble.addVertex(v1d.getElement());
+		undirectedWeightedDouble.addVertex(v2d.getElement());
+		undirectedWeightedDouble.addVertex(v3d.getElement());
+		undirectedWeightedDouble.addVertex(v4d.getElement());
+		
+		undirectedWeightedDouble.addEdge(v0d.getElement(), v1d.getElement(),1.0);
+		undirectedWeightedDouble.addEdge(v1d.getElement(), v2d.getElement(),1.0);
+		undirectedWeightedDouble.removeEdge(v1d.getElement(), v2d.getElement());
+		
+		UndirectedWeightedGraph<String> undirectedWeightedString = new UndirectedWeightedGraph<String>();
+		Vertex<String> va = new Vertex<String>("a");
+		Vertex<String> vb = new Vertex<String>("b");
+		Vertex<String> vc = new Vertex<String>("c");
+		Vertex<String> vd = new Vertex<String>("d");
+		Vertex<String> ve = new Vertex<String>("e");
+		
+		undirectedWeightedString.addVertex(va.getElement());
+		undirectedWeightedString.addVertex(vb.getElement());
+		undirectedWeightedString.addVertex(vc.getElement());
+		undirectedWeightedString.addVertex(vd.getElement());
+		undirectedWeightedString.addVertex(ve.getElement());
+		
+		undirectedWeightedString.addEdge(va.getElement(), vb.getElement(),1.0);
+		undirectedWeightedString.addEdge(vb.getElement(), vc.getElement(),1.0);
+		undirectedWeightedString.removeEdge(vb.getElement(), vc.getElement());
+		
+		assertTrue(undirectedWeightedInt.containsVertex(0));
+		assertFalse(undirectedWeightedInt.containsVertex(10));
+		
+		assertTrue(undirectedWeightedDouble.containsVertex(0.0));
+		assertFalse(undirectedWeightedDouble.containsVertex(10.0));
+		
+		assertTrue(undirectedWeightedString.containsVertex("a"));
+		assertFalse(undirectedWeightedString.containsVertex("z"));
+		
+	}
+	
+	@Test
+	void clearGraphTest() {
+		
+		UndirectedWeightedGraph<Integer> undirectedWeightedInt = new UndirectedWeightedGraph<Integer>();
+		Vertex<Integer> v0 = new Vertex<Integer>(0);
+		Vertex<Integer> v1 = new Vertex<Integer>(1);
+		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<Integer> v3 = new Vertex<Integer>(3);
+		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		
+		undirectedWeightedInt.addVertex(v0.getElement());
+		undirectedWeightedInt.addVertex(v1.getElement());
+		undirectedWeightedInt.addVertex(v2.getElement());
+		undirectedWeightedInt.addVertex(v3.getElement());
+		undirectedWeightedInt.addVertex(v4.getElement());
+		
+		undirectedWeightedInt.addEdge(v0.getElement(), v1.getElement(),1.0);
+		undirectedWeightedInt.addEdge(v1.getElement(), v2.getElement(),1.0);
+		undirectedWeightedInt.removeEdge(v1.getElement(), v2.getElement());
+		
+		undirectedWeightedInt.clearGraph();
+		
+		UndirectedWeightedGraph<Double> undirectedWeightedDouble = new UndirectedWeightedGraph<Double>();
+		Vertex<Double> v0d = new Vertex<Double>(0.0);
+		Vertex<Double> v1d = new Vertex<Double>(1.0);
+		Vertex<Double> v2d = new Vertex<Double>(2.0);
+		Vertex<Double> v3d = new Vertex<Double>(3.0);
+		Vertex<Double> v4d = new Vertex<Double>(4.0);
+		
+		undirectedWeightedDouble.addVertex(v0d.getElement());
+		undirectedWeightedDouble.addVertex(v1d.getElement());
+		undirectedWeightedDouble.addVertex(v2d.getElement());
+		undirectedWeightedDouble.addVertex(v3d.getElement());
+		undirectedWeightedDouble.addVertex(v4d.getElement());
+		
+		undirectedWeightedDouble.addEdge(v0d.getElement(), v1d.getElement(),1.0);
+		undirectedWeightedDouble.addEdge(v1d.getElement(), v2d.getElement(),1.0);
+		undirectedWeightedDouble.removeEdge(v1d.getElement(), v2d.getElement());
+		
+		undirectedWeightedDouble.clearGraph();
+		
+		UndirectedWeightedGraph<String> undirectedWeightedString = new UndirectedWeightedGraph<String>();
+		Vertex<String> va = new Vertex<String>("a");
+		Vertex<String> vb = new Vertex<String>("b");
+		Vertex<String> vc = new Vertex<String>("c");
+		Vertex<String> vd = new Vertex<String>("d");
+		Vertex<String> ve = new Vertex<String>("e");
+		
+		undirectedWeightedString.addVertex(va.getElement());
+		undirectedWeightedString.addVertex(vb.getElement());
+		undirectedWeightedString.addVertex(vc.getElement());
+		undirectedWeightedString.addVertex(vd.getElement());
+		undirectedWeightedString.addVertex(ve.getElement());
+		
+		undirectedWeightedString.addEdge(va.getElement(), vb.getElement(),1.0);
+		undirectedWeightedString.addEdge(vb.getElement(), vc.getElement(),1.0);
+		undirectedWeightedString.removeEdge(vb.getElement(), vc.getElement());
+		
+		undirectedWeightedString.clearGraph();
+		
+		assertTrue(undirectedWeightedInt.getAdjacencyList().size() == 0);
+		
+		assertTrue(undirectedWeightedDouble.getAdjacencyList().size() == 0);
+		
+		assertTrue(undirectedWeightedString.getAdjacencyList().size() == 0);
+		
+	}
+	
+	@Test
+	void vertexNeighboursTest() {
+		
+		UndirectedWeightedGraph<Integer> undirectedWeightedInt = new UndirectedWeightedGraph<Integer>();
+		Vertex<Integer> v0 = new Vertex<Integer>(0);
+		Vertex<Integer> v1 = new Vertex<Integer>(1);
+		Vertex<Integer> v2 = new Vertex<Integer>(2);
+		Vertex<Integer> v3 = new Vertex<Integer>(3);
+		Vertex<Integer> v4 = new Vertex<Integer>(4);
+		
+		undirectedWeightedInt.addVertex(v0.getElement());
+		undirectedWeightedInt.addVertex(v1.getElement());
+		undirectedWeightedInt.addVertex(v2.getElement());
+		undirectedWeightedInt.addVertex(v3.getElement());
+		undirectedWeightedInt.addVertex(v4.getElement());
+		
+		undirectedWeightedInt.addEdge(v0.getElement(), v1.getElement(),1.0);
+		undirectedWeightedInt.addEdge(v0.getElement(), v2.getElement(),1.0);
+		undirectedWeightedInt.addEdge(v0.getElement(), v4.getElement(),1.0);
+		undirectedWeightedInt.addEdge(v1.getElement(), v2.getElement(),1.0);
+		undirectedWeightedInt.removeEdge(v1.getElement(), v2.getElement());
+		
+		UndirectedWeightedGraph<Double> undirectedWeightedDouble = new UndirectedWeightedGraph<Double>();
+		Vertex<Double> v0d = new Vertex<Double>(0.0);
+		Vertex<Double> v1d = new Vertex<Double>(1.0);
+		Vertex<Double> v2d = new Vertex<Double>(2.0);
+		Vertex<Double> v3d = new Vertex<Double>(3.0);
+		Vertex<Double> v4d = new Vertex<Double>(4.0);
+		
+		undirectedWeightedDouble.addVertex(v0d.getElement());
+		undirectedWeightedDouble.addVertex(v1d.getElement());
+		undirectedWeightedDouble.addVertex(v2d.getElement());
+		undirectedWeightedDouble.addVertex(v3d.getElement());
+		undirectedWeightedDouble.addVertex(v4d.getElement());
+		
+		undirectedWeightedDouble.addEdge(v0d.getElement(), v1d.getElement(),1.0);
+		undirectedWeightedDouble.addEdge(v0d.getElement(), v2d.getElement(),1.0);
+		undirectedWeightedDouble.addEdge(v0d.getElement(), v4d.getElement(),1.0);
+		undirectedWeightedDouble.addEdge(v1d.getElement(), v2d.getElement(),1.0);
+		undirectedWeightedDouble.removeEdge(v1d.getElement(), v2d.getElement());
+		
+		UndirectedWeightedGraph<String> undirectedWeightedString = new UndirectedWeightedGraph<String>();
+		Vertex<String> va = new Vertex<String>("a");
+		Vertex<String> vb = new Vertex<String>("b");
+		Vertex<String> vc = new Vertex<String>("c");
+		Vertex<String> vd = new Vertex<String>("d");
+		Vertex<String> ve = new Vertex<String>("e");
+		
+		undirectedWeightedString.addVertex(va.getElement());
+		undirectedWeightedString.addVertex(vb.getElement());
+		undirectedWeightedString.addVertex(vc.getElement());
+		undirectedWeightedString.addVertex(vd.getElement());
+		undirectedWeightedString.addVertex(ve.getElement());
+		
+		undirectedWeightedString.addEdge(va.getElement(), vb.getElement(),1.0);
+		undirectedWeightedString.addEdge(va.getElement(), vc.getElement(),1.0);
+		undirectedWeightedString.addEdge(va.getElement(), ve.getElement(),1.0);
+		undirectedWeightedString.addEdge(vb.getElement(), vc.getElement(),1.0);
+		undirectedWeightedString.removeEdge(vb.getElement(), vc.getElement());
+
+		List<Pair<Vertex<Integer>,Double>> actual1 = new ArrayList<>();
+		List<Pair<Vertex<Double>,Double>> actual2 = new ArrayList<>();
+		List<Pair<Vertex<String>,Double>> actual3 = new ArrayList<>();
+		
+		undirectedWeightedInt.getNeighbours(0).iterator().forEachRemaining(actual1::add);
+		undirectedWeightedDouble.getNeighbours(0.0).iterator().forEachRemaining(actual2::add);
+		undirectedWeightedString.getNeighbours("a").iterator().forEachRemaining(actual3::add);
+		
+		Pair<Vertex<Integer>,Double> intPair1 = new Pair<>(v1,1.0);
+		Pair<Vertex<Integer>,Double> intPair2 = new Pair<>(v1,1.0);
+		Pair<Vertex<Integer>,Double> intPair3 = new Pair<>(v1,1.0);
+		
+		Pair<Vertex<Double>,Double> doublePair1 = new Pair<>(v1d,1.0);
+		Pair<Vertex<Double>,Double> doublePair2 = new Pair<>(v2d,1.0);
+		Pair<Vertex<Double>,Double> doublePair3 = new Pair<>(v4d,1.0);
+		
+		Pair<Vertex<String>,Double> stringPair1 = new Pair<>(vb,1.0);
+		Pair<Vertex<String>,Double> stringPair2 = new Pair<>(vc,1.0);
+		Pair<Vertex<String>,Double> stringPair3 = new Pair<>(ve,1.0);
+		
+		 assertThat(actual1, hasItems(intPair1,intPair2,intPair3));
+		 assertThat(actual2, hasItems(doublePair1,doublePair2,doublePair3));
+		 assertThat(actual3, hasItems(stringPair1,stringPair2,stringPair3));
 
 	}
 
