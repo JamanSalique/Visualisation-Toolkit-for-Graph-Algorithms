@@ -629,7 +629,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
      	
      	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && t.getSource() instanceof StackPane) {
      		
-     		 Alert alert = new Alert(AlertType.ERROR);
+     		 Alert alert = new Alert(AlertType.WARNING);
      		 
      		 ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
      		 ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
