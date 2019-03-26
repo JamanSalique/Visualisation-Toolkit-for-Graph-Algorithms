@@ -144,73 +144,73 @@ public class AddVertexDataController {
     	else if(isInteger(input) && graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") 
     			&& !selectedDataChoiceUndirectedNonWeightedGraph.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
     			!selectedDataChoiceUndirectedNonWeightedGraph.equals("Double")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isString(input) && graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && 
     			!selectedDataChoiceUndirectedNonWeightedGraph.equals("String")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isInteger(input) && graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") 
     			&& !selectedDataChoiceUndirectedWeightedGraph.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
     		
     	}
     	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") && 
     			!selectedDataChoiceUndirectedWeightedGraph.equals("Double")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
     		
     	}
     	else if(isString(input) && graphPanelController.getSelectedTabName().equals("Undirected Weighted Graph") && 
     			!selectedDataChoiceUndirectedWeightedGraph.equals("String")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceUndirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceUndirectedWeightedGraph + ".";
     		
     	}
     	else if(isInteger(input) && graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") 
     			&& !selectedDataChoiceDirectedNonWeightedGraph.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && 
     			!selectedDataChoiceDirectedNonWeightedGraph.equals("Double")) {
 
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isString(input) && graphPanelController.getSelectedTabName().equals("Directed Non-Weighted Graph") && 
     			!selectedDataChoiceDirectedNonWeightedGraph.equals("String")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedNonWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedNonWeightedGraph + ".";
     		
     	}
     	else if(isInteger(input) && graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") 
     			&& !selectedDataChoiceDirectedWeightedGraph.equals("Integer")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
     		
     	}
     	else if(isDouble(input) && graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && 
     			!selectedDataChoiceDirectedWeightedGraph.equals("Double")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
     		
     	}
     	else if(isString(input) && graphPanelController.getSelectedTabName().equals("Directed Weighted Graph") && 
     			!selectedDataChoiceDirectedWeightedGraph.equals("String")) {
     		
-    		errorMessage+="Invalid data type inputted, you must enter data of type" + selectedDataChoiceDirectedWeightedGraph + ".";
+    		errorMessage+="Invalid data type inputted, you must enter data of type " + selectedDataChoiceDirectedWeightedGraph + ".";
     		
     	}
  	
