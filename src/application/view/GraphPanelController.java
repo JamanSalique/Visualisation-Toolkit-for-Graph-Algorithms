@@ -1,12 +1,15 @@
 package application.view;
 
+import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.swing.event.ChangeEvent;
 import javafx.beans.value.ChangeListener;
 
 import application.Main;
 import application.model.DataModel;
+import application.model.Vertex;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -17,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -50,7 +54,6 @@ import javafx.util.Pair;
  */
 public class GraphPanelController {
 
-	
 	private Main main;
 	
 	private DataModel dataModel;
@@ -103,7 +106,6 @@ public class GraphPanelController {
 	
 	@FXML
 	private ListView<String> listViewDirectedWeighted;
-	
 	
 	@FXML
 	private Button playButton;
@@ -208,7 +210,6 @@ public class GraphPanelController {
         
         animationSpeedSlider = new Slider();
 
-        
         randomGraphGenerator = new RandomGraphGenerator(this);
         handleCenterPanes();
         handleListViews();
@@ -278,9 +279,7 @@ public class GraphPanelController {
 	 * @return
 	 */
 	@FXML EventHandler<MouseEvent> mouseReleasedOnVertexEvent() {
-		
-		
-     
+
      EventHandler<MouseEvent> circleOnMouseReleaseEventHandler = 
 		        new EventHandler<MouseEvent>() {
 		 
@@ -374,7 +373,6 @@ public class GraphPanelController {
 		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		alert.getDialogPane().getStylesheets().add("/application/global.css");
         Optional<ButtonType> result = alert.showAndWait();
-		
 		
 	}
 	
@@ -542,7 +540,7 @@ public class GraphPanelController {
 	
 	/**
 	 * This method adds a change listener to the list views (list of algorithms that can be played on graph) for all 4 graph tabs on the gui.
-	 * This method basically prevents the user from restarting/skipping an algorithm that has not even been played.
+	 * This method prevents the user from restarting/skipping an algorithm that has not been played.
 	 */
 	@SuppressWarnings("unchecked")
 	public void handleListViews() {
@@ -696,7 +694,7 @@ public class GraphPanelController {
 	}
 	
 	/**
-	 * This method is adds a change listener to the Pane components (The pane is where the user creates the graphs)
+	 * This method adds a change listener to the Pane components (The pane is where the user creates the graphs and contains all graph vertices and edges)
 	 * in each tab. This is so I can monitor when a graph is modified or not. If the number of components decrease or increase in the Pane this
 	 * means the graph has been modified and so I disable the restart and skip to end buttons to prevent an error replaying an animation on a 
 	 * modified graph. I also set the isUndirectedNonWeightedModified to true if the undirected non weighted graph was modified, I do the same
@@ -794,7 +792,6 @@ public class GraphPanelController {
         
     	dialog.getDialogPane().setContent(grid);
     	
-    	// Convert the result to a username-password-pair when the login button is clicked.
     	dialog.setResultConverter(dialogButton -> {
     	    if (dialogButton == okButton) {
     	        return new Pair<>(vertex.getText(), weight.getText());
@@ -831,11 +828,13 @@ public class GraphPanelController {
         alert.setHeaderText("No graph algorithm has been selected.");
         alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
         		+ " of the screen and then press the play button.");
+        alert.getDialogPane().getStylesheets().add("/application/global.css");
 		
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
         alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
+        alert2.getDialogPane().getStylesheets().add("/application/global.css");
 		
 			
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -883,9 +882,23 @@ public class GraphPanelController {
 					algorithmAnimations.playDepthFirstSearch();
 					
 				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
-					
-					algorithmAnimations.playDijkstraAlgorithm();
-					
+
+					if(hasNegativeEdgesUndirectedWeighted()) {
+						
+						Alert alert3 = new Alert(AlertType.ERROR);
+						alert3.setTitle("Negative Weighted Edges");
+						alert3.setHeaderText("The graph contains at least one negative weighted edge.");
+						alert3.setContentText("Dijkstra's shortest path algorithm cannot be performed on graphs that contain negative weighted edges.");
+						alert3.getDialogPane().getStylesheets().add("/application/global.css");
+						alert3.showAndWait();
+				        
+						
+					}else {
+						
+						algorithmAnimations.playDijkstraAlgorithm();
+						
+					}
+
 				}else if(listViewUndirectedWeighted.getSelectionModel().getSelectedItem().equals("Kruskal's Algorithm")) {
 					
 					algorithmAnimations.playKruskalAlgorithm();
@@ -952,7 +965,21 @@ public class GraphPanelController {
 					
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Dijkstra's Algorithm")) {
 					
-					algorithmAnimations.playDijkstraAlgorithm();
+					if(hasNegativeEdgesDirectedWeighted()) {
+						
+						Alert alert3 = new Alert(AlertType.ERROR);
+						alert3.setTitle("Negative Weighted Edges");
+						alert3.setHeaderText("The graph contains at least one negative weighted edge.");
+						alert3.setContentText("Dijkstra's shortest path algorithm cannot be performed on graphs that contain negative weighted edges.");
+						alert3.getDialogPane().getStylesheets().add("/application/global.css");
+						alert3.showAndWait();
+				        
+						
+					}else {
+						
+						algorithmAnimations.playDijkstraAlgorithm();
+						
+					}
 					
 				}else if(listViewDirectedWeighted.getSelectionModel().getSelectedItem().equals("Kosaraju's Algorithm")) {
 					
@@ -1129,7 +1156,7 @@ public class GraphPanelController {
 
 	/**
 	 * This method is called when the user clicks the skip to end button. When called we skip the animation of the algorithm and just show the end 
-	 * output of the animation Once again if the graph is empty or an algorithm has not been selected then an error message is shown 
+	 * output of the animation. Once again if the graph is empty or an algorithm has not been selected then an error message is shown 
 	 * explaining there error.
 	 * @param e
 	 */
@@ -1431,10 +1458,11 @@ public class GraphPanelController {
 	}
 	
 	/**
-	 * This method is called when the user clicks anywhere on the Pane component on the GUI. The user is prompted to input a the data they want the
+	 * This method is called when the user clicks anywhere on the Pane component on the GUI. The user is prompted to input the data they want the
 	 * the vertex they want to add to hold. Once the user inputs the data and presses OK the data is then checked to see if it is valid in the
-	 * AddVertexDataController class. If the data is valid then a vertex is created and some event handlers are added to this vertex. The vertex is then
-	 * added to the GUI where the user clicked.
+	 * AddVertexDataController class. If the data is valid then a vertex is created and some event handlers are added to this vertex. The event
+	 * handlers added to the vertex are for the deletion of vertices via double clicking the vertex and adding edges via right clicking the vertex.
+	 * The vertex is then added to the GUI where the user clicked.
 	 * @param event
 	 */
 	@FXML
@@ -1646,6 +1674,66 @@ public class GraphPanelController {
 
 	public void setDataModel(DataModel dataModel) {
 		this.dataModel = dataModel;
+	}
+	
+	private boolean hasNegativeEdgesUndirectedWeighted() {
+		boolean isNegativeWeights = false;
+		
+		for(Set<Pair<Vertex<Integer>, Double>> edges: dataModel.getUndirectedWeightedInt().getAdjacencyList().values()) {
+			for(Pair<Vertex<Integer>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+		
+		for(Set<Pair<Vertex<Double>, Double>> edges: dataModel.getUndirectedWeightedDouble().getAdjacencyList().values()) {
+			for(Pair<Vertex<Double>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+		
+		for(Set<Pair<Vertex<String>, Double>> edges: dataModel.getUndirectedWeightedString().getAdjacencyList().values()) {
+			for(Pair<Vertex<String>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+
+		return isNegativeWeights;
+	}
+	
+	private boolean hasNegativeEdgesDirectedWeighted() {
+		boolean isNegativeWeights = false;
+		
+		for(Set<Pair<Vertex<Integer>, Double>> edges: dataModel.getDirectedWeightedInt().getAdjacencyList().values()) {
+			for(Pair<Vertex<Integer>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+		
+		for(Set<Pair<Vertex<Double>, Double>> edges: dataModel.getDirectedWeightedDouble().getAdjacencyList().values()) {
+			for(Pair<Vertex<Double>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+		
+		for(Set<Pair<Vertex<String>, Double>> edges: dataModel.getDirectedWeightedString().getAdjacencyList().values()) {
+			for(Pair<Vertex<String>, Double> edge: edges) {
+				if(edge.getValue() < 0) {
+					isNegativeWeights = true;
+				}
+			}
+		}
+
+		return isNegativeWeights;
 	}
 	
 	/**
@@ -1882,7 +1970,7 @@ public class GraphPanelController {
     }
     
     /**
-     * This method checks that the data the user inputs for adding an edge to a graph is . If the data is
+     * This method checks that the data the user inputs for adding an edge to a graph is valid. If the data is
      * invalid an error message is shown to inform the user why the data they inputed is incorrect.
      * @param input
      * @return true if data valid else false
