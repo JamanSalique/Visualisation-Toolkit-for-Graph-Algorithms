@@ -37,7 +37,6 @@ public class DijkstraAlgorithm <T extends Comparable<? super T>>{
 	 */
 	private SequentialTransition mainAnimation;
 
-	
 	private Animations animations;
 	
 	/**
@@ -48,8 +47,6 @@ public class DijkstraAlgorithm <T extends Comparable<? super T>>{
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
 		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
-
-		
 		animations = new Animations(gpc);
 	}
 	
@@ -69,7 +66,6 @@ public class DijkstraAlgorithm <T extends Comparable<? super T>>{
 		HashMap<T,T> predecessors = new HashMap<T,T>();
 		
 		ArrayList<String> edgesInShortestPathTree = new ArrayList<String>();
-		
 
 		 for (int i=0; i<vertexDistances.size();i++) { 
 			 

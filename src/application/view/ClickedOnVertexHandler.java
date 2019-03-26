@@ -78,305 +78,59 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 	 @Override
     public void handle(MouseEvent t) {
      	
-		 //if user right clicks vertex...
+		 //if user right clicks vertex (add edge functionality)...
      	if(t.getButton() == MouseButton.SECONDARY) {
      		
      		StackPane vertexClickedOn = (StackPane)(t.getSource());
      		ObservableList<Node> childs = ((StackPane)(t.getSource())).getChildren();
          	Text data = (Text) childs.get(childs.size()-1);
          	String dataAsString = data.getText();
-				double x = t.getX();
-				double y = t.getY();
-				gpc.getHoverMenu().show(stack,t.getScreenX(), t.getScreenY());
+			double x = t.getX();
+			double y = t.getY();
+			gpc.getHoverMenu().show(stack,t.getScreenX(), t.getScreenY());
 				
-				 gpc.getHoverMenuItemAddEdge().setOnAction(event -> {
+			gpc.getHoverMenuItemAddEdge().setOnAction(event -> {
 			        	
-					 if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
-						 
-						TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
-				        dialogNonWeightedEdge.setTitle("Add Edge");
-				        dialogNonWeightedEdge.setHeaderText("Please enter the vertex you would like to create a edge to.");
-				        dialogNonWeightedEdge.setContentText("Destination Vertex:");
-				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
-			        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
+				 if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph") || gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+					 
+					TextInputDialog dialogNonWeightedEdge = new TextInputDialog();
+			        dialogNonWeightedEdge.setTitle("Add Edge");
+			        dialogNonWeightedEdge.setHeaderText("Please enter the vertex you would like to create a edge to.");
+			        dialogNonWeightedEdge.setContentText("Destination Vertex:");
+			        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		        	dialogNonWeightedEdge.getDialogPane().getButtonTypes().setAll(okButton,cancelButton);
 
-			        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
+		        	dialogNonWeightedEdge.getDialogPane().getStylesheets().add("/application/global.css");
+		        			
+			        // Traditional way to get the response value.
+			        Optional<String> result = dialogNonWeightedEdge.showAndWait();
+			        	
+			        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get(),dataAsString,"") 
+			        			){
+			        		if(result.isPresent()) {
 			        			
-				        // Traditional way to get the response value.
-				        Optional<String> result = dialogNonWeightedEdge.showAndWait();
-				        	
-				        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get(),dataAsString,"") 
-				        			){
-				        		if(result.isPresent()) {
+			        			StackPane vertexTo = null;
+			        			
+			        			if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
+				        			for(Node child : gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
+				                		
+				                		if(child instanceof StackPane) {
+				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+				                			String toCompare = dataOfStack.getText();
+				                			if(toCompare.equals(result.get())) {
+				                				vertexTo = (StackPane) child;
+				                			}
+				                		}
+				                	}
 				        			
-				        			StackPane vertexTo = null;
-				        			
-				        			if(gpc.getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
-					        			for(Node child : gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren()) {
-					                		
-					                		if(child instanceof StackPane) {
-					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
-					                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
-					                			String toCompare = dataOfStack.getText();
-					                			if(toCompare.equals(result.get())) {
-					                				vertexTo = (StackPane) child;
-					                			}
-					                		}
-					                	}
-					        			
-					        			addEdgeHandlerNonWeighted(dataAsString,result.get());
-					        			
-					        			Line line = new Line();
-						        		line.setStrokeWidth(2);
-						        		
-						        		line.setOnMouseClicked(Event::consume);
-//						        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
-						        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-
-						        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
-						        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
-						        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
-						        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
-
-						        		line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
-						        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-						        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
-						        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
-					        			
-						        		gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren().add(0,line);
-						        		
-					        		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
-					        			
-					        			for(Node child : gpc.getCenterPaneDirectedNonWeightedGraph().getChildren()) {
-					                		
-					                		if(child instanceof StackPane) {
-					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
-					                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
-					                			String toCompare = dataOfStack.getText();
-					                			if(toCompare.equals(result.get())) {
-					                				vertexTo = (StackPane) child;
-					                			}
-					                		}
-					                	}
-					        			
-					        			
-					        			
-//					        			directedEdgePlacement = 13;
-					        			
-					        			double xMoveStart = directedEdgePlacement;
-					        			double yMoveStart =directedEdgePlacement;
-					        			double xMoveEnd = directedEdgePlacement;
-					        			double yMoveEnd =directedEdgePlacement;
-					        			
-					        			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
-					        				
-					        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
-						                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
-						                	String dataAsStringVertexTo = dataVertexTo.getText();
-						                	
-					        				if(gpc.getDataModel().getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
-					        					directedEdgePlacement = -directedEdgePlacement;
-					        					xMoveStart = directedEdgePlacement;
-							        			yMoveStart = directedEdgePlacement;
-							        			
-							        			xMoveEnd = directedEdgePlacement;
-							        			yMoveEnd = directedEdgePlacement;
-					        				}
-					        				
-					        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
-					        				
-					        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
-						                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
-						                	String dataAsStringVertexTo = dataVertexTo.getText();
-						                	
-					        				if(gpc.getDataModel().getDirectedNonWeightedDouble().isAdjacent(Double.parseDouble(dataAsStringVertexTo), Double.parseDouble(dataAsString))) {
-					        					xMoveStart = -xMoveStart;
-							        			yMoveStart = -yMoveStart;
-							        			
-							        			xMoveEnd = -xMoveEnd;
-							        			yMoveEnd = -yMoveEnd;
-					        				}
-					        				
-					        				
-					        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
-					        				
-					        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
-						                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
-						                	String dataAsStringVertexTo = dataVertexTo.getText();
-						                	
-					        				if(gpc.getDataModel().getDirectedNonWeightedString().isAdjacent(dataAsStringVertexTo,dataAsString)) {
-					        					xMoveStart = -xMoveStart;
-							        			yMoveStart = -yMoveStart;
-							        			
-							        			xMoveEnd = -xMoveEnd;
-							        			yMoveEnd = -yMoveEnd;
-					        				}
-					        				
-					        				
-					        			}
-					        			addEdgeHandlerNonWeighted(dataAsString,result.get());
-						        		
-						        		if(result.get().equals(dataAsString)) {
-						        			
-						        			Rectangle rect = new Rectangle();
-						        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
-						        			rect.yProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
-						        			rect.setHeight(40);
-						        			rect.setWidth(40);
-						        			rect.setStroke(Color.BLACK);
-						        			rect.setStrokeWidth(2);
-						        			rect.setFill(null);
-						        			
-						        			rect.setOnMouseClicked(Event::consume);
-//							        		rect.setOnMousePressed(mouseClickedOnEdgeEvent());
-						        			rect.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-						        			
-//						        			rect.getTransforms().add(new Rotate(45,rect.getX(),rect.getY()));
-						        		    
-						        			gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,rect);
-						        			
-						        			Polygon arrowHead = new Polygon();
-						        	        arrowHead.getPoints().addAll(new Double[]{
-						        	            0.0, 7.0,
-						        	            -7.0, -7.0,
-						        	            7.0, -7.0 });
-						        	        arrowHead.setFill(Color.BLACK);
-						        	       
-						        	        arrowHead.setOnMouseClicked(Event::consume);
-//							        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
-						        	        arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-						        	        
-						        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
-						        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
-						        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
-						        	        
-						        	        arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
-							            	          () -> rect.getX() +selfEdgeArrowheadPlacement,
-							            	          rect.xProperty()));
-								            	
-						            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
-						            	          () -> rect.getY() ,
-						            	          rect.yProperty()));
-						        	        
-						        	        
-						        	        gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(arrowHead);
-						        			
-						        		}else {
-						        			
-						        			Line line = new Line();
-						        			line.setStroke(Color.BLACK);
-						        			line.setFill(null);
-						        			line.setStrokeWidth(2);
-						        			line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)).add(xMoveStart));
-							        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)).add(yMoveStart));
-							        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)).add(xMoveEnd));
-							        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)).add(yMoveEnd));
-						        			
-							        		line.setOnMouseClicked(Event::consume);
-//							        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
-							        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-						        			
-						        			Polygon arrowHead = new Polygon();
-						        	        arrowHead.getPoints().addAll(new Double[]{
-						        	            0.0, 8.0,
-						        	            -8.0, -8.0,
-						        	            8.0, -8.0 });
-						        	        arrowHead.setFill(Color.BLACK);
-						        	       
-						        	        
-						        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
-						        	        		() -> Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()) * 180 / 3.14 - 90,
-						        	        		line.endXProperty(),line.endYProperty(),line.startXProperty(),line.startYProperty()));
-				
-						        	       
-
-							            	arrowHead.setOnMouseClicked(Event::consume);
-//							        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
-							            	arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-
-							        		
-							        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
-							            	          () -> ((line.getStartX() + line.getEndX() ) / 2) ,
-							            	          line.startXProperty(), line.endXProperty()));
-								            	
-						            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
-						            	          () -> ((line.getStartY() + line.getEndY() ) / 2),
-						            	          line.startYProperty(), line.endYProperty()));
-						            	    
-							        		gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(arrowHead);
-							        		gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,line);
-						        		}
-					        			
-					        		}
-				        			
-				        		}
-				        	}
-				        	
-					 }else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
-						 
-						StackPane vertexTo = null;
-
-				        Dialog<Pair<String, String>> dialog = new Dialog<>();
-				        dialog.setTitle("Add Edge");
-				        dialog.setHeaderText("Please enter the vertex you would like to create a edge to and the weight of the edge");
-				        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-			        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
-			        	dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
-			        	
-			        	GridPane grid = new GridPane();
-			        	grid.setHgap(10);
-			        	grid.setVgap(10);
-			        	grid.setPadding(new Insets(20, 150, 10, 10));
-			        	
-			        	TextField vertex = new TextField();
-			        	vertex.setPromptText("Destination Vertex");
-			        	TextField weight = new TextField();
-			        	weight.setPromptText("Weight Of Edge.");
-			        	
-			        	grid.add(new Label("Destination Vertex:"), 0, 0);
-			        	grid.add(vertex, 1, 0);
-			        	grid.add(new Label("Weight Of Edge:"), 0, 1);
-			        	grid.add(weight, 1, 1);
-				        
-			        	dialog.getDialogPane().setContent(grid);
-			        	
-			        	// Convert the result to a username-password-pair when the login button is clicked.
-			        	dialog.setResultConverter(dialogButton -> {
-			        	    if (dialogButton == okButton) {
-			        	        return new Pair<>(vertex.getText(), weight.getText());
-			        	    }
-			        	    return null;
-			        	});
-			        	
-			        	dialog.getDialogPane().getStylesheets().add("/application/global.css");
-			        	
-			        	Optional<Pair<String, String>> result = dialog.showAndWait();
-			        	
-			        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get().getKey(),dataAsString,result.get().getValue()) ){
-							 if(result.isPresent()) {
-								 
-								 if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
-					        			
-					        			for(Node child : gpc.getCenterPaneUndirectedWeightedGraph().getChildren()) {
-					                		
-					                		if(child instanceof StackPane) {
-					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
-					                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
-					                			String toCompare = dataOfStack.getText();
-					                			if(toCompare.equals(result.get().getKey())) {
-					                				vertexTo = (StackPane) child;
-					                			}
-					                		}
-					                	}
-					        			
-				        			addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
+				        			addEdgeHandlerNonWeighted(dataAsString,result.get());
 				        			
 				        			Line line = new Line();
 					        		line.setStrokeWidth(2);
 					        		
 					        		line.setOnMouseClicked(Event::consume);
-//					        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
 					        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
 
 					        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
@@ -388,63 +142,50 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
 					        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
 					        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
-					            	
-					        		Label label = new Label(result.get().getValue());
-					            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
-					            	label.setPadding(new Insets(2, 4, 2, 4));
-//					            	label.setPrefWidth(25);
-//					            	label.setPrefHeight(25);
-					            	label.setAlignment(Pos.CENTER);
-					            	label.setFont(new Font(10));
-
-					            	label.setOnMouseClicked(Event::consume);
-//					        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
-					            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-					            	
-					            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
-				            	          () -> (line.getStartX() + line.getEndX() - label.getWidth()) / 2,
-				            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
-					            	
-				            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
-				            	          () -> (line.getStartY() + line.getEndY() - label.getHeight()) / 2,
-				            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
-				            	    
-				            	    
-					        		
-					        		gpc.getCenterPaneUndirectedWeightedGraph().getChildren().add(0,line);
-					        		gpc.getCenterPaneUndirectedWeightedGraph().getChildren().add(label);
-						        		
-					        			
-					        		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
-					        			
-					        			for(Node child : gpc.getCenterPaneDirectedWeightedGraph().getChildren()) {
-					                		
-					                		if(child instanceof StackPane) {
-					                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
-					                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
-					                			String toCompare = dataOfStack.getText();
-					                			if(toCompare.equals(result.get().getKey())) {
-					                				vertexTo = (StackPane) child;
-					                			}
-					                		}
-					                	}
-					        			
-					        		addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
 				        			
-					        		directedEdgePlacement = 13;
+					        		gpc.getCenterPaneUndirectedNonWeightedGraph().getChildren().add(0,line);
 					        		
-					        		double xMoveStart = directedEdgePlacement;
+				        		}else if(gpc.getSelectedTabName().equals("Directed Non-Weighted Graph")) {
+				        			
+				        			for(Node child : gpc.getCenterPaneDirectedNonWeightedGraph().getChildren()) {
+				                		
+				                		if(child instanceof StackPane) {
+				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+				                			String toCompare = dataOfStack.getText();
+				                			if(toCompare.equals(result.get())) {
+				                				vertexTo = (StackPane) child;
+				                			}
+				                		}
+				                	}
+
+				        			double xMoveStart = directedEdgePlacement;
 				        			double yMoveStart =directedEdgePlacement;
 				        			double xMoveEnd = directedEdgePlacement;
 				        			double yMoveEnd =directedEdgePlacement;
 				        			
-				        			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
+				        			if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Integer")) {
 				        				
 				        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
 					                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
 					                	String dataAsStringVertexTo = dataVertexTo.getText();
 					                	
-				        				if(gpc.getDataModel().getDirectedWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
+				        				if(gpc.getDataModel().getDirectedNonWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
+				        					directedEdgePlacement = -directedEdgePlacement;
+				        					xMoveStart = directedEdgePlacement;
+						        			yMoveStart = directedEdgePlacement;
+						        			
+						        			xMoveEnd = directedEdgePlacement;
+						        			yMoveEnd = directedEdgePlacement;
+				        				}
+				        				
+				        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("Double")) {
+				        				
+				        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+					                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+					                	String dataAsStringVertexTo = dataVertexTo.getText();
+					                	
+				        				if(gpc.getDataModel().getDirectedNonWeightedDouble().isAdjacent(Double.parseDouble(dataAsStringVertexTo), Double.parseDouble(dataAsString))) {
 				        					xMoveStart = -xMoveStart;
 						        			yMoveStart = -yMoveStart;
 						        			
@@ -452,28 +193,14 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 						        			yMoveEnd = -yMoveEnd;
 				        				}
 				        				
-				        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
+				        				
+				        			}else if(gpc.getSelectedDataChoiceDirectedNonWeightedGraph().equals("String")) {
 				        				
 				        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
 					                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
 					                	String dataAsStringVertexTo = dataVertexTo.getText();
 					                	
-				        				if(gpc.getDataModel().getDirectedWeightedDouble().isAdjacent(Double.parseDouble(dataAsStringVertexTo), Double.parseDouble(dataAsString))) {
-				        					xMoveStart = -xMoveStart;
-						        			yMoveStart = -yMoveStart;
-						        			
-						        			xMoveEnd = -xMoveEnd;
-						        			yMoveEnd = -yMoveEnd;
-				        				}
-				        				
-				        				
-				        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
-				        				
-				        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
-					                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
-					                	String dataAsStringVertexTo = dataVertexTo.getText();
-					                	
-				        				if(gpc.getDataModel().getDirectedWeightedString().isAdjacent(dataAsStringVertexTo,dataAsString)) {
+				        				if(gpc.getDataModel().getDirectedNonWeightedString().isAdjacent(dataAsStringVertexTo,dataAsString)) {
 				        					xMoveStart = -xMoveStart;
 						        			yMoveStart = -yMoveStart;
 						        			
@@ -483,8 +210,9 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 				        				
 				        				
 				        			}
+				        			addEdgeHandlerNonWeighted(dataAsString,result.get());
 					        		
-					        		if(result.get().getKey().equals(dataAsString)) {
+					        		if(result.get().equals(dataAsString)) {
 					        			
 					        			Rectangle rect = new Rectangle();
 					        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
@@ -496,32 +224,8 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					        			rect.setFill(null);
 					        			
 					        			rect.setOnMouseClicked(Event::consume);
-//						        		rect.setOnMousePressed(mouseClickedOnEdgeEvent());
 					        			rect.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-					        			
-//					        			rect.getTransforms().add(new Rotate(45,rect.getX(),rect.getY()));
-					        		    
-					        			gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,rect);
-					        			
-					        	        Label label = new Label(result.get().getValue());
-						            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
-						            	label.setPadding(new Insets(2, 4, 2, 4));
-//						            	label.setPrefWidth(25);
-//						            	label.setPrefHeight(25);
-						            	label.setAlignment(Pos.CENTER);
-						            	label.setFont(new Font(10));
-						            	
-						            	label.setOnMouseClicked(Event::consume);
-//						        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
-						            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-						            	
-						            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
-					            	          () -> (rect.getX()  + rect.getWidth()) - (label.getWidth()/2),
-					            	          rect.xProperty(),label.widthProperty(),rect.widthProperty()));
-						            	
-					            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
-					            	          () -> (rect.getY() + rect.getHeight()) - (label.getHeight()/2),
-					            	          rect.yProperty(),label.heightProperty(),rect.heightProperty()));
+					        			gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,rect);
 					        			
 					        			Polygon arrowHead = new Polygon();
 					        	        arrowHead.getPoints().addAll(new Double[]{
@@ -529,25 +233,24 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					        	            -7.0, -7.0,
 					        	            7.0, -7.0 });
 					        	        arrowHead.setFill(Color.BLACK);
-
+					        	       
+					        	        arrowHead.setOnMouseClicked(Event::consume);
+					        	        arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+					        	        
 					        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
 					        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
 					        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
 					        	        
 					        	        arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
-						            	          () -> rect.getX() +20,
+						            	          () -> rect.getX() +selfEdgeArrowheadPlacement,
 						            	          rect.xProperty()));
 							            	
 					            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
 					            	          () -> rect.getY() ,
 					            	          rect.yProperty()));
 					        	        
-					            	    arrowHead.setOnMouseClicked(Event::consume);
-//						        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
-					            	    arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
 					        	        
-					        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(arrowHead);
-					        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(label);
+					        	        gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(arrowHead);
 					        			
 					        		}else {
 					        			
@@ -561,7 +264,6 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 						        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)).add(yMoveEnd));
 					        			
 						        		line.setOnMouseClicked(Event::consume);
-//						        		line.setOnMousePressed(mouseClickedOnEdgeEvent());
 						        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
 					        			
 					        			Polygon arrowHead = new Polygon();
@@ -576,57 +278,327 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
 					        	        		() -> Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()) * 180 / 3.14 - 90,
 					        	        		line.endXProperty(),line.endYProperty(),line.startXProperty(),line.startYProperty()));
 			
-					        	        
-					        	        Label label = new Label(result.get().getValue());
-						            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
-						            	label.setPadding(new Insets(2, 4, 2, 4));
-//						            	label.setPrefWidth(25);
-//						            	label.setPrefHeight(25);
-						            	label.setAlignment(Pos.CENTER);
-						            	label.setFont(new Font(10));
-						            	
-						            	label.setOnMouseClicked(Event::consume);
-//						        		label.setOnMousePressed(mouseClickedOnEdgeEvent());
-						            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
-						            	
-						            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
-					            	          () -> (line.getStartX() + line.getEndX() - label.getWidth()) / 2,
-					            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
-						            	
-					            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
-					            	          () -> (line.getStartY() + line.getEndY() - label.getHeight()) / 2,
-					            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
+					        	       
 
 						            	arrowHead.setOnMouseClicked(Event::consume);
-//						        		arrowHead.setOnMousePressed(mouseClickedOnEdgeEvent());
 						            	arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+
 						        		
 						        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
-						            	          () -> ((line.getStartX() + 4*line.getEndX()) / 5) ,
+						            	          () -> ((line.getStartX() + line.getEndX() ) / 2) ,
 						            	          line.startXProperty(), line.endXProperty()));
 							            	
 					            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
-					            	          () -> (line.getStartY() + 4*line.getEndY()) / 5,
+					            	          () -> ((line.getStartY() + line.getEndY() ) / 2),
 					            	          line.startYProperty(), line.endYProperty()));
 					            	    
-					            	    gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,label);
-						        		gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(arrowHead);
-						        		gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,line);
+						        		gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(arrowHead);
+						        		gpc.getCenterPaneDirectedNonWeightedGraph().getChildren().add(0,line);
 					        		}
+				        			
+				        		}
+			        			
+			        		}
+			        	}
+			        	
+				 }else if(gpc.getSelectedTabName().equals("Undirected Weighted Graph") || gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+					 
+					StackPane vertexTo = null;
+
+			        Dialog<Pair<String, String>> dialog = new Dialog<>();
+			        dialog.setTitle("Add Edge");
+			        dialog.setHeaderText("Please enter the vertex you would like to create a edge to and the weight of the edge");
+			        ButtonType cancelButton = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+		        	ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
+		        	dialog.getDialogPane().getButtonTypes().addAll(okButton, cancelButton);
+		        	
+		        	GridPane grid = new GridPane();
+		        	grid.setHgap(10);
+		        	grid.setVgap(10);
+		        	grid.setPadding(new Insets(20, 150, 10, 10));
+		        	
+		        	TextField vertex = new TextField();
+		        	vertex.setPromptText("Destination Vertex");
+		        	TextField weight = new TextField();
+		        	weight.setPromptText("Weight Of Edge.");
+		        	
+		        	grid.add(new Label("Destination Vertex:"), 0, 0);
+		        	grid.add(vertex, 1, 0);
+		        	grid.add(new Label("Weight Of Edge:"), 0, 1);
+		        	grid.add(weight, 1, 1);
+			        
+		        	dialog.getDialogPane().setContent(grid);
+		        	
+		        	dialog.setResultConverter(dialogButton -> {
+		        	    if (dialogButton == okButton) {
+		        	        return new Pair<>(vertex.getText(), weight.getText());
+		        	    }
+		        	    return null;
+		        	});
+		        	
+		        	dialog.getDialogPane().getStylesheets().add("/application/global.css");
+		        	
+		        	Optional<Pair<String, String>> result = dialog.showAndWait();
+		        	
+		        	if(result.isPresent() && gpc.isInputValidAddingEdge(result.get().getKey(),dataAsString,result.get().getValue()) ){
+						 if(result.isPresent()) {
+							 
+							 if(gpc.getSelectedTabName().equals("Undirected Weighted Graph")) {
+				        			
+				        			for(Node child : gpc.getCenterPaneUndirectedWeightedGraph().getChildren()) {
+				                		
+				                		if(child instanceof StackPane) {
+				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+				                			String toCompare = dataOfStack.getText();
+				                			if(toCompare.equals(result.get().getKey())) {
+				                				vertexTo = (StackPane) child;
+				                			}
+				                		}
+				                	}
+				        			
+			        			addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
+			        			
+			        			Line line = new Line();
+				        		line.setStrokeWidth(2);
+				        		
+				        		line.setOnMouseClicked(Event::consume);
+				        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+
+				        		line.setStartX(vertexClickedOn.getLayoutX() + (vertexClickedOn.getWidth() / 2));
+				        		line.setStartY(vertexClickedOn.getLayoutY() + (vertexClickedOn.getHeight() / 2));
+				        		line.setEndX(vertexTo.getLayoutX() + (vertexTo.getWidth() / 2));
+				        		line.setEndY(vertexTo.getLayoutY() +  (vertexTo.getHeight() / 2));
+
+				        		line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
+				        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
+				        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)));
+				        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)));
+				            	
+				        		Label label = new Label(result.get().getValue());
+				            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
+				            	label.setPadding(new Insets(2, 4, 2, 4));
+				            	label.setAlignment(Pos.CENTER);
+				            	label.setFont(new Font(10));
+
+				            	label.setOnMouseClicked(Event::consume);
+				            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+				            	
+				            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
+			            	          () -> (line.getStartX() + line.getEndX() - label.getWidth()) / 2,
+			            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
+				            	
+			            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
+			            	          () -> (line.getStartY() + line.getEndY() - label.getHeight()) / 2,
+			            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
+			            	    
+			            	    
+				        		
+				        		gpc.getCenterPaneUndirectedWeightedGraph().getChildren().add(0,line);
+				        		gpc.getCenterPaneUndirectedWeightedGraph().getChildren().add(label);
+					        		
+				        			
+				        		}else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
+				        			
+				        			for(Node child : gpc.getCenterPaneDirectedWeightedGraph().getChildren()) {
+				                		
+				                		if(child instanceof StackPane) {
+				                			ObservableList<Node> childsOfStack = ((StackPane)child).getChildren();
+				                			Text dataOfStack = (Text) childsOfStack.get(childs.size()-1);
+				                			String toCompare = dataOfStack.getText();
+				                			if(toCompare.equals(result.get().getKey())) {
+				                				vertexTo = (StackPane) child;
+				                			}
+				                		}
+				                	}
+				        			
+				        		addEdgeHandlerWeighted(dataAsString,result.get().getKey(),Double.parseDouble(result.get().getValue()));
+			        			
+				        		directedEdgePlacement = 13;
+				        		
+				        		double xMoveStart = directedEdgePlacement;
+			        			double yMoveStart =directedEdgePlacement;
+			        			double xMoveEnd = directedEdgePlacement;
+			        			double yMoveEnd =directedEdgePlacement;
+			        			
+			        			if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Integer")) {
+			        				
+			        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+				                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+				                	String dataAsStringVertexTo = dataVertexTo.getText();
+				                	
+			        				if(gpc.getDataModel().getDirectedWeightedInt().isAdjacent(Integer.parseInt(dataAsStringVertexTo), Integer.parseInt(dataAsString))) {
+			        					xMoveStart = -xMoveStart;
+					        			yMoveStart = -yMoveStart;
 					        			
-					        		}
-							 }
+					        			xMoveEnd = -xMoveEnd;
+					        			yMoveEnd = -yMoveEnd;
+			        				}
+			        				
+			        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("Double")) {
+			        				
+			        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+				                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+				                	String dataAsStringVertexTo = dataVertexTo.getText();
+				                	
+			        				if(gpc.getDataModel().getDirectedWeightedDouble().isAdjacent(Double.parseDouble(dataAsStringVertexTo), Double.parseDouble(dataAsString))) {
+			        					xMoveStart = -xMoveStart;
+					        			yMoveStart = -yMoveStart;
+					        			
+					        			xMoveEnd = -xMoveEnd;
+					        			yMoveEnd = -yMoveEnd;
+			        				}
+			        				
+			        				
+			        			}else if(gpc.getSelectedDataChoiceDirectedWeightedGraph().equals("String")) {
+			        				
+			        				ObservableList<Node> childsVertexTo = vertexTo.getChildren();
+				                	Text dataVertexTo = (Text) childsVertexTo.get(childsVertexTo.size()-1);
+				                	String dataAsStringVertexTo = dataVertexTo.getText();
+				                	
+			        				if(gpc.getDataModel().getDirectedWeightedString().isAdjacent(dataAsStringVertexTo,dataAsString)) {
+			        					xMoveStart = -xMoveStart;
+					        			yMoveStart = -yMoveStart;
+					        			
+					        			xMoveEnd = -xMoveEnd;
+					        			yMoveEnd = -yMoveEnd;
+			        				}
+			        				
+			        				
+			        			}
+				        		
+				        		if(result.get().getKey().equals(dataAsString)) {
+				        			
+				        			Rectangle rect = new Rectangle();
+				        			rect.xProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)));
+				        			rect.yProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)));
+				        			rect.setHeight(40);
+				        			rect.setWidth(40);
+				        			rect.setStroke(Color.BLACK);
+				        			rect.setStrokeWidth(2);
+				        			rect.setFill(null);
+				        			
+				        			rect.setOnMouseClicked(Event::consume);
+				        			rect.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+				        		    
+				        			gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,rect);
+				        			
+				        	        Label label = new Label(result.get().getValue());
+					            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
+					            	label.setPadding(new Insets(2, 4, 2, 4));
+					            	label.setAlignment(Pos.CENTER);
+					            	label.setFont(new Font(10));
+					            	
+					            	label.setOnMouseClicked(Event::consume);
+					            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+					            	
+					            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> (rect.getX()  + rect.getWidth()) - (label.getWidth()/2),
+				            	          rect.xProperty(),label.widthProperty(),rect.widthProperty()));
+					            	
+				            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> (rect.getY() + rect.getHeight()) - (label.getHeight()/2),
+				            	          rect.yProperty(),label.heightProperty(),rect.heightProperty()));
+				        			
+				        			Polygon arrowHead = new Polygon();
+				        	        arrowHead.getPoints().addAll(new Double[]{
+				        	            0.0, 7.0,
+				        	            -7.0, -7.0,
+				        	            7.0, -7.0 });
+				        	        arrowHead.setFill(Color.BLACK);
+
+				        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+				        	        		() -> Math.atan2(rect.getY() - (rect.getY()), rect.getX()- (rect.getX()+ rect.getWidth())) * 180 / 3.14 - 90,
+				        	        		rect.xProperty(),rect.yProperty(),rect.widthProperty()));
+				        	        
+				        	        arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+					            	          () -> rect.getX() +20,
+					            	          rect.xProperty()));
+						            	
+				            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> rect.getY() ,
+				            	          rect.yProperty()));
+				        	        
+				            	    arrowHead.setOnMouseClicked(Event::consume);
+				            	    arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+				        	        
+				        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(arrowHead);
+				        	        gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(label);
+				        			
+				        		}else {
+				        			
+				        			Line line = new Line();
+				        			line.setStroke(Color.BLACK);
+				        			line.setFill(null);
+				        			line.setStrokeWidth(2);
+				        			line.startXProperty().bind(vertexClickedOn.layoutXProperty().add(vertexClickedOn.translateXProperty()).add(vertexClickedOn.widthProperty().divide(2)).add(xMoveStart));
+					        		line.startYProperty().bind(vertexClickedOn.layoutYProperty().add(vertexClickedOn.translateYProperty()).add(vertexClickedOn.heightProperty().divide(2)).add(yMoveStart));
+					        		line.endXProperty().bind(vertexTo.layoutXProperty().add(vertexTo.translateXProperty()).add(vertexTo.widthProperty().divide(2)).add(xMoveEnd));
+					        		line.endYProperty().bind(vertexTo.layoutYProperty().add(vertexTo.translateYProperty()).add(vertexTo.heightProperty().divide(2)).add(yMoveEnd));
+				        			
+					        		line.setOnMouseClicked(Event::consume);
+					        		line.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+				        			
+				        			Polygon arrowHead = new Polygon();
+				        	        arrowHead.getPoints().addAll(new Double[]{
+				        	            0.0, 8.0,
+				        	            -8.0, -8.0,
+				        	            8.0, -8.0 });
+				        	        arrowHead.setFill(Color.BLACK);
+				        	       
+				        	        
+				        	        arrowHead.rotateProperty().bind(Bindings.createDoubleBinding(
+				        	        		() -> Math.atan2(line.getEndY() - line.getStartY(), line.getEndX() - line.getStartX()) * 180 / 3.14 - 90,
+				        	        		line.endXProperty(),line.endYProperty(),line.startXProperty(),line.startYProperty()));
+		
+				        	        
+				        	        Label label = new Label(result.get().getValue());
+					            	label.setStyle("-fx-background-color: white; -fx-border-color: black;");
+					            	label.setPadding(new Insets(2, 4, 2, 4));
+					            	label.setAlignment(Pos.CENTER);
+					            	label.setFont(new Font(10));
+					            	
+					            	label.setOnMouseClicked(Event::consume);
+					            	label.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+					            	
+					            	label.layoutXProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> (line.getStartX() + line.getEndX() - label.getWidth()) / 2,
+				            	          line.startXProperty(), line.endXProperty(), label.widthProperty()));
+					            	
+				            	    label.layoutYProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> (line.getStartY() + line.getEndY() - label.getHeight()) / 2,
+				            	          line.startYProperty(), line.endYProperty(), label.heightProperty()));
+
+					            	arrowHead.setOnMouseClicked(Event::consume);
+					            	arrowHead.setOnMousePressed(gpc.getClickedOnEdgeHandler());
+					        		
+					        		arrowHead.layoutXProperty().bind(Bindings.createDoubleBinding(
+					            	          () -> ((line.getStartX() + 4*line.getEndX()) / 5) ,
+					            	          line.startXProperty(), line.endXProperty()));
+						            	
+				            	    arrowHead.layoutYProperty().bind(Bindings.createDoubleBinding(
+				            	          () -> (line.getStartY() + 4*line.getEndY()) / 5,
+				            	          line.startYProperty(), line.endYProperty()));
+				            	    
+				            	    gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,label);
+					        		gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(arrowHead);
+					        		gpc.getCenterPaneDirectedWeightedGraph().getChildren().add(0,line);
+				        		}
+				        			
+				        		}
 						 }
-				        
-				        
-
 					 }
+			        
+			        
 
-			         event.consume();
+				 }
+
+		         event.consume();
 			            
 			        });
 			}
      	
+     	//Delete vertex functionality...
      	if (t.getClickCount() == 2 && t.getButton() != MouseButton.SECONDARY && t.getSource() instanceof StackPane) {
      		
      		 Alert alert = new Alert(AlertType.WARNING);

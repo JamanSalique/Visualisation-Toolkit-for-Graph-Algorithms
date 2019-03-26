@@ -11,7 +11,7 @@ import java.util.HashSet;
 public class DirectedNonWeightedGraph<T> extends AbstractNonWeightedGraph<T>{
 
 	/**
-	 * Contructor that calls constructor of super class.
+	 * Constructor that calls constructor of super class.
 	 */
 	public DirectedNonWeightedGraph(){
 		super();

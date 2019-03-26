@@ -46,13 +46,11 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
 		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
-
-		
 		animations = new Animations(gpc);
 	}
 	
 	/**
-	 * This method contains  Kosaraju's algorithm for directed non weighted graphs with animation transitions. Throughout the 
+	 * This method contains Kosaraju's algorithm for directed non weighted graphs with animation transitions. Throughout the 
 	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
 	 * @param graph
 	 * @param startingVertex
@@ -101,7 +99,7 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 	}
 	
 	/**
-	 * This method contains  Kosaraju's algorithm for directed weighted graphs with animation transitions. Throughout the 
+	 * This method contains Kosaraju's algorithm for directed weighted graphs with animation transitions. Throughout the 
 	 * algorithm sub animations (e.g highlighting vertices/edges) are being added to the main Sequential Transition animation. 
 	 * @param graph
 	 * @param startingVertex
@@ -204,7 +202,7 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 	}
 	
 	/**
-	 * This method given a directed non weighted graph will return the tranpose of this graph.
+	 * This method given a directed non weighted graph will return the transpose of this graph.
 	 * @param adjList
 	 * @return
 	 */

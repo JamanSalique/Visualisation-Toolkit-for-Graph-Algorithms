@@ -51,15 +51,15 @@ public class AddVertexDataController {
     }
     
     /**
-     * Called when the user clicks ok. We update the model accordingly for whatever vertex the user added.
+     * Called when the user clicks ok. Update the model accordingly for whatever vertex the user added.
      */
     @FXML
     private void handleOk() {
         if (isInputValid()) {
 
         	/*
-        	 * In these if statements we check the type of graph the user is adding a vertex to and the data type of the user input
-        	 * for the vertex, depending on these 2 factors we update the right type of graph accordingly. For example if the user inputs '2'
+        	 * In these if statements the type of graph the user is adding a vertex to and the data type of the user input
+        	 * for the vertex is checked, depending on these 2 factors update the right type of graph accordingly. For example if the user inputs '2'
         	 * and is on the Undirected Non-Weighted Graph tab then we will update the Undirected Non-Weighted Graph that consists of integer vertices.
         	 */
         	if(graphPanelController.getSelectedTabName().equals("Undirected Non-Weighted Graph") && isInteger(inputDataField.getText())) {
@@ -123,7 +123,7 @@ public class AddVertexDataController {
     }
     
     /**
-     * This method is a error prevention method. We check if the users request is possible. For example a user cannot add a vertex with a Double
+     * This method is a error prevention method which checks if the users request is possible. For example a user cannot add a vertex with a Double
      * data type for a graph that consists of integer vertices. If a error is found then we notify the user with an alert box with a error message
      * explaining what they have done wrong.
      * @return

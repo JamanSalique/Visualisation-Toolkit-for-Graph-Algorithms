@@ -33,7 +33,6 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 	 */
 	private SequentialTransition mainAnimation;
 
-	
 	private Animations animations;
 	
 	/**
@@ -44,8 +43,6 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
 		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
-
-		
 		animations = new Animations(gpc);
 	}
 	
@@ -116,8 +113,6 @@ public class KruskalAlgorithm <T extends Comparable<? super T>>{
 				}
 				
 				HashMap<Pair<T,T>,Double> copyOfMapOfEdges = (HashMap<Pair<T, T>, Double>) mapOfEdges.clone();
-				
-				
 
 				for(Pair<T,T> p : copyOfMapOfEdges.keySet()) {
 					

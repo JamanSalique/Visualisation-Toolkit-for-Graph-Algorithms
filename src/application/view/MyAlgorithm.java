@@ -25,15 +25,12 @@ public class MyAlgorithm<T extends Comparable<? super T>> {
 	
 	private SequentialTransition mainAnimation;
 
-	
 	private Animations animations;
 	
 	public MyAlgorithm(GraphPanelController gpc) {
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
 		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
-
-		
 		animations = new Animations(gpc);
 	}
 	

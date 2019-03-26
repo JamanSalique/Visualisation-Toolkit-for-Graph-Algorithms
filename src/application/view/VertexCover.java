@@ -21,7 +21,7 @@ import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
 /**
- * This class holds the functionality for the Vertex Cover algorithm animation.
+ * This class holds the functionality for the minimum Vertex Cover algorithm animation.
  * @author jamansalique
  *
  * @param <T>
@@ -35,7 +35,6 @@ public class VertexCover <T extends Comparable<? super T>>{
 	 */
 	private SequentialTransition mainAnimation;
 
-	
 	private Animations animations;
 	
 	/**
@@ -46,8 +45,6 @@ public class VertexCover <T extends Comparable<? super T>>{
 		this.gpc = gpc;
 		mainAnimation = new SequentialTransition();
 		mainAnimation.rateProperty().bind(gpc.getAnimationSpeedSlider().valueProperty());
-
-		
 		animations = new Animations(gpc);
 	}
 	

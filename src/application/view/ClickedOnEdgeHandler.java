@@ -47,7 +47,7 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
 	 * delete an edge so they will be shown a warning alert box asking if they are sure they want to delete the edge if they confirm then the edge is
 	 * deleted. An edge is made up of multiple shapes depending on what type of graph it is.
 	 * Undirected Non-Weighted graph edges are made up of just a Line shape.
-	 * Undirected weighted graph edges are made up of a Line shape and a Rectangle with a label (weight box showing the weight of the edge.
+	 * Undirected weighted graph edges are made up of a Line shape and a Rectangle with a label (weight box showing the weight of the edge).
 	 * Directed non-weighted edges are made up of of a Line and a triangle (arrow head of edge), self pointing edges (loop edges) consist of a rectangle
 	 * and a triangle (arrowhead).
 	 * Directed weighted edges have the same shapes as the directed non weighted edges but with the extra rectangle with label to denote weight of the
@@ -237,7 +237,7 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
              					 
  		                	 }
          					 
-		                	 }
+		                }
 
          			 }else if(gpc.getSelectedTabName().equals("Directed Weighted Graph")) {
          				 

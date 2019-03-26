@@ -15,7 +15,7 @@ public class DataModel implements java.io.Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	// Store all data as observable lists so data will update automatically when changes are made in the graphical user interface e.g deleting vertex.
+	// Store all data as observable lists so data can easily be tracked for changes and as a result correct updates to the data can be made.
 	@SuppressWarnings("rawtypes")
 	private ObservableList<UndirectedNonWeightedGraph> undirectedNonWeightedGraphData = FXCollections.observableArrayList();
 	
