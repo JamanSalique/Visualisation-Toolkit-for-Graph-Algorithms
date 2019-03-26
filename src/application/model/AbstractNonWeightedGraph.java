@@ -146,8 +146,7 @@ public abstract class AbstractNonWeightedGraph<T> {
     					String.join(" -> ",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
     			toReturn = toReturn + "\n";
-    			
-    			
+
     		}
     		
     		return toReturn;

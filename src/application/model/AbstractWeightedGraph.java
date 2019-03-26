@@ -161,12 +161,9 @@ public abstract class AbstractWeightedGraph<T> {
     			toReturn = toReturn + vertex.toString() + " -> [" + 
     					String.join(" -> ",adjacencyList.get().get(returnVertex(vertex.getElement())).stream().
     							map(o -> o.toString()).collect(Collectors.toList())) + "]";
-    			
-//    			toReturn = toReturn +
-    			
+
     			toReturn = toReturn + "\n";
-    			
-    			
+
     		}
     		
     		return toReturn;
