@@ -147,3 +147,21 @@
     -fx-text-inner-color: white
 }
 
+.list-view{
+	-fx-border-color: black;
+}
+
+.list-view :hover{
+	-fx-background-color:  #696969;
+    -fx-text-fill: white;
+	-fx-border-color: #696969;
+}
+
+
+
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color:  #ff9500;
+    -fx-text-fill: black;
+	-fx-border-color: black;
+}
+
