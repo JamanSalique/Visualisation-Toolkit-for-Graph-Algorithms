@@ -23,7 +23,7 @@
 }
 
 .choice-box .menu-item:focused { 
-	-fx-background-color: orange;
+	-fx-background-color: #ff9500;
 }
 
 .choice-box .menu-item > .label { 
@@ -167,6 +167,10 @@
     -fx-text-fill: white;
 }
 
+.menu-bar > .container > .menu-button > .label {
+    -fx-text-fill: white;
+}
+
 .menu:hover{
 	 -fx-background-color: #ff9500;
 }
@@ -188,6 +192,7 @@
 	  -fx-background-color: #ff9500; 
 }
 
-.menu-item > .container:hovered {
-    -fx-background-color: red; 
+.context-menu .menu-item:hover{
+	-fx-background-color: #ff9500; 
+	
 }
