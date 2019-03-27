@@ -64,7 +64,9 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		HashMap<Vertex<T>,Set<Vertex<T>>> adjList = graph.getAdjacencyList();
 		HashMap<Vertex<T>,Set<Vertex<T>>> tranposeGraph = getTranposeGraphDirectedNonWeightedGraph(adjList);
 		ArrayList<Color> listOfColors = new ArrayList<Color>();
-		listOfColors.add(Color.RED);listOfColors.add(Color.BLUE);listOfColors.add(Color.GREEN);listOfColors.add(Color.PURPLE);listOfColors.add(Color.YELLOW);
+		listOfColors.add(Color.RED);listOfColors.add(Color.BLUE);listOfColors.add(Color.GREEN);listOfColors.add(Color.PURPLE);
+		listOfColors.add(Color.YELLOW);listOfColors.add(Color.MAGENTA);listOfColors.add(Color.BURLYWOOD);listOfColors.add(Color.AQUA);
+		listOfColors.add(Color.CADETBLUE);listOfColors.add(Color.CHARTREUSE);listOfColors.add(Color.DARKGRAY);
 		
 		for(Vertex<T> v:adjList.keySet()) {
 			
@@ -129,7 +131,9 @@ public class KosarajuAlgorithm<T extends Comparable<? super T>> {
 		
 		HashMap<Vertex<T>,Set<Vertex<T>>> tranposeGraph = getTranposeGraphDirectedNonWeightedGraph(adjListWithoutWeights);
 		ArrayList<Color> listOfColors = new ArrayList<Color>();
-		listOfColors.add(Color.RED);listOfColors.add(Color.BLUE);listOfColors.add(Color.GREEN);listOfColors.add(Color.PURPLE);listOfColors.add(Color.YELLOW);
+		listOfColors.add(Color.RED);listOfColors.add(Color.BLUE);listOfColors.add(Color.GREEN);listOfColors.add(Color.PURPLE);
+		listOfColors.add(Color.YELLOW);listOfColors.add(Color.MAGENTA);listOfColors.add(Color.BURLYWOOD);listOfColors.add(Color.AQUA);
+		listOfColors.add(Color.CADETBLUE);listOfColors.add(Color.CHARTREUSE);listOfColors.add(Color.DARKGRAY);
 		
 		for(Vertex<T> v:adjList.keySet()) {
 			
