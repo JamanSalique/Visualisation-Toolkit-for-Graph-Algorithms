@@ -19,6 +19,13 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tab;
 import javafx.util.Pair;
 
+/**
+ * This class holds the implementation of graph algorithms implemented by the user. The user will edit this class to add their implementations of
+ * graph algorithms. The class provides methods so animations can be added to their graph algorithms so it can be visualised on the GUI.
+ * @author jamansalique
+ *
+ * @param <T>
+ */
 public class MyAlgorithm<T extends Comparable<? super T>> {
 	
 	private GraphPanelController gpc;
