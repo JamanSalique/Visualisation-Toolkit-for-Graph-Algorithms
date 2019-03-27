@@ -1410,7 +1410,7 @@ public class RandomGraphGenerator {
             alert.setTitle("Random Graph Generator Error.");
             alert.setHeaderText("You have provided incorrect data in one of the fields.");
             alert.setContentText(errorMessage);
-            
+            alert.getDialogPane().getStylesheets().add("/application/global.css");
             alert.showAndWait();
             
             return false;

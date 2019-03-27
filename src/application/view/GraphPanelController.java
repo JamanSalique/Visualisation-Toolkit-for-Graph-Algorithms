@@ -59,8 +59,8 @@ public class GraphPanelController {
 	private DataModel dataModel;
 	private ClickedOnEdgeHandler clickedOnEdgeHandler;
 	private RandomGraphGenerator randomGraphGenerator;
-	
 	private AlgorithmAnimations algorithmAnimations;
+	private Animations animations;
 	
 	@FXML
 	private AnchorPane rootAnchorPane;
@@ -174,6 +174,8 @@ public class GraphPanelController {
 	private void initialize() {
 		
 		algorithmAnimations = new AlgorithmAnimations(this);
+		
+		animations = new Animations(this);
 		
 		clickedOnEdgeHandler = new ClickedOnEdgeHandler(this);
 		
@@ -650,7 +652,7 @@ public class GraphPanelController {
 				
 				restartButton.setDisable(true);
 				skipToEndButton.setDisable(true);
-				
+								
 			}
 			
 		}else if(getSelectedTabName().equals("Undirected Weighted Graph")) {
@@ -698,7 +700,7 @@ public class GraphPanelController {
 	 * in each tab. This is so I can monitor when a graph is modified or not. If the number of components decrease or increase in the Pane this
 	 * means the graph has been modified and so I disable the restart and skip to end buttons to prevent an error replaying an animation on a 
 	 * modified graph. I also set the isUndirectedNonWeightedModified to true if the undirected non weighted graph was modified, I do the same
-	 * for the other graph panes.
+	 * for the other graph panes. Also the colours of vertices and edges are set back to its default colours and the output box is cleared.
 	 */
 	private void handleCenterPanes() {
 			
@@ -710,6 +712,8 @@ public class GraphPanelController {
 				restartButton.setDisable(true);
 				skipToEndButton.setDisable(true);
 				isUndirectedNonWeightedModified = true;
+				outputBox.clear();
+				animations.resetGraphColours("Undirected Non Weighted");
 				
 			}
 	       
@@ -723,6 +727,8 @@ public class GraphPanelController {
 				restartButton.setDisable(true);
 				skipToEndButton.setDisable(true);
 				isUndirectedWeightedModified = true;
+				outputBox.clear();
+				animations.resetGraphColours("Undirected Weighted");
 				
 			}
 	       
@@ -736,6 +742,8 @@ public class GraphPanelController {
 				restartButton.setDisable(true);
 				skipToEndButton.setDisable(true);
 				isDirectedNonWeightedModified = true;
+				outputBox.clear();
+				animations.resetGraphColours("Directed Non Weighted");
 				
 			}
 	       
@@ -750,6 +758,8 @@ public class GraphPanelController {
 				restartButton.setDisable(true);
 				skipToEndButton.setDisable(true);
 				isDirectedWeightedModified = true;
+				outputBox.clear();
+				animations.resetGraphColours("Directed Weighted");
 				
 			}
 	       
@@ -1961,7 +1971,7 @@ public class GraphPanelController {
             alert.setTitle("Starting Vertex Error");
             alert.setHeaderText("You have provided incorrect data.");
             alert.setContentText(errorMessage);
-            
+            alert.getDialogPane().getStylesheets().add("/application/global.css");
             alert.showAndWait();
             
             return false;
