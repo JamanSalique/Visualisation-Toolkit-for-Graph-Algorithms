@@ -68,31 +68,6 @@
 	-fx-text-fill: white;
 }
 
-.menu .label
-{
-    -fx-text-fill: white;
-}
-
-.menu:hover{
-	 -fx-background-color: #ff9500;
-}
-
-.menu:focused{
-	-fx-background-color: #ff9500;
-}
-
-.menu-item{
-	 -fx-background-color: black;
-}
-
-.menu-item:hover{
-	 -fx-background-color: #ff9500; 
-}
-
-.menu-item:hover > .label{
-	  -fx-text-fill: black;
-}
-
 .dialog-pane{
 	-fx-background-color: black
 }
@@ -165,3 +140,54 @@
 	-fx-border-color: black;
 }
 
+.context-menu{
+    -fx-background-color: #696969;
+}
+
+
+.menu-bar > .container > .menu-button:showing {
+    -fx-background-color: #ff9500;
+}
+
+.context-menu .menu-item{
+	-fx-background-color:  #696969;
+    -fx-text-fill: white;
+	-fx-border-color: #696969;
+	
+}
+
+.menu-item:focused {
+    -fx-background-color:  #ff9500;
+    -fx-text-fill: black;
+	-fx-border-color: black;
+}
+
+.menu .label
+{
+    -fx-text-fill: white;
+}
+
+.menu:hover{
+	 -fx-background-color: #ff9500;
+}
+
+.menu:focused{
+	-fx-background-color: #ff9500;
+}
+
+.menu-item{
+	 -fx-background-color: black;
+}
+
+.menu-item:hover{
+	 -fx-background-color: #ff9500; 
+}
+
+.menu-item:hover > .label{
+	  -fx-text-fill: black;
+	  -fx-background-color: #ff9500; 
+}
+
+.menu-item > .container:hovered {
+    -fx-background-color: red; 
+}
