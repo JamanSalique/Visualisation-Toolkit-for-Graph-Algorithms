@@ -52,9 +52,12 @@ public class Main extends Application {
 
 	}
 	
+	/**
+	 * This method connects the GraphPanelController with the GraphPanel view and will load the GraphPanel GUI.
+	 */
 	public void showGraphPanel() {
 		 try {
-	            // Load person overview.
+	            // Load GraphPanel view.
 	            FXMLLoader loader = new FXMLLoader();
 	            loader.setLocation(Main.class.getResource("view/GraphPanel.fxml"));
 	            AnchorPane graphPanel = (AnchorPane) loader.load();
@@ -78,9 +81,14 @@ public class Main extends Application {
 	        }
 	}
 	
+	/**
+	 * This method connects the AddVertexDataController with the AddVertexData view and will load the add vertex data form.
+	 * @param gpc
+	 * @return
+	 */
 	public boolean showAddVertexPopUp(GraphPanelController gpc) {
 		try {
-            // Load the fxml file and create a new stage for the popup dialog.
+            // Load the fxml file and create a new stage for the add vertex popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/AddVertexData.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
@@ -96,7 +104,7 @@ public class Main extends Application {
             String css= Main.class.getResource("global.css").toExternalForm();
             scene.getStylesheets().add(css);
 
-            // Set the person into the controller.
+            // Set the AddVertexData into the controller.
             AddVertexDataController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setGraphPanelController(gpc);
@@ -121,6 +129,10 @@ public class Main extends Application {
         return primaryStage;
     }
 	
+    /**
+     * Main method...
+     * @param args
+     */
 	public static void main(String[] args) {
 		launch(args);
 	}
