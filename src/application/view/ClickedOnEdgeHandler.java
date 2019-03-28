@@ -70,7 +70,7 @@ public class ClickedOnEdgeHandler implements EventHandler<MouseEvent>{
               alert.setContentText("Once deleting the edge you cannot retrieve it back.");
               alert.getButtonTypes().setAll(okButton,cancelButton);
               alert.getDialogPane().getStylesheets().add("/application/global.css");
-              
+              alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
               Optional<ButtonType> result = alert.showAndWait();
               
               if(result.get() == okButton) {

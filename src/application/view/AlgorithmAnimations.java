@@ -7,6 +7,7 @@ import java.util.Optional;
 import application.model.Vertex;
 import javafx.animation.Animation.Status;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.layout.Region;
 import javafx.util.Pair;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -919,6 +920,7 @@ public class AlgorithmAnimations {
                     alert.setHeaderText("The Graph does not have a vertex cover");
                     alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
                 	alert.getDialogPane().getStylesheets().add("/application/global.css");
+                	alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                     alert.showAndWait();
             		
         		}else{
@@ -941,6 +943,7 @@ public class AlgorithmAnimations {
                     alert.setHeaderText("The Graph does not have a vertex cover");
                     alert.setContentText("The graph does not have a vertex cover because the graph is disconnected.");
                 	alert.getDialogPane().getStylesheets().add("/application/global.css");
+                	alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
                     alert.showAndWait();
     				
     			}else {

@@ -449,6 +449,7 @@ public class GraphPanelController {
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
 		alert.getDialogPane().getStylesheets().add("/application/global.css");
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         Optional<ButtonType> result = alert.showAndWait();
          
  		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -839,12 +840,14 @@ public class GraphPanelController {
         alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
         		+ " of the screen and then press the play button.");
         alert.getDialogPane().getStylesheets().add("/application/global.css");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
         alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
         alert2.getDialogPane().getStylesheets().add("/application/global.css");
+        alert2.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
 			
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -900,6 +903,7 @@ public class GraphPanelController {
 						alert3.setHeaderText("The graph contains at least one negative weighted edge.");
 						alert3.setContentText("Dijkstra's shortest path algorithm cannot be performed on graphs that contain negative weighted edges.");
 						alert3.getDialogPane().getStylesheets().add("/application/global.css");
+						alert3.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 						alert3.showAndWait();
 				        
 						
@@ -982,6 +986,7 @@ public class GraphPanelController {
 						alert3.setHeaderText("The graph contains at least one negative weighted edge.");
 						alert3.setContentText("Dijkstra's shortest path algorithm cannot be performed on graphs that contain negative weighted edges.");
 						alert3.getDialogPane().getStylesheets().add("/application/global.css");
+						alert3.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 						alert3.showAndWait();
 				        
 						
@@ -1024,16 +1029,19 @@ public class GraphPanelController {
         alert.setHeaderText("No graph algorithm has been selected.");
         alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
         		+ " of the screen and then press the play button.");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
         alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
+        alert2.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         
         Alert alert3 = new Alert(AlertType.ERROR);
         alert3.setTitle("Restart Visualisation Error.");
         alert3.setHeaderText("You cannot restart an animation before starting an animation for a new/modified graph");
         alert3.setContentText("To start an animation for a newly made/modified graph you must press the play button.");
+        alert3.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
@@ -1178,11 +1186,13 @@ public class GraphPanelController {
         alert.setHeaderText("No graph algorithm has been selected.");
         alert.setContentText("In order to visualize an animation on a graph you must select one of the algorithms in the list on the left"
         		+ " of the screen and then press the play button.");
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
         Alert alert2 = new Alert(AlertType.ERROR);
         alert2.setTitle("Empty Graph");
         alert2.setHeaderText("The graph is empty.");
         alert2.setContentText("The graph has no vertices and no edges, to visualise an algorithm add some vertices and edges to your graph first.");
+        alert2.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 		
 		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
 			
@@ -1329,6 +1339,7 @@ public class GraphPanelController {
 		ButtonType okButton = new ButtonType("Ok", ButtonData.OK_DONE);
 		alert.getButtonTypes().setAll(okButton,cancelButton);
 		alert.getDialogPane().getStylesheets().add("/application/global.css");
+		alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         Optional<ButtonType> result = alert.showAndWait();
          
  		if(getSelectedTabName().equals("Undirected Non-Weighted Graph")) {
@@ -1972,6 +1983,7 @@ public class GraphPanelController {
             alert.setHeaderText("You have provided incorrect data.");
             alert.setContentText(errorMessage);
             alert.getDialogPane().getStylesheets().add("/application/global.css");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
             
             return false;
@@ -2190,6 +2202,7 @@ public class GraphPanelController {
              alert.setHeaderText("You have provided incorrect data.");
              alert.setContentText(errorMessage);
              alert.getDialogPane().getStylesheets().add("/application/global.css");
+             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
              alert.showAndWait();
              
              return false;

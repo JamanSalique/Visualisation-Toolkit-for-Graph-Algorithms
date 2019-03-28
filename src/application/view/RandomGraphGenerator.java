@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -1411,6 +1412,7 @@ public class RandomGraphGenerator {
             alert.setHeaderText("You have provided incorrect data in one of the fields.");
             alert.setContentText(errorMessage);
             alert.getDialogPane().getStylesheets().add("/application/global.css");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
             
             return false;

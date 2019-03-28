@@ -24,6 +24,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -612,7 +613,7 @@ public class ClickedOnVertexHandler implements EventHandler<MouseEvent>{
               alert.getButtonTypes().setAll(okButton,cancelButton);
               
               alert.getDialogPane().getStylesheets().add("/application/global.css");
-              
+              alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
               Optional<ButtonType> result = alert.showAndWait();
               
               if(result.get() == okButton) {

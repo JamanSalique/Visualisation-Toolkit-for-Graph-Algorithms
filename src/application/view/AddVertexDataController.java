@@ -5,6 +5,7 @@ import application.model.DataModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Region;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -227,7 +228,7 @@ public class AddVertexDataController {
              alert.setTitle("Add Vertex Error");
              alert.setHeaderText("Please correct invalid fields");
              alert.setContentText(errorMessage);
-             
+             alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
              alert.showAndWait();
              
              return false;
@@ -312,6 +313,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}else if(type.equals("Double") && dataModel.getUndirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
     		Alert alert = new Alert(AlertType.ERROR);
@@ -319,6 +321,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}else if(type.equals("String") && dataModel.getUndirectedNonWeightedString().containsVertex(inputDataField.getText())) {
     		Alert alert = new Alert(AlertType.ERROR);
@@ -326,6 +329,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}
     	
@@ -367,6 +371,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}else if(type.equals("Double") && dataModel.getUndirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
     		Alert alert = new Alert(AlertType.ERROR);
@@ -374,6 +379,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}else if(type.equals("String") && dataModel.getUndirectedWeightedString().containsVertex(inputDataField.getText())) {
     		Alert alert = new Alert(AlertType.ERROR);
@@ -381,6 +387,7 @@ public class AddVertexDataController {
             alert.setTitle("Duplicate Vertex");
             alert.setHeaderText("Cannot add duplicate vertices");
             alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
             alert.showAndWait();
     	}
     	
@@ -424,6 +431,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex");
 	            alert.setHeaderText("Cannot add duplicate vertices");
 	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}else if(type.equals("Double") && dataModel.getDirectedNonWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
 	    		Alert alert = new Alert(AlertType.ERROR);
@@ -431,6 +439,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex");
 	            alert.setHeaderText("Cannot add duplicate vertices");
 	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}else if(type.equals("String") && dataModel.getDirectedNonWeightedString().containsVertex(inputDataField.getText())) {
 	    		Alert alert = new Alert(AlertType.ERROR);
@@ -438,6 +447,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex");
 	            alert.setHeaderText("Cannot add duplicate vertices");
 	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}
 	    	
@@ -479,6 +489,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex.");
 	            alert.setHeaderText("Cannot add duplicate vertices.");
 	            alert.setContentText("A vertex with data " + Integer.parseInt(inputDataField.getText()) + " is already in the graph.");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}else if(type.equals("Double") && dataModel.getDirectedWeightedDouble().containsVertex(Double.parseDouble(inputDataField.getText()))) {
 	    		Alert alert = new Alert(AlertType.ERROR);
@@ -486,6 +497,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex.");
 	            alert.setHeaderText("Cannot add duplicate vertices.");
 	            alert.setContentText("A vertex with data " + Double.parseDouble(inputDataField.getText()) + " is already in the graph.");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}else if(type.equals("String") && dataModel.getDirectedWeightedString().containsVertex(inputDataField.getText())) {
 	    		Alert alert = new Alert(AlertType.ERROR);
@@ -493,6 +505,7 @@ public class AddVertexDataController {
 	            alert.setTitle("Duplicate Vertex.");
 	            alert.setHeaderText("Cannot add duplicate vertices.");
 	            alert.setContentText("A vertex with data " + inputDataField.getText() + " is already in the graph.");
+	            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 	            alert.showAndWait();
 	    	}
 	    	
