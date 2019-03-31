@@ -276,6 +276,9 @@ class UndirectedNonWeightedGraphTests {
 
 	}
 	
+	/**
+	 * This function is to test the containsVertex function for undirected non-weighted graphs.
+	 */
 	@Test
 	void containVertexTest(){
 		
@@ -341,6 +344,9 @@ class UndirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test the clearGraph function for undirected non-weighted graphs.
+	 */
 	@Test
 	void clearGraphTest() {
 		
@@ -409,6 +415,9 @@ class UndirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test the getNeighbours function for vertices in undirected non-weighted graphs.
+	 */
 	@Test
 	void vertexNeighboursTest() {
 		

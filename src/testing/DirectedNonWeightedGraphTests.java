@@ -275,6 +275,9 @@ class DirectedNonWeightedGraphTests {
 
 	}
 	
+	/**
+	 * This function is to test the containsVertex function for directed non-weighted graphs.
+	 */
 	@Test
 	void containVertexTest(){
 		
@@ -340,6 +343,9 @@ class DirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test the clearGraph function for directed non-weighted graphs.
+	 */
 	@Test
 	void clearGraphTest() {
 		
@@ -408,6 +414,9 @@ class DirectedNonWeightedGraphTests {
 		
 	}
 	
+	/**
+	 * This function is to test the getNeighbours function for vertices in directed non-weighted graphs.
+	 */
 	@Test
 	void vertexNeighboursTest() {
 		
