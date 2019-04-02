@@ -909,7 +909,23 @@ public class GraphPanelController {
 						
 					}else {
 						
-						algorithmAnimations.playDijkstraAlgorithm();
+						try {
+							algorithmAnimations.playDijkstraAlgorithm();
+						}catch(NullPointerException exception) {
+							
+							Alert alert4 = new Alert(AlertType.ERROR);
+							alert4.setTitle("Disconnected Graph");
+							alert4.setHeaderText("The graph is disconnected.");
+							alert4.setContentText("The current implementation of Dijkstra's algorithm for undirected weighted graphs cannot "
+									+ "find the shortest path tree on a disconnected graph.");
+							alert4.getDialogPane().getStylesheets().add("/application/global.css");
+							alert4.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+							alert4.showAndWait();
+							
+							algorithmAnimations.getDijkstraAlgorithm().getMainAnimation().getChildren().clear();
+							
+						}
+						
 						
 					}
 
@@ -992,7 +1008,23 @@ public class GraphPanelController {
 						
 					}else {
 						
-						algorithmAnimations.playDijkstraAlgorithm();
+						try {
+							algorithmAnimations.playDijkstraAlgorithm();
+						}catch(NullPointerException exception) {
+							
+							Alert alert4 = new Alert(AlertType.ERROR);
+							alert4.setTitle("Non Strongly Connected Graph");
+							alert4.setHeaderText("The graph is not strongly connected.");
+							alert4.setContentText("The current implementation of Dijkstra's algorithm for directed weighted graphs "
+									+ "cannot find the shortest path tree on a graph that is not strongly connected. A strongly connected graph is a graph where "
+									+ "every vertex has a path to all vertices in the graph.");
+							alert4.getDialogPane().getStylesheets().add("/application/global.css");
+							alert4.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+							alert4.showAndWait();
+							
+							algorithmAnimations.getDijkstraAlgorithm().getMainAnimation().getChildren().clear();
+							
+						}
 						
 					}
 					

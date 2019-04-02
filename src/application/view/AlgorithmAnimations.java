@@ -1387,6 +1387,10 @@ public class AlgorithmAnimations {
 		
 	}
 	
+	public DijkstraAlgorithm getDijkstraAlgorithm() {
+		return dijkstra;
+	}
+	
 	
 	
 }
