@@ -199,7 +199,25 @@ public class RandomGraphGenerator {
 			
 			for(int i=0;i<numberOfVertices;i++) {
 				
-				listOfLetters.add(Character.toString(alphabet.charAt(i)));
+				if(i>25) {
+					
+					int numberOfChars = i/25;
+					String label ="";
+					
+	   				for(int j=0;j<numberOfChars +1;j++) {
+	   					
+	   					label+= Character.toString(alphabet.charAt(i%26));
+	   					
+	   				}
+	   				
+	   				listOfLetters.add(label);
+					
+				}else {
+					
+					listOfLetters.add(Character.toString(alphabet.charAt(i)));
+					
+				}
+				
 				
 			}
 			Collections.shuffle(listOfLetters);
@@ -855,7 +873,27 @@ public class RandomGraphGenerator {
 					
 					Circle vertex = new Circle(20, Color.WHITE);
 		   			vertex.setStroke(Color.BLACK);
-		   			Text text = new Text (Character.toString(alphabet.charAt(i)));
+		   			String label = "";
+		   			
+		   			if(i > 25) {
+		   				
+		   				int numberOfChars = i/25;
+		   				
+		   				
+		   				for(int j=0;j<numberOfChars +1;j++) {
+		   					
+		   					label+= Character.toString(alphabet.charAt(i%26));
+		   					
+		   				}
+		   				
+		   				
+		   			}else {
+		   				
+		   				label = Character.toString(alphabet.charAt(i));
+		   				
+		   			}
+		   			
+	   				Text text = new Text (label);
 		   			
 		   			StackPane stack = new StackPane();
 		   			
@@ -927,7 +965,27 @@ public class RandomGraphGenerator {
 					
 					Circle vertex = new Circle(20, Color.WHITE);
 		   			vertex.setStroke(Color.BLACK);
-		   			Text text = new Text (Character.toString(alphabet.charAt(i)));
+		   			String label = "";
+		   			
+		   			if(i > 25) {
+		   				
+		   				int numberOfChars = i/25;
+		   				
+		   				
+		   				for(int j=0;j<numberOfChars +1;j++) {
+		   					
+		   					label+= Character.toString(alphabet.charAt(i%26));
+		   					
+		   				}
+		   				
+		   				
+		   			}else {
+		   				
+		   				label = Character.toString(alphabet.charAt(i));
+		   				
+		   			}
+		   			
+	   				Text text = new Text (label);
 		   			
 		   			StackPane stack = new StackPane();
 		   			
@@ -999,7 +1057,27 @@ public class RandomGraphGenerator {
 					
 					Circle vertex = new Circle(20, Color.WHITE);
 		   			vertex.setStroke(Color.BLACK);
-		   			Text text = new Text (Character.toString(alphabet.charAt(i)));
+		   			String label = "";
+		   			
+		   			if(i > 25) {
+		   				
+		   				int numberOfChars = i/25;
+		   				
+		   				
+		   				for(int j=0;j<numberOfChars +1;j++) {
+		   					
+		   					label+= Character.toString(alphabet.charAt(i%26));
+		   					
+		   				}
+		   				
+		   				
+		   			}else {
+		   				
+		   				label = Character.toString(alphabet.charAt(i));
+		   				
+		   			}
+		   			
+	   				Text text = new Text (label);
 		   			
 		   			StackPane stack = new StackPane();
 		   			
@@ -1071,7 +1149,27 @@ public class RandomGraphGenerator {
 					
 					Circle vertex = new Circle(20, Color.WHITE);
 		   			vertex.setStroke(Color.BLACK);
-		   			Text text = new Text (Character.toString(alphabet.charAt(i)));
+		   			String label = "";
+		   			
+		   			if(i > 25) {
+		   				
+		   				int numberOfChars = i/25;
+		   				
+		   				
+		   				for(int j=0;j<numberOfChars +1;j++) {
+		   					
+		   					label+= Character.toString(alphabet.charAt(i%26));
+		   					
+		   				}
+		   				
+		   				
+		   			}else {
+		   				
+		   				label = Character.toString(alphabet.charAt(i));
+		   				
+		   			}
+		   			
+	   				Text text = new Text (label);
 		   			
 		   			StackPane stack = new StackPane();
 		   			
@@ -1363,7 +1461,7 @@ public class RandomGraphGenerator {
     		
     		errorMessage += "You must provide and integer value for the number of edges field.";
     		
-    	}else if(Integer.parseInt(numberOfVertices)<=0 || Integer.parseInt(numberOfEdges)<=0) {
+    	}else if(Integer.parseInt(numberOfVertices)<=0) {
     		
     		errorMessage += "A graph must have at least one vertex. You must provide and integer value greater than 0 for the number "
     				+ "of vertices field.";
