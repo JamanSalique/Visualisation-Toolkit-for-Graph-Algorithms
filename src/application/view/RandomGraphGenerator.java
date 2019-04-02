@@ -1461,6 +1461,14 @@ public class RandomGraphGenerator {
     		
     		errorMessage += "You must provide and integer value for the number of edges field.";
     		
+    	}else if(Integer.parseInt(numberOfVertices)>2500) {
+    		
+    		errorMessage += "Graphs can only be made with up to 2500 vertices using this application.";
+    		
+    	}else if(Integer.parseInt(numberOfEdges)>5000) {
+    		
+    		errorMessage += "Graphs can only be made with up to 5000 edges using this application.";
+    		
     	}else if(Integer.parseInt(numberOfVertices)<=0) {
     		
     		errorMessage += "A graph must have at least one vertex. You must provide and integer value greater than 0 for the number "
